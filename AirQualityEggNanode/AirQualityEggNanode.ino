@@ -24,7 +24,7 @@
 #define APIKEY  "7HsgaVRMCZ5FOSGypykT72YyKvKSAKxQbXdIanBxeEFBYz0g"
 
 //timer vars
-const int transmitFrequency = 10; //time to wait between calls in seconds
+const int transmitFrequency = 60; //time to wait between calls in seconds
 unsigned long int currTime;
 
 // analog sensor input pins
@@ -78,9 +78,4 @@ void loop () {
     }
   } else flashStatusLed(); //we are transmitting data!
 }
-
-
-
-
-
 
