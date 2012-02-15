@@ -18,7 +18,7 @@ Stash stash;
 //----- setup
 void nanodeSetup(){
   Serial.println("\n[webClient]");
-  timer = 15; //initial wait time in seconds
+  timer = 65; //initial wait time in seconds
 
   if (ether.begin(sizeof Ethernet::buffer, mymac) == 0) 
     Serial.println( "Failed to access Ethernet controller");

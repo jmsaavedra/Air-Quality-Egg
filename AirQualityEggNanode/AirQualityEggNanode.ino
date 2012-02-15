@@ -24,7 +24,7 @@
 #define APIKEY  "7HsgaVRMCZ5FOSGypykT72YyKvKSAKxQbXdIanBxeEFBYz0g"
 
 //timer vars
-const int transmitFrequency = 60; //time to wait between calls in seconds
+const int transmitFrequency = 30; //time to wait between calls in seconds
 unsigned long int currTime;
 
 // analog sensor input pins
@@ -49,7 +49,7 @@ const int buttonPin = 7;
 boolean debug = true;
 
 void setup () {
-  Serial.begin(57600);
+  Serial.begin(9600);
   
   ledSetup();
   
