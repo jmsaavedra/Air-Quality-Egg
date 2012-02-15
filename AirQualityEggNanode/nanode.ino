@@ -12,8 +12,11 @@ byte mymac[] = {
   0x74,0x69,0x69,0x2D,0x30,0x31 };
 
 byte Ethernet::buffer[700];
-uint32_t timer;
+unsigned long timer = 60000;
 Stash stash;
+
+//for counting how long it's been since last successful connection:
+unsigned long lastResponseTime = 0;
 
 //----- setup
 void nanodeSetup(){
@@ -26,7 +29,7 @@ void nanodeSetup(){
     Serial.println("DHCP failed");
 
   ether.printIp("IP:  ", ether.myip);
-  ether.printIp("GW:  ", ether.gwip);  
+  ether.printIp("Gateway:  ", ether.gwip);  
   ether.printIp("DNS: ", ether.dnsip);  
 
   if (!ether.dnsLookup(website))
@@ -36,17 +39,33 @@ void nanodeSetup(){
 }
 
 void nanodeUpdate(){
-  ether.packetLoop(ether.packetReceive()); //needs to stay near top of loop
+
+  ether.packetLoop(ether.packetReceive());
+
+  if ( ether.msgReceived() ){
+    Serial.println(">>> RESPONSE RECEIVED ---\n\n");
+    lastResponseTime = currTime;
+    flashStatusLed();
+  }
+
+  if (currTime - lastResponseTime > (10*60000)){ // we have not connected in 10 min
+    flashAllLed();
+    Serial.println("RESET ME");
+    //nanodeReset();
+  }
 }
 
 //----- check time, sendData if we've hit timer
 boolean transmitTime(){
   if (currTime > timer) { //we've hit our timer limit
+    //tranmsitting = true;
     nanodeSendData();      //send out all curr data!
     timer = currTime + (transmitFrequency*1000); //reset timer
     return true;
   } 
-  else return false;
+  else { 
+    return false;
+  }
 }
 
 //----- send data!
@@ -102,8 +121,13 @@ void nanodeSendData(){
 
   // send the packet - this also releases all stash buffers once done
   ether.tcpSend();
+
+  flashStatusLed();
 }
 
+void nanodeReset(){
+  //need to reset board
+}
 
 
 

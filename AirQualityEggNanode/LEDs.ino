@@ -1,4 +1,6 @@
 
+int ledTime = 0;
+
 void ledSetup(){
   pinMode(statusLed, OUTPUT);
   pinMode(buttonLed, OUTPUT);
@@ -13,28 +15,43 @@ void ledSetup(){
   }
   digitalWrite(statusLed, LOW); 
   digitalWrite(buttonLed, LOW); 
+  //ledTimeStamp = currTime;
 }
 
-void breathStatusLed(){
-  for(int i=0; i<175; i++){
-    analogWrite(statusLed, i);
-    delay(3);
+void ledUpdate(){
+
+  ledTime = currTime % 2000;
+
+  if (ledTime < 1000){
+    analogWrite(statusLed, ledTime/5);
+  } 
+  else if (ledTime < 1950) {
+    analogWrite(statusLed, 200-((ledTime-1000)/5));
+  } 
+  else {
+    analogWrite(statusLed, 0);
   }
-  for(int i=174; i>0; i--){
-    analogWrite(statusLed, i);
-    delay(3);
-  }
-  analogWrite(statusLed, 0);
 }
 
 void flashStatusLed(){
-  //pinMode(buttonLed, OUTPUT);
-  for(int i=0; i<3; i++){
+  for(int i=0; i<5; i++){
     digitalWrite(statusLed, HIGH);
-    //digitalWrite(buttonLed, HIGH);
-    delay(250);
+    delay(100);
     digitalWrite(statusLed, LOW);
-    //digitalWrite(buttonLed, LOW);
-    delay(250); 
+    delay(100);
   }
 }
+
+void flashAllLed(){
+  for(int i=0; i<5; i++){
+    digitalWrite(statusLed, HIGH);
+    digitalWrite(buttonLed, HIGH);
+    delay(100);
+    digitalWrite(statusLed, LOW);
+    digitalWrite(buttonLed, LOW);
+    delay(100);
+  }
+}
+
+
+

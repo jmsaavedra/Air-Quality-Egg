@@ -17,7 +17,6 @@ void buttonUpdate(){
       }
     }
   }
-
   digitalWrite(buttonLed, currButton);    //turn LED on/off to represent myDigitalVal
 }
 

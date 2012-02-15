@@ -10,9 +10,8 @@ CS_MQ7 MQ7(4, 3);
   //heater indicator LED on 3
 
 void readSensors(){
-   MQ7.CoPwrCycler(); //for CO sensor power cycling
-
   //sensors
+  Serial.println("reading sensors");
   currNo2 = getNo2();
   delay(sensorDebounceTime);
   currCo = getCO();
@@ -23,6 +22,8 @@ void readSensors(){
   delay(sensorDebounceTime);
   currTemp = getTemperature();
   delay(sensorDebounceTime);
+  
+  MQ7.CoPwrCycler(); //for CO sensor power cycling
 }
 
 //--------- e2v MiCS-2170 NO2 sensor ---------

@@ -24,8 +24,8 @@
 #define APIKEY  "7HsgaVRMCZ5FOSGypykT72YyKvKSAKxQbXdIanBxeEFBYz0g"
 
 //timer vars
-const int transmitFrequency = 30; //time to wait between calls in seconds
-unsigned long int currTime;
+const int transmitFrequency = 15; //time to wait between sending data in seconds
+unsigned long currTime; //holds ms passed since board started
 
 // analog sensor input pins
 const int No2SensorPin = A0;
@@ -34,12 +34,9 @@ const int qualitySensorPin = A2;
 const int humiditySensorPin = A3;
 
 // sensor values
-int currCo = 0; 
-int currNo2 = 0; 
-int currQuality = 0;  
-int currHumidity = 0; 
-int currTemp = 0;
-int currButton = 0;
+int currCo = 0;      int currNo2 = 0; 
+int currQuality = 0; int currHumidity = 0; 
+int currTemp = 0;    int currButton = 0;
 
 //LEDs
 const int statusLed = 5;
@@ -49,12 +46,9 @@ const int buttonPin = 7;
 boolean debug = true;
 
 void setup () {
-  Serial.begin(9600);
-  
-  ledSetup();
-  
+  Serial.begin(9600); 
   pinMode(buttonPin, INPUT);
-  
+  ledSetup();
   //sensorsSetup();
   nanodeSetup(); //nanode ethernet stup stuff
   Wire.begin(); 
@@ -63,19 +57,19 @@ void setup () {
 void loop () {
   currTime = millis();
   
-  nanodeUpdate();
+  nanodeUpdate(); //checking for received data
   
-  buttonUpdate(); //separate from sensors, we want to check all the time
+  buttonUpdate(); //separate from sensors, we want to check it all the time
   
-  //note: transmitTime() contains sending function
-  if( !transmitTime() ){   //if transmitTime returns false
-    if(currTime%1000 == 0){  //print the currTime every second
-      Serial.print("elapsedTime: ");  
+  ledUpdate();
+  
+  //note: transmitTime() contains sending function 
+  if( !transmitTime() ){   //if we are not transmitting
+    if(currTime%2000 == 0){  //print the currTime every second
+      Serial.print("currTime: ");  
       Serial.println(currTime/1000);
-
-      readSensors();
-      breathStatusLed(); 
+      readSensors(); //update sensor values every second
     }
-  } else flashStatusLed(); //we are transmitting data!
+  } //else we are transmitting
 }
 
