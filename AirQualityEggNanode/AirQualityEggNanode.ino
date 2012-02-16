@@ -20,8 +20,8 @@
 #include <Wire.h>
 #include <CS_MQ7.h>
 
-#define FEED    "48091" //unique feed id
-                        //unit01: 48091 // unit02: 48306 // unit03: 48307 // unit04: 48308 // unit05: 48309 // unit06: 48310 //
+#define FEED    "48091" //unique feed id -- Egg feeds are below:
+//unit01: 48091 // unit02: 48306 // unit03: 48307 // unit04: 48308 // unit05: 48309 // unit06: 48310 //
 #define APIKEY  "7HsgaVRMCZ5FOSGypykT72YyKvKSAKxQbXdIanBxeEFBYz0g"
 
 //timer vars
@@ -33,28 +33,24 @@ const int No2SensorPin = A0;
 const int CoSensorPin = A1;
 const int qualitySensorPin = A2;
 const int humiditySensorPin = A3;
-
-// sensor values
-int currCo = 0;      int currNo2 = 0; 
-int currQuality = 0; int currHumidity = 0; 
-int currTemp = 0;    int currButton = 0;
-
-//LEDs
-const int statusLed = 9;
-const int buttonLed = 5;
 const int buttonPin = 7;
 
+//sensor value vars
+int currNo2, currCo, currQuality, currHumidity, currTemp, currButton = 0;
+
 boolean debug = true;
+
+//reset for when ethernet times out and never comes back
 const int resetterPin = 3; //when pulled low, will reset board.
 
 void setup () {
   digitalWrite(resetterPin, HIGH); //this is a hack!
-  
+
   pinMode(resetterPin, OUTPUT);  
   pinMode(buttonPin, INPUT);
-  
-  Serial.begin(9600); 
 
+  Serial.begin(9600); 
+  
   ledSetup();
   nanodeSetup(); //nanode ethernet stup stuff
   Wire.begin(); 
@@ -62,13 +58,13 @@ void setup () {
 
 void loop () {
   currTime = millis();
-  
+
   nanodeUpdate(); //checking for received data
-  
+
   buttonUpdate(); //separate from sensors, we want to check it all the time
-  
-  ledUpdate();
-  
+
+    ledUpdate();
+
   //note: transmitTime() contains sending function 
   if( !transmitTime() ){   //if we are not transmitting
     if(currTime%2000 == 0){  //print the currTime every second
@@ -76,6 +72,7 @@ void loop () {
       Serial.println(currTime/1000);
       readSensors(); //update sensor values every second
     }
-  } //else we are transmitting
+  } //else we are transmitting!
 }
+
 

@@ -1,4 +1,8 @@
 
+//LEDs
+const int statusLed = 9;
+const int buttonLed = 5;
+
 int ledTime = 0;
 
 void ledSetup(){

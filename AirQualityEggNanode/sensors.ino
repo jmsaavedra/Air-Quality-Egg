@@ -5,9 +5,7 @@ const int sensorDebounceTime = 15;
 
 int tmp102Address = 0x48; //temp sensor 2-wire address
 
-CS_MQ7 MQ7(4);
-  //heater "tog" pin on 4
-  //heater indicator LED on 3
+CS_MQ7 MQ7(4);  //sensor "tog" pin on 4
 
 void readSensors(){
   //sensors
