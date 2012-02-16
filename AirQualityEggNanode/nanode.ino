@@ -39,7 +39,7 @@ void nanodeSetup(){
 }
 
 void nanodeUpdate(){
-
+  digitalWrite(resetterPin, HIGH);
   ether.packetLoop(ether.packetReceive());
 
   if ( ether.msgReceived() ){
@@ -49,9 +49,9 @@ void nanodeUpdate(){
   }
 
   if (currTime - lastResponseTime > (10*60000)){ // we have not connected in 10 min
-    flashAllLed();
     Serial.println("RESET ME");
-    //nanodeReset();
+    flashAllLed();
+    nanodeReset();
   }
 }
 
@@ -126,7 +126,7 @@ void nanodeSendData(){
 }
 
 void nanodeReset(){
-  //need to reset board
+  digitalWrite(resetterPin, LOW);
 }
 
 

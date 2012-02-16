@@ -43,13 +43,13 @@ void flashStatusLed(){
 }
 
 void flashAllLed(){
-  for(int i=0; i<5; i++){
+  for(int i=1; i<10; i++){
     digitalWrite(statusLed, HIGH);
     digitalWrite(buttonLed, HIGH);
-    delay(100);
+    delay(100/i);
     digitalWrite(statusLed, LOW);
     digitalWrite(buttonLed, LOW);
-    delay(100);
+    delay(100/i);
   }
 }
 

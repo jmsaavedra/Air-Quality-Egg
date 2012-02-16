@@ -21,6 +21,7 @@
 #include <CS_MQ7.h>
 
 #define FEED    "48091" //unique feed id
+                        //unit01: 48091 // unit02: 48306 // unit03: 48307 // unit04: 48308 // unit05: 48309 // unit06: 48310 //
 #define APIKEY  "7HsgaVRMCZ5FOSGypykT72YyKvKSAKxQbXdIanBxeEFBYz0g"
 
 //timer vars
@@ -39,17 +40,22 @@ int currQuality = 0; int currHumidity = 0;
 int currTemp = 0;    int currButton = 0;
 
 //LEDs
-const int statusLed = 5;
-const int buttonLed = 10;
+const int statusLed = 9;
+const int buttonLed = 5;
 const int buttonPin = 7;
 
 boolean debug = true;
+const int resetterPin = 3; //when pulled low, will reset board.
 
 void setup () {
-  Serial.begin(9600); 
+  digitalWrite(resetterPin, HIGH); //this is a hack!
+  
+  pinMode(resetterPin, OUTPUT);  
   pinMode(buttonPin, INPUT);
+  
+  Serial.begin(9600); 
+
   ledSetup();
-  //sensorsSetup();
   nanodeSetup(); //nanode ethernet stup stuff
   Wire.begin(); 
 }
