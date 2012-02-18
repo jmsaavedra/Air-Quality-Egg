@@ -13,7 +13,7 @@ byte mymac[] = {
 
 byte Ethernet::buffer[700];
 unsigned long timer = 60000;
-Stash stash;
+Stash stash; //holds data to send
 
 //for counting how long it's been since last successful connection:
 unsigned long lastResponseTime = 0;
@@ -57,7 +57,7 @@ void nanodeUpdate(){
 
 //----- check time, sendData if we've hit timer
 boolean transmitTime(){
-  if (currTime > timer) { //we've hit our timer limit
+  if (currTime > timer) { //we've hit our transmit timer limit
     //tranmsitting = true;
     nanodeSendData();      //send out all curr data!
     timer = currTime + (transmitFrequency*1000); //reset timer
