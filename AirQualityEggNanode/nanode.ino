@@ -122,7 +122,7 @@ void nanodeSendData(){
   // send the packet - this also releases all stash buffers once done
   ether.tcpSend();
 
-  flashStatusLed();
+  //flashStatusLed();
 }
 
 void nanodeReset(){
