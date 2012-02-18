@@ -1,3 +1,4 @@
+
                                      /*
 >>> Air Quality Egg v01 <<<
  
@@ -7,8 +8,9 @@
  uses ethercard (Nanode) library from 
  http://github.com/jcw/ethercard
  
- and CS_MQ7 (CO sensor) library from
+ and CS_MQ7 (CO) sensor and library from
  http://citizensensor.cc/make
+ http://github.com/jmsaavedra/Citizen-Sensor/tree/master/sensors
  
  jos.ph 2012
  http://pachube.com
