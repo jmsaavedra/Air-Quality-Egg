@@ -22,7 +22,7 @@
 #include <Wire.h>
 #include <CS_MQ7.h>
 
-#define FEED    "48309" //unique feed id -- Egg feeds are below:
+#define FEED    "48307" //unique feed id -- Egg feeds are below:
 //unit01: 48091 // unit02: 48306 // unit03: 48307 // unit04: 48308 // unit05: 48309 // unit06: 48310 //
 #define APIKEY  "7HsgaVRMCZ5FOSGypykT72YyKvKSAKxQbXdIanBxeEFBYz0g"
 
