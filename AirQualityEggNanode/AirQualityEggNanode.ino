@@ -1,9 +1,11 @@
 
-                                     /*
+/*
 >>> Air Quality Egg v01 <<<
  
  Nanode based environmental sensor ethernet connected unit. 
  Measures NO2, CO, air quality, humidity, temperature.
+ 
+ reset hack connects digital pin 3 to RESET pin. must be disconnected when programming.
  
  uses ethercard (Nanode) library from 
  http://github.com/jcw/ethercard
@@ -16,7 +18,7 @@
  http://pachube.com
  http://citizensensor.cc
  
- */
+*/
 
 #include <EtherCard.h>
 #include <Wire.h>

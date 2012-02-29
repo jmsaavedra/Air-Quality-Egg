@@ -1,0 +1,19 @@
+
+h2. air quality egg - nanode
+p. a democratic, distributed air quality network sensor device. all sensor data is sent directly to Pachube.com
+p. sensor feeds here: https://pachube.com/users/citizensensor
+
+h3. sensors
+* temperature (TMP102)
+* humidity (HIH 4030)
+* carbon monoxide (MQ-7)
+* nitrous dioxide (e2v MICS-2710)
+
+h3. notes
+* auto reset feature connects digitalPin 3 to RESET pin
+** this must be disconnected when programming the board.
+
+h3. collaborators
+* http://pachube.com
+* http://citizensensor.cc | http://jos.ph
+* your name here
