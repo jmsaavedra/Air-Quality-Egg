@@ -12,9 +12,9 @@ h3. sensors
 
 h3. notes
 * auto reset feature connects digitalPin 3 to RESET pin
-** this must be disconnected when programming the board.
+** this *must* be disconnected when programming the board.
 
 h3. collaborators
-* http://pachube.com
-* http://citizensensor.cc | http://jos.ph
+* "http://pachube.com":http://pachube.com
+* "http://citizensensor.cc":http://citizensensor.cc | "http://jos.ph":http://jos.ph
 * your name here
