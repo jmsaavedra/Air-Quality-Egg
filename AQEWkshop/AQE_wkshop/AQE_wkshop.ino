@@ -1,14 +1,17 @@
 
 /*
-
-*** NEED TO REPLACE TEMP/HUMIDITY WITH DHT22 ***
-
->>> Air Quality Egg v01 <<<
+>>> Air Quality Circuit v0.01 <<<
  
  Nanode based environmental sensor ethernet connected unit. 
- Measures NO2, CO, air quality, humidity, temperature.
+ Measures NO2, CO, humidity, temperature.
  
- reset hack connects digital pin 3 to RESET pin. must be disconnected when programming.
+ ***circuit***
+ - NO2 sensor on A0
+ - CO sensor OUT on A1, TOG on D4
+ - Status LED on D9
+ - Button on D5
+ - DHT22 temp/humidity on D7
+ - reset hack connects digital pin 3 to RESET pin. must be disconnected when programming.
  
  uses ethercard (Nanode) library from 
  http://github.com/jcw/ethercard
@@ -23,13 +26,12 @@
  
 */
 
-#include <EtherCard.h>
-#include <Wire.h>
-#include <CS_MQ7.h>
+#include <EtherCard.h> //nanode lib
+#include <CS_MQ7.h> //CO lib
+#include "DHT.h" //DHT temp/hum lib
 
-#define FEED    "48091" //unique feed id -- Egg feeds are below:
-//unit01: 48091 // unit02: 48306 // unit03: 48307 // unit04: 48308 // unit05: 48309 // unit06: 48310 //
-#define APIKEY  "7HsgaVRMCZ5FOSGypykT72YyKvKSAKxQbXdIanBxeEFBYz0g"
+#define FEED    "53801" //unique feed id
+#define APIKEY  "GBVP8BTnLF2_XuoIYH79yWs9M02SAKxpd3gwdWVFa01oWT0g" //your API key
 
 //timer vars
 const int transmitFrequency = 10; //time to wait between sending data in seconds
@@ -39,9 +41,11 @@ unsigned long currTime; //holds ms passed since board started
 const int No2SensorPin = A0;
 const int CoSensorPin = A1;
 const int qualitySensorPin = A2;
-const int humiditySensorPin = A3;
-const int buttonPin = 7;
+//const int humiditySensorPin = A3; /* old */
+const int buttonPin = 5;
 
+#define DHTPIN 7     // what pin we're connected to
+DHT dht(DHTPIN, DHT22); //instantiate
 //sensor value vars
 int currNo2, currCo, currQuality, currHumidity, currTemp, currButton = 0;
 
@@ -59,8 +63,7 @@ void setup () {
   Serial.begin(9600); 
   
   ledSetup();
-  nanodeSetup(); //nanode ethernet stup stuff
-  Wire.begin(); 
+  nanodeSetup(); //nanode ethernet stup stuff 
 }
 
 void loop () {
@@ -70,7 +73,7 @@ void loop () {
 
   buttonUpdate(); //separate from sensors, we want to check it all the time
 
-    ledUpdate();
+  ledUpdate();
 
   //note: transmitTime() contains sending function 
   if( !transmitTime() ){   //if we are not transmitting
