@@ -3,7 +3,7 @@ h2. air quality egg
 
 a large-scale distributed air quality network sensor device. based on the "http://wickeddevice.com/index.php?main_page=product_info&cPath=26&products_id=102":Nanode
 an Arduino-compatible, Ethernet enabled microcontroller.
-"http://airqualityegg.com":airqualityegg.com
+"http://airqualityegg.com": airqualityegg.com
 
 h3. sensors
 * temp/humidity (RHT22)
