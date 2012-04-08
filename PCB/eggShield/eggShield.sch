@@ -11180,71 +11180,6 @@ In this library the device names are the same as the pin names of the symbols, t
 Operational amplifiers,  comparators, voltage regulators, ADCs, DACs, etc.&lt;p&gt;
 &lt;author&gt;Created by librarian@cadsoft.de&lt;/author&gt;</description>
 <packages>
-<package name="DIL14">
-<description>&lt;b&gt;Dual In Line Package&lt;/b&gt;</description>
-<wire x1="8.89" y1="2.921" x2="-8.89" y2="2.921" width="0.1524" layer="21"/>
-<wire x1="-8.89" y1="-2.921" x2="8.89" y2="-2.921" width="0.1524" layer="21"/>
-<wire x1="8.89" y1="2.921" x2="8.89" y2="-2.921" width="0.1524" layer="21"/>
-<wire x1="-8.89" y1="2.921" x2="-8.89" y2="1.016" width="0.1524" layer="21"/>
-<wire x1="-8.89" y1="-2.921" x2="-8.89" y2="-1.016" width="0.1524" layer="21"/>
-<wire x1="-8.89" y1="1.016" x2="-8.89" y2="-1.016" width="0.1524" layer="21" curve="-180"/>
-<pad name="1" x="-7.62" y="-3.81" drill="0.8128" shape="long" rot="R90"/>
-<pad name="2" x="-5.08" y="-3.81" drill="0.8128" shape="long" rot="R90"/>
-<pad name="7" x="7.62" y="-3.81" drill="0.8128" shape="long" rot="R90"/>
-<pad name="8" x="7.62" y="3.81" drill="0.8128" shape="long" rot="R90"/>
-<pad name="3" x="-2.54" y="-3.81" drill="0.8128" shape="long" rot="R90"/>
-<pad name="4" x="0" y="-3.81" drill="0.8128" shape="long" rot="R90"/>
-<pad name="6" x="5.08" y="-3.81" drill="0.8128" shape="long" rot="R90"/>
-<pad name="5" x="2.54" y="-3.81" drill="0.8128" shape="long" rot="R90"/>
-<pad name="9" x="5.08" y="3.81" drill="0.8128" shape="long" rot="R90"/>
-<pad name="10" x="2.54" y="3.81" drill="0.8128" shape="long" rot="R90"/>
-<pad name="11" x="0" y="3.81" drill="0.8128" shape="long" rot="R90"/>
-<pad name="12" x="-2.54" y="3.81" drill="0.8128" shape="long" rot="R90"/>
-<pad name="13" x="-5.08" y="3.81" drill="0.8128" shape="long" rot="R90"/>
-<pad name="14" x="-7.62" y="3.81" drill="0.8128" shape="long" rot="R90"/>
-<text x="-9.271" y="-3.048" size="1.27" layer="25" ratio="10" rot="R90">&gt;NAME</text>
-<text x="-6.731" y="-0.635" size="1.27" layer="27" ratio="10">&gt;VALUE</text>
-</package>
-<package name="SO14">
-<description>&lt;b&gt;Small Outline Package 14&lt;/b&gt;</description>
-<wire x1="4.305" y1="-1.9" x2="-4.305" y2="-1.9" width="0.2032" layer="51"/>
-<wire x1="-4.305" y1="-1.9" x2="-4.305" y2="-1.4" width="0.2032" layer="51"/>
-<wire x1="-4.305" y1="-1.4" x2="-4.305" y2="1.9" width="0.2032" layer="51"/>
-<wire x1="4.305" y1="-1.4" x2="-4.305" y2="-1.4" width="0.2032" layer="51"/>
-<wire x1="4.305" y1="1.9" x2="4.305" y2="-1.4" width="0.2032" layer="51"/>
-<wire x1="4.305" y1="-1.4" x2="4.305" y2="-1.9" width="0.2032" layer="51"/>
-<wire x1="-4.305" y1="1.9" x2="4.305" y2="1.9" width="0.2032" layer="51"/>
-<smd name="2" x="-2.54" y="-2.6" dx="0.6" dy="2.2" layer="1"/>
-<smd name="13" x="-2.54" y="2.6" dx="0.6" dy="2.2" layer="1"/>
-<smd name="1" x="-3.81" y="-2.6" dx="0.6" dy="2.2" layer="1"/>
-<smd name="3" x="-1.27" y="-2.6" dx="0.6" dy="2.2" layer="1"/>
-<smd name="4" x="0" y="-2.6" dx="0.6" dy="2.2" layer="1"/>
-<smd name="14" x="-3.81" y="2.6" dx="0.6" dy="2.2" layer="1"/>
-<smd name="12" x="-1.27" y="2.6" dx="0.6" dy="2.2" layer="1"/>
-<smd name="11" x="0" y="2.6" dx="0.6" dy="2.2" layer="1"/>
-<smd name="6" x="2.54" y="-2.6" dx="0.6" dy="2.2" layer="1"/>
-<smd name="9" x="2.54" y="2.6" dx="0.6" dy="2.2" layer="1"/>
-<smd name="5" x="1.27" y="-2.6" dx="0.6" dy="2.2" layer="1"/>
-<smd name="7" x="3.81" y="-2.6" dx="0.6" dy="2.2" layer="1"/>
-<smd name="10" x="1.27" y="2.6" dx="0.6" dy="2.2" layer="1"/>
-<smd name="8" x="3.81" y="2.6" dx="0.6" dy="2.2" layer="1"/>
-<text x="-4.572" y="-1.905" size="1.27" layer="25" rot="R90">&gt;NAME</text>
-<text x="5.842" y="-1.905" size="1.27" layer="27" rot="R90">&gt;VALUE</text>
-<rectangle x1="-4.055" y1="-3.1" x2="-3.565" y2="-2" layer="51"/>
-<rectangle x1="-2.785" y1="-3.1" x2="-2.295" y2="-2" layer="51"/>
-<rectangle x1="-1.515" y1="-3.1" x2="-1.025" y2="-2" layer="51"/>
-<rectangle x1="-0.245" y1="-3.1" x2="0.245" y2="-2" layer="51"/>
-<rectangle x1="-0.245" y1="2" x2="0.245" y2="3.1" layer="51"/>
-<rectangle x1="-1.515" y1="2" x2="-1.025" y2="3.1" layer="51"/>
-<rectangle x1="-2.785" y1="2" x2="-2.295" y2="3.1" layer="51"/>
-<rectangle x1="-4.055" y1="2" x2="-3.565" y2="3.1" layer="51"/>
-<rectangle x1="1.025" y1="-3.1" x2="1.515" y2="-2" layer="51"/>
-<rectangle x1="2.295" y1="-3.1" x2="2.785" y2="-2" layer="51"/>
-<rectangle x1="3.565" y1="-3.1" x2="4.055" y2="-2" layer="51"/>
-<rectangle x1="3.565" y1="2" x2="4.055" y2="3.1" layer="51"/>
-<rectangle x1="2.295" y1="2" x2="2.785" y2="3.1" layer="51"/>
-<rectangle x1="1.025" y1="2" x2="1.515" y2="3.1" layer="51"/>
-</package>
 <package name="DIL08">
 <description>&lt;b&gt;Dual In Line Package&lt;/b&gt;</description>
 <wire x1="5.08" y1="2.921" x2="-5.08" y2="2.921" width="0.1524" layer="21"/>
@@ -11340,25 +11275,6 @@ NS Package M08A</description>
 </package>
 </packages>
 <symbols>
-<symbol name="PWR+G">
-<text x="1.27" y="3.175" size="0.8128" layer="93" rot="R90">V+</text>
-<text x="1.27" y="-5.08" size="0.8128" layer="93" rot="R90">GND</text>
-<pin name="V+" x="0" y="7.62" visible="pad" length="middle" direction="pwr" rot="R270"/>
-<pin name="GND" x="0" y="-7.62" visible="pad" length="middle" direction="pwr" rot="R90"/>
-</symbol>
-<symbol name="COMPARATOR-OC">
-<wire x1="-5.08" y1="5.08" x2="-5.08" y2="-5.08" width="0.4064" layer="94"/>
-<wire x1="-5.08" y1="-5.08" x2="5.08" y2="0" width="0.4064" layer="94"/>
-<wire x1="5.08" y1="0" x2="-5.08" y2="5.08" width="0.4064" layer="94"/>
-<wire x1="-3.81" y1="3.175" x2="-3.81" y2="1.905" width="0.1524" layer="94"/>
-<wire x1="-4.445" y1="2.54" x2="-3.175" y2="2.54" width="0.1524" layer="94"/>
-<wire x1="-4.445" y1="-2.54" x2="-3.175" y2="-2.54" width="0.1524" layer="94"/>
-<text x="2.54" y="3.175" size="1.778" layer="95">&gt;NAME</text>
-<text x="2.54" y="-5.08" size="1.778" layer="96">&gt;VALUE</text>
-<pin name="-IN" x="-7.62" y="-2.54" visible="pad" length="short" direction="in"/>
-<pin name="+IN" x="-7.62" y="2.54" visible="pad" length="short" direction="in"/>
-<pin name="OUT" x="7.62" y="0" visible="pad" length="short" direction="oc" rot="R180"/>
-</symbol>
 <symbol name="OPAMP+-">
 <wire x1="-5.08" y1="5.08" x2="-5.08" y2="-5.08" width="0.4064" layer="94"/>
 <wire x1="-5.08" y1="-5.08" x2="5.08" y2="0" width="0.4064" layer="94"/>
@@ -11378,61 +11294,6 @@ NS Package M08A</description>
 </symbol>
 </symbols>
 <devicesets>
-<deviceset name="LM339" prefix="IC">
-<description>&lt;b&gt;Low Power Low Offset Voltage Quad Comparators&lt;/b&gt;&lt;p&gt;
-with open collector; LM139/LM239/LM339/LM2901/LM3302&lt;br&gt;</description>
-<gates>
-<gate name="P" symbol="PWR+G" x="20.32" y="12.7" addlevel="request"/>
-<gate name="A" symbol="COMPARATOR-OC" x="20.32" y="12.7"/>
-<gate name="B" symbol="COMPARATOR-OC" x="43.18" y="12.7"/>
-<gate name="C" symbol="COMPARATOR-OC" x="17.78" y="-10.16"/>
-<gate name="D" symbol="COMPARATOR-OC" x="43.18" y="-10.16"/>
-</gates>
-<devices>
-<device name="N" package="DIL14">
-<connects>
-<connect gate="A" pin="+IN" pad="5"/>
-<connect gate="A" pin="-IN" pad="4"/>
-<connect gate="A" pin="OUT" pad="2"/>
-<connect gate="B" pin="+IN" pad="7"/>
-<connect gate="B" pin="-IN" pad="6"/>
-<connect gate="B" pin="OUT" pad="1"/>
-<connect gate="C" pin="+IN" pad="9"/>
-<connect gate="C" pin="-IN" pad="8"/>
-<connect gate="C" pin="OUT" pad="14"/>
-<connect gate="D" pin="+IN" pad="11"/>
-<connect gate="D" pin="-IN" pad="10"/>
-<connect gate="D" pin="OUT" pad="13"/>
-<connect gate="P" pin="GND" pad="12"/>
-<connect gate="P" pin="V+" pad="3"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="D" package="SO14">
-<connects>
-<connect gate="A" pin="+IN" pad="5"/>
-<connect gate="A" pin="-IN" pad="4"/>
-<connect gate="A" pin="OUT" pad="2"/>
-<connect gate="B" pin="+IN" pad="7"/>
-<connect gate="B" pin="-IN" pad="6"/>
-<connect gate="B" pin="OUT" pad="1"/>
-<connect gate="C" pin="+IN" pad="9"/>
-<connect gate="C" pin="-IN" pad="8"/>
-<connect gate="C" pin="OUT" pad="14"/>
-<connect gate="D" pin="+IN" pad="11"/>
-<connect gate="D" pin="-IN" pad="10"/>
-<connect gate="D" pin="OUT" pad="13"/>
-<connect gate="P" pin="GND" pad="12"/>
-<connect gate="P" pin="V+" pad="3"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
 <deviceset name="MCP601" prefix="IC">
 <description>&lt;b&gt;Single Op Amp&lt;/b&gt; 2.7V to 6.0V Single Supply CMOS&lt;p&gt;
 Source: http://ww1.microchip.com/downloads/en/DeviceDoc/21314g.pdf</description>
@@ -11506,31 +11367,6 @@ Source: http://ww1.microchip.com/downloads/en/DeviceDoc/21314g.pdf</description>
 </library>
 <library name="ricardo">
 <packages>
-<package name="S100CO2">
-<wire x1="0" y1="0" x2="33" y2="0" width="0.127" layer="21"/>
-<wire x1="33" y1="0" x2="33" y2="33" width="0.127" layer="21"/>
-<wire x1="33" y1="33" x2="0" y2="33" width="0.127" layer="21"/>
-<wire x1="0" y1="33" x2="0" y2="0" width="0.127" layer="21"/>
-<pad name="P$1" x="5" y="20.5" drill="1"/>
-<pad name="P$2" x="3" y="20.5" drill="1"/>
-<pad name="P$3" x="3" y="18.5" drill="1"/>
-<pad name="P$4" x="5" y="18.5" drill="1"/>
-<pad name="GND9" x="5" y="16.5" drill="1"/>
-<pad name="AOUT" x="3" y="16.5" drill="1"/>
-<pad name="P$7" x="3" y="14.5" drill="1"/>
-<pad name="P$8" x="5" y="14.5" drill="1"/>
-<pad name="P$9" x="5" y="12.5" drill="1"/>
-<pad name="P$10" x="3" y="12.5" drill="1"/>
-<pad name="+5V1" x="30.6" y="17.5" drill="1"/>
-<pad name="GND2" x="30.6" y="15.5" drill="1"/>
-<pad name="GND4" x="28.6" y="15.5" drill="1"/>
-<pad name="+5V2" x="28.6" y="17.5" drill="1"/>
-<text x="2.5" y="31" size="1.27" layer="21">S100 CO2</text>
-<text x="28" y="19" size="1.27" layer="21">+5V</text>
-<text x="28" y="13" size="1.27" layer="21">GND</text>
-<text x="-1.5" y="16" size="1.27" layer="21">Aout</text>
-<text x="6.5" y="16" size="1.27" layer="21">GND</text>
-</package>
 <package name="SR-4">
 <wire x1="3.6" y1="1.8" x2="5.4" y2="1.8" width="0.127" layer="21"/>
 <wire x1="5.4" y1="1.8" x2="5.4" y2="-1.8" width="0.127" layer="21"/>
@@ -11586,19 +11422,6 @@ Source: http://ww1.microchip.com/downloads/en/DeviceDoc/21314g.pdf</description>
 </package>
 </packages>
 <symbols>
-<symbol name="S100CO2">
-<wire x1="-12.7" y1="10.16" x2="17.78" y2="10.16" width="0.254" layer="94"/>
-<wire x1="17.78" y1="10.16" x2="17.78" y2="-12.7" width="0.254" layer="94"/>
-<wire x1="17.78" y1="-12.7" x2="-12.7" y2="-12.7" width="0.254" layer="94"/>
-<wire x1="-12.7" y1="-12.7" x2="-12.7" y2="10.16" width="0.254" layer="94"/>
-<pin name="GND2" x="-17.78" y="7.62" length="middle"/>
-<pin name="GND4" x="-17.78" y="2.54" length="middle"/>
-<pin name="GND9" x="-17.78" y="-2.54" length="middle"/>
-<pin name="+5V" x="-17.78" y="-7.62" length="middle"/>
-<pin name="AOUT" x="22.86" y="7.62" length="middle" rot="R180"/>
-<text x="0" y="7.62" size="1.27" layer="94">S100 CO2</text>
-<pin name="+5V4" x="22.86" y="2.54" length="middle" rot="R180"/>
-</symbol>
 <symbol name="E2V">
 <wire x1="-15.24" y1="10.16" x2="0" y2="10.16" width="0.254" layer="94"/>
 <wire x1="0" y1="10.16" x2="0" y2="-15.24" width="0.254" layer="94"/>
@@ -11622,26 +11445,6 @@ Source: http://ww1.microchip.com/downloads/en/DeviceDoc/21314g.pdf</description>
 </symbol>
 </symbols>
 <devicesets>
-<deviceset name="S100CO2">
-<gates>
-<gate name="G$1" symbol="S100CO2" x="-2.54" y="10.16"/>
-</gates>
-<devices>
-<device name="" package="S100CO2">
-<connects>
-<connect gate="G$1" pin="+5V" pad="+5V1"/>
-<connect gate="G$1" pin="+5V4" pad="+5V2"/>
-<connect gate="G$1" pin="AOUT" pad="AOUT"/>
-<connect gate="G$1" pin="GND2" pad="GND2"/>
-<connect gate="G$1" pin="GND4" pad="GND4"/>
-<connect gate="G$1" pin="GND9" pad="GND9"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
 <deviceset name="E2V">
 <gates>
 <gate name="G$1" symbol="E2V" x="5.08" y="7.62"/>
@@ -13375,87 +13178,6 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 </deviceset>
 </devicesets>
 </library>
-<library name="zetex">
-<description>&lt;b&gt;Zetex Power MOS FETs, Bridges, Diodes&lt;/b&gt;&lt;p&gt;
-http://www.zetex.com&lt;p&gt;
-&lt;author&gt;Created by librarian@cadsoft.de&lt;/author&gt;</description>
-<packages>
-<package name="SOT-23">
-<description>&lt;b&gt;Small Outline Transistor&lt;/b&gt;</description>
-<wire x1="-1.4224" y1="0.381" x2="1.4732" y2="0.381" width="0.1524" layer="21"/>
-<wire x1="1.4732" y1="0.381" x2="1.4732" y2="-0.381" width="0.1524" layer="21"/>
-<wire x1="1.4732" y1="-0.381" x2="-1.4224" y2="-0.381" width="0.1524" layer="21"/>
-<wire x1="-1.4224" y1="-0.381" x2="-1.4224" y2="0.381" width="0.1524" layer="21"/>
-<smd name="3" x="0.9906" y="1.016" dx="0.7874" dy="0.889" layer="1"/>
-<smd name="2" x="-0.9398" y="1.016" dx="0.7874" dy="0.889" layer="1"/>
-<smd name="1" x="0.0254" y="-1.016" dx="0.7874" dy="0.889" layer="1"/>
-<text x="-1.397" y="1.778" size="1.27" layer="27" ratio="10">&gt;VALUE</text>
-<text x="-1.397" y="3.302" size="1.27" layer="25" ratio="10">&gt;NAME</text>
-<rectangle x1="0.7874" y1="0.4318" x2="1.1684" y2="0.9398" layer="51"/>
-<rectangle x1="-1.143" y1="0.4318" x2="-0.762" y2="0.9398" layer="51"/>
-<rectangle x1="-0.1778" y1="-0.9398" x2="0.2032" y2="-0.4318" layer="51"/>
-</package>
-</packages>
-<symbols>
-<symbol name="P_MOSFET">
-<wire x1="-1.651" y1="0" x2="0" y2="0" width="0.1524" layer="94"/>
-<wire x1="-1.524" y1="-2.159" x2="0" y2="-2.159" width="0.1524" layer="94"/>
-<wire x1="-2.54" y1="-2.54" x2="-2.54" y2="2.54" width="0.1524" layer="94"/>
-<wire x1="0" y1="0" x2="0" y2="-2.159" width="0.1524" layer="94"/>
-<wire x1="1.397" y1="-0.508" x2="1.397" y2="-3.048" width="0.1524" layer="94"/>
-<wire x1="1.397" y1="-3.048" x2="0" y2="-3.048" width="0.1524" layer="94"/>
-<wire x1="-1.524" y1="2.159" x2="0" y2="2.159" width="0.1524" layer="94"/>
-<wire x1="0" y1="2.159" x2="0" y2="2.54" width="0.1524" layer="94"/>
-<wire x1="0" y1="3.048" x2="1.397" y2="3.048" width="0.1524" layer="94"/>
-<wire x1="1.397" y1="3.048" x2="1.397" y2="0.381" width="0.1524" layer="94"/>
-<wire x1="0" y1="-2.159" x2="0" y2="-2.54" width="0.1524" layer="94"/>
-<text x="2.54" y="0" size="1.778" layer="96">&gt;VALUE</text>
-<text x="2.54" y="2.54" size="1.778" layer="95">&gt;NAME</text>
-<rectangle x1="-2.032" y1="1.397" x2="-1.524" y2="2.921" layer="94"/>
-<rectangle x1="-2.032" y1="-0.762" x2="-1.524" y2="0.762" layer="94"/>
-<rectangle x1="-2.032" y1="-2.921" x2="-1.524" y2="-1.397" layer="94"/>
-<rectangle x1="0.762" y1="-0.635" x2="2.032" y2="-0.508" layer="94"/>
-<pin name="D" x="0" y="5.08" visible="off" length="short" direction="pas" rot="R270"/>
-<pin name="S" x="0" y="-5.08" visible="off" length="short" direction="pas" rot="R90"/>
-<pin name="G" x="-5.08" y="-2.54" visible="off" length="short" direction="pas"/>
-<polygon width="0.1016" layer="94">
-<vertex x="-0.127" y="0"/>
-<vertex x="-1.143" y="-0.635"/>
-<vertex x="-1.143" y="0.635"/>
-</polygon>
-<polygon width="0.1016" layer="94">
-<vertex x="1.397" y="-0.508"/>
-<vertex x="0.762" y="0.508"/>
-<vertex x="2.032" y="0.508"/>
-</polygon>
-</symbol>
-</symbols>
-<devicesets>
-<deviceset name="PMOSSOT23" prefix="T" uservalue="yes">
-<description>&lt;b&gt;MOS FET&lt;/b&gt;</description>
-<gates>
-<gate name="A" symbol="P_MOSFET" x="0" y="0" swaplevel="1"/>
-</gates>
-<devices>
-<device name="" package="SOT-23">
-<connects>
-<connect gate="A" pin="D" pad="1"/>
-<connect gate="A" pin="G" pad="3"/>
-<connect gate="A" pin="S" pad="2"/>
-</connects>
-<technologies>
-<technology name="">
-<attribute name="MF" value="" constant="no"/>
-<attribute name="MPN" value="" constant="no"/>
-<attribute name="OC_FARNELL" value="unknown" constant="no"/>
-<attribute name="OC_NEWARK" value="unknown" constant="no"/>
-</technology>
-</technologies>
-</device>
-</devices>
-</deviceset>
-</devicesets>
-</library>
 </libraries>
 <attributes>
 </attributes>
@@ -13473,16 +13195,10 @@ http://www.zetex.com&lt;p&gt;
 <part name="GND7" library="supply1" deviceset="GND" device=""/>
 <part name="P+1" library="supply1" deviceset="V+" device=""/>
 <part name="GND9" library="supply1" deviceset="GND" device=""/>
-<part name="IC3" library="linear" deviceset="LM339" device="D"/>
 <part name="SUPPLY6" library="supply2" deviceset="+9V" device=""/>
 <part name="LED3" library="SparkFun" deviceset="LED" device="3MM"/>
 <part name="GND22" library="supply1" deviceset="GND" device=""/>
 <part name="+9V1" library="rcl" deviceset="R-US_" device="R1206" value="500 ohm"/>
-<part name="U$6" library="ricardo" deviceset="S100CO2" device=""/>
-<part name="GND35" library="supply1" deviceset="GND" device=""/>
-<part name="GND36" library="supply1" deviceset="GND" device=""/>
-<part name="GND37" library="supply1" deviceset="GND" device=""/>
-<part name="P+13" library="supply1" deviceset="V+" device=""/>
 <part name="U$13" library="ricardo" deviceset="E2V" device=""/>
 <part name="GND46" library="supply1" deviceset="GND" device=""/>
 <part name="P+23" library="supply1" deviceset="V+" device=""/>
@@ -13493,9 +13209,6 @@ http://www.zetex.com&lt;p&gt;
 <part name="U$14" library="ricardo" deviceset="RHT03" device=""/>
 <part name="GND48" library="supply1" deviceset="GND" device=""/>
 <part name="P+25" library="supply1" deviceset="V+" device=""/>
-<part name="JP5" library="jumper" deviceset="JP1Q" device=""/>
-<part name="SUPPLY12" library="supply2" deviceset="+9V" device=""/>
-<part name="SUPPLY13" library="supply2" deviceset="+9V" device=""/>
 <part name="JP6" library="jumper" deviceset="JP1Q" device=""/>
 <part name="P+33" library="supply1" deviceset="V+" device=""/>
 <part name="P+34" library="supply1" deviceset="V+" device=""/>
@@ -13503,8 +13216,6 @@ http://www.zetex.com&lt;p&gt;
 <part name="GND63" library="supply1" deviceset="GND" device=""/>
 <part name="+9V2" library="rcl" deviceset="R-US_" device="R1206" value="900 ohm"/>
 <part name="SUPPLY14" library="supply2" deviceset="+9V" device=""/>
-<part name="JP21" library="jumper" deviceset="JP1Q" device=""/>
-<part name="GND73" library="supply1" deviceset="GND" device=""/>
 <part name="NO2" library="ricardo" deviceset="E2V" device="" value="E2V NO2"/>
 <part name="GND25" library="supply1" deviceset="GND" device=""/>
 <part name="P+5" library="supply1" deviceset="V+" device=""/>
@@ -13521,16 +13232,13 @@ http://www.zetex.com&lt;p&gt;
 <part name="P+12" library="supply1" deviceset="V+" device=""/>
 <part name="TP1" library="testpad" deviceset="TP" device="PAD1-13Y"/>
 <part name="P+35" library="supply1" deviceset="V+" device=""/>
-<part name="P-CH_MOSFET" library="zetex" deviceset="PMOSSOT23" device="" value="ZXM61P02FCT"/>
 <part name="SUPPLY16" library="supply2" deviceset="+9V" device=""/>
 <part name="GND81" library="supply1" deviceset="GND" device=""/>
-<part name="TP5" library="testpad" deviceset="TP" device="PAD1-13Y">
+<part name="TP2" library="testpad" deviceset="TP" device="PAD1-13Y">
 <attribute name="TP_SIGNAL_NAME" value=""/>
 </part>
 <part name="GND82" library="supply1" deviceset="GND" device=""/>
 <part name="JP23" library="SparkFun" deviceset="M02" device="5MM" value="Screw Terminal"/>
-<part name="SUPPLY17" library="supply2" deviceset="+9V" device=""/>
-<part name="GND83" library="supply1" deviceset="GND" device=""/>
 <part name="IC6" library="linear" deviceset="MCP601" device="OT"/>
 <part name="P+37" library="supply1" deviceset="V+" device=""/>
 <part name="GND34" library="supply1" deviceset="GND" device=""/>
@@ -13556,11 +13264,9 @@ http://www.zetex.com&lt;p&gt;
 <text x="373.38" y="274.32" size="1.778" layer="91">LED for PWR</text>
 <text x="419.1" y="274.32" size="1.778" layer="91">V+/5V TEST PADS</text>
 <text x="419.1" y="213.36" size="1.778" layer="91">+9V TEST PADS</text>
-<text x="381" y="198.12" size="1.778" layer="91">Comparator PWR</text>
 <text x="33.02" y="252.73" size="1.778" layer="91">NO2</text>
 <text x="34.036" y="168.402" size="1.778" layer="91">O3</text>
 <text x="33.02" y="212.09" size="1.778" layer="91">CO</text>
-<text x="200.66" y="267.97" size="1.778" layer="91">C02</text>
 <text x="398.78" y="182.88" size="3.81" layer="97">Possibly Useful stuff</text>
 </plain>
 <instances>
@@ -13575,11 +13281,6 @@ http://www.zetex.com&lt;p&gt;
 <instance part="LED3" gate="G$1" x="330.2" y="241.3"/>
 <instance part="GND22" gate="1" x="332.74" y="220.98" rot="R90"/>
 <instance part="+9V1" gate="G$1" x="330.2" y="228.6" rot="R90"/>
-<instance part="U$6" gate="G$1" x="213.36" y="256.54"/>
-<instance part="GND35" gate="1" x="193.04" y="264.16" rot="R270"/>
-<instance part="GND36" gate="1" x="195.58" y="259.08" rot="R270"/>
-<instance part="GND37" gate="1" x="193.04" y="254" rot="R270"/>
-<instance part="P+13" gate="1" x="160.02" y="264.16" rot="R90"/>
 <instance part="U$13" gate="G$1" x="48.26" y="200.66"/>
 <instance part="GND46" gate="1" x="25.4" y="205.74" rot="R270"/>
 <instance part="P+23" gate="1" x="-2.54" y="195.58" rot="R90"/>
@@ -13590,9 +13291,6 @@ http://www.zetex.com&lt;p&gt;
 <instance part="U$14" gate="G$1" x="299.72" y="172.72"/>
 <instance part="GND48" gate="1" x="299.72" y="170.18"/>
 <instance part="P+25" gate="1" x="274.32" y="160.02" rot="R90"/>
-<instance part="JP5" gate="A" x="391.16" y="248.92"/>
-<instance part="SUPPLY12" gate="G$1" x="391.16" y="264.16"/>
-<instance part="SUPPLY13" gate="G$1" x="391.16" y="233.68" rot="R180"/>
 <instance part="JP6" gate="A" x="406.4" y="248.92"/>
 <instance part="P+33" gate="1" x="406.4" y="264.16"/>
 <instance part="P+34" gate="1" x="406.4" y="231.14" rot="R180"/>
@@ -13600,8 +13298,6 @@ http://www.zetex.com&lt;p&gt;
 <instance part="GND63" gate="1" x="378.46" y="233.68" rot="R90"/>
 <instance part="+9V2" gate="G$1" x="375.92" y="241.3" rot="R90"/>
 <instance part="SUPPLY14" gate="G$1" x="375.92" y="266.7"/>
-<instance part="JP21" gate="A" x="251.46" y="261.62" rot="R90"/>
-<instance part="GND73" gate="1" x="261.62" y="261.62" rot="R90"/>
 <instance part="NO2" gate="G$1" x="48.26" y="241.3"/>
 <instance part="GND25" gate="1" x="25.4" y="246.38" rot="R270"/>
 <instance part="P+5" gate="1" x="-2.54" y="236.22" rot="R90"/>
@@ -13618,15 +13314,11 @@ http://www.zetex.com&lt;p&gt;
 <instance part="P+12" gate="1" x="20.32" y="147.32" rot="R90"/>
 <instance part="TP1" gate="G$1" x="421.64" y="266.7"/>
 <instance part="P+35" gate="1" x="431.8" y="266.7"/>
-<instance part="P-CH_MOSFET" gate="A" x="165.1" y="254"/>
 <instance part="SUPPLY16" gate="G$1" x="431.8" y="241.3"/>
 <instance part="GND81" gate="1" x="431.8" y="220.98"/>
-<instance part="TP5" gate="G$1" x="439.42" y="266.7"/>
+<instance part="TP2" gate="G$1" x="439.42" y="266.7"/>
 <instance part="GND82" gate="1" x="439.42" y="256.54"/>
 <instance part="JP23" gate="G$1" x="441.96" y="231.14" rot="R180"/>
-<instance part="IC3" gate="P" x="378.46" y="198.12"/>
-<instance part="SUPPLY17" gate="G$1" x="378.46" y="210.82"/>
-<instance part="GND83" gate="1" x="378.46" y="185.42"/>
 <instance part="IC6" gate="G$1" x="68.58" y="233.68"/>
 <instance part="P+37" gate="1" x="68.58" y="243.84"/>
 <instance part="GND34" gate="1" x="68.58" y="223.52"/>
@@ -13669,10 +13361,6 @@ http://www.zetex.com&lt;p&gt;
 <wire x1="330.2" y1="220.98" x2="330.2" y2="223.52" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="U$6" gate="G$1" pin="GND9"/>
-<pinref part="GND37" gate="1" pin="GND"/>
-</segment>
-<segment>
 <pinref part="U$13" gate="G$1" pin="GND_HEATER"/>
 <pinref part="GND46" gate="1" pin="GND"/>
 </segment>
@@ -13689,14 +13377,6 @@ http://www.zetex.com&lt;p&gt;
 <pinref part="+9V2" gate="G$1" pin="1"/>
 <pinref part="GND63" gate="1" pin="GND"/>
 <wire x1="375.92" y1="233.68" x2="375.92" y2="236.22" width="0.1524" layer="91"/>
-</segment>
-<segment>
-<pinref part="U$6" gate="G$1" pin="GND2"/>
-<pinref part="GND35" gate="1" pin="GND"/>
-</segment>
-<segment>
-<pinref part="JP21" gate="A" pin="1"/>
-<pinref part="GND73" gate="1" pin="GND"/>
 </segment>
 <segment>
 <pinref part="NO2" gate="G$1" pin="GND_HEATER"/>
@@ -13724,13 +13404,8 @@ http://www.zetex.com&lt;p&gt;
 </segment>
 <segment>
 <pinref part="GND82" gate="1" pin="GND"/>
-<pinref part="TP5" gate="G$1" pin="TP"/>
+<pinref part="TP2" gate="G$1" pin="TP"/>
 <wire x1="439.42" y1="264.16" x2="439.42" y2="259.08" width="0.1524" layer="91"/>
-</segment>
-<segment>
-<pinref part="IC3" gate="P" pin="GND"/>
-<pinref part="GND83" gate="1" pin="GND"/>
-<wire x1="378.46" y1="190.5" x2="378.46" y2="187.96" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="IC6" gate="G$1" pin="V-"/>
@@ -13823,12 +13498,6 @@ http://www.zetex.com&lt;p&gt;
 <wire x1="421.64" y1="264.16" x2="421.64" y2="261.62" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="P-CH_MOSFET" gate="A" pin="D"/>
-<pinref part="P+13" gate="1" pin="V+"/>
-<wire x1="165.1" y1="259.08" x2="162.56" y2="259.08" width="0.1524" layer="91"/>
-<wire x1="162.56" y1="259.08" x2="162.56" y2="264.16" width="0.1524" layer="91"/>
-</segment>
-<segment>
 <pinref part="IC6" gate="G$1" pin="V+"/>
 <pinref part="P+37" gate="1" pin="V+"/>
 </segment>
@@ -13858,16 +13527,6 @@ http://www.zetex.com&lt;p&gt;
 <junction x="299.72" y="264.16"/>
 </segment>
 <segment>
-<pinref part="JP5" gate="A" pin="1"/>
-<pinref part="SUPPLY13" gate="G$1" pin="+9V"/>
-<wire x1="391.16" y1="241.3" x2="391.16" y2="236.22" width="0.1524" layer="91"/>
-</segment>
-<segment>
-<pinref part="JP5" gate="A" pin="2"/>
-<pinref part="SUPPLY12" gate="G$1" pin="+9V"/>
-<wire x1="391.16" y1="256.54" x2="391.16" y2="261.62" width="0.1524" layer="91"/>
-</segment>
-<segment>
 <pinref part="LED4" gate="G$1" pin="A"/>
 <wire x1="375.92" y1="264.16" x2="375.92" y2="256.54" width="0.1524" layer="91"/>
 <pinref part="SUPPLY14" gate="G$1" pin="+9V"/>
@@ -13877,11 +13536,6 @@ http://www.zetex.com&lt;p&gt;
 <wire x1="431.8" y1="231.14" x2="431.8" y2="238.76" width="0.1524" layer="91"/>
 <pinref part="JP23" gate="G$1" pin="1"/>
 <wire x1="431.8" y1="231.14" x2="434.34" y2="231.14" width="0.1524" layer="91"/>
-</segment>
-<segment>
-<pinref part="SUPPLY17" gate="G$1" pin="+9V"/>
-<pinref part="IC3" gate="P" pin="V+"/>
-<wire x1="378.46" y1="208.28" x2="378.46" y2="205.74" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="JP2" gate="A" pin="6"/>
@@ -13927,39 +13581,6 @@ http://www.zetex.com&lt;p&gt;
 <pinref part="U$9" gate="G$1" pin="VHEATER+"/>
 <pinref part="R31" gate="G$1" pin="1"/>
 <wire x1="27.94" y1="152.4" x2="12.7" y2="152.4" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$49" class="0">
-<segment>
-<pinref part="P-CH_MOSFET" gate="A" pin="S"/>
-<pinref part="U$6" gate="G$1" pin="+5V"/>
-<wire x1="165.1" y1="248.92" x2="190.5" y2="248.92" width="0.1524" layer="91"/>
-<pinref part="U$6" gate="G$1" pin="+5V4"/>
-<wire x1="190.5" y1="248.92" x2="195.58" y2="248.92" width="0.1524" layer="91"/>
-<wire x1="236.22" y1="259.08" x2="236.22" y2="238.76" width="0.1524" layer="91"/>
-<wire x1="236.22" y1="238.76" x2="190.5" y2="238.76" width="0.1524" layer="91"/>
-<wire x1="190.5" y1="238.76" x2="190.5" y2="248.92" width="0.1524" layer="91"/>
-<junction x="190.5" y="248.92"/>
-</segment>
-</net>
-<net name="A5" class="0">
-<segment>
-<wire x1="243.84" y1="233.68" x2="243.84" y2="261.62" width="0.1524" layer="91"/>
-<pinref part="U$6" gate="G$1" pin="AOUT"/>
-<wire x1="243.84" y1="261.62" x2="243.84" y2="264.16" width="0.1524" layer="91"/>
-<wire x1="243.84" y1="264.16" x2="236.22" y2="264.16" width="0.1524" layer="91"/>
-<wire x1="243.84" y1="233.68" x2="182.88" y2="233.68" width="0.1524" layer="91"/>
-<wire x1="182.88" y1="233.68" x2="182.88" y2="223.52" width="0.1524" layer="91"/>
-<label x="182.88" y="220.98" size="1.778" layer="95" rot="R270"/>
-<pinref part="JP21" gate="A" pin="2"/>
-<junction x="243.84" y="261.62"/>
-</segment>
-</net>
-<net name="D5" class="0">
-<segment>
-<pinref part="P-CH_MOSFET" gate="A" pin="G"/>
-<wire x1="160.02" y1="251.46" x2="149.86" y2="251.46" width="0.1524" layer="91"/>
-<label x="149.86" y="251.46" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="A3" class="0">
