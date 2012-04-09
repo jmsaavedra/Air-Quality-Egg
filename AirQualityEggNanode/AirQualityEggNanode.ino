@@ -2,6 +2,8 @@
 /*
 
 *** NEED TO REPLACE TEMP/HUMIDITY WITH DHT22 ***
+*** NEED TO REMOVE CS_MQ7, REPLACE WITH E2V***
+*** also need to remove Button from this code ***
 
 >>> Air Quality Egg v01 <<<
  

@@ -13587,14 +13587,14 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <segment>
 <pinref part="U$14" gate="G$1" pin="SIGNAL"/>
 <wire x1="289.56" y1="172.72" x2="289.56" y2="162.56" width="0.1524" layer="91"/>
-<wire x1="289.56" y1="162.56" x2="289.56" y2="149.86" width="0.1524" layer="91"/>
+<wire x1="289.56" y1="162.56" x2="289.56" y2="152.4" width="0.1524" layer="91"/>
 <pinref part="R1" gate="G$1" pin="1"/>
 <junction x="289.56" y="162.56"/>
-<pinref part="U$2" gate="G$1" pin="D6"/>
-<pinref part="JP3" gate="G$1" pin="7"/>
-<wire x1="231.14" y1="152.4" x2="241.3" y2="149.86" width="0.1524" layer="91"/>
-<wire x1="241.3" y1="149.86" x2="289.56" y2="149.86" width="0.1524" layer="91"/>
-<junction x="241.3" y="149.86"/>
+<pinref part="U$2" gate="G$1" pin="D7"/>
+<pinref part="JP3" gate="G$1" pin="8"/>
+<wire x1="231.14" y1="154.94" x2="241.3" y2="152.4" width="0.1524" layer="91"/>
+<wire x1="289.56" y1="152.4" x2="241.3" y2="152.4" width="0.1524" layer="91"/>
+<junction x="241.3" y="152.4"/>
 </segment>
 </net>
 <net name="N$50" class="0">
@@ -13778,13 +13778,6 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <wire x1="231.14" y1="149.86" x2="241.3" y2="147.32" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$21" class="0">
-<segment>
-<pinref part="U$2" gate="G$1" pin="D7"/>
-<pinref part="JP3" gate="G$1" pin="8"/>
-<wire x1="231.14" y1="154.94" x2="241.3" y2="152.4" width="0.1524" layer="91"/>
-</segment>
-</net>
 <net name="N$22" class="0">
 <segment>
 <pinref part="U$2" gate="G$1" pin="D8"/>
@@ -13847,6 +13840,13 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <wire x1="365.76" y1="175.26" x2="452.12" y2="175.26" width="0.1524" layer="91"/>
 <wire x1="452.12" y1="175.26" x2="452.12" y2="287.02" width="0.1524" layer="91"/>
 <wire x1="452.12" y1="287.02" x2="365.76" y2="287.02" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$5" class="0">
+<segment>
+<pinref part="JP3" gate="G$1" pin="7"/>
+<pinref part="U$2" gate="G$1" pin="D6"/>
+<wire x1="231.14" y1="152.4" x2="241.3" y2="149.86" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
