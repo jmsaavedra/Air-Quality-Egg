@@ -13268,6 +13268,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <text x="34.036" y="168.402" size="1.778" layer="91">O3</text>
 <text x="33.02" y="212.09" size="1.778" layer="91">CO</text>
 <text x="398.78" y="182.88" size="3.81" layer="97">Possibly Useful stuff</text>
+<text x="292.1" y="226.06" size="3.81" layer="97">power</text>
 </plain>
 <instances>
 <instance part="LD1085" gate="G$1" x="312.42" y="264.16"/>
@@ -13847,6 +13848,15 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <pinref part="JP3" gate="G$1" pin="7"/>
 <pinref part="U$2" gate="G$1" pin="D6"/>
 <wire x1="231.14" y1="152.4" x2="241.3" y2="149.86" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$6" class="0">
+<segment>
+<wire x1="284.48" y1="276.86" x2="284.48" y2="210.82" width="0.1524" layer="91"/>
+<wire x1="284.48" y1="210.82" x2="358.14" y2="210.82" width="0.1524" layer="91"/>
+<wire x1="358.14" y1="210.82" x2="358.14" y2="208.28" width="0.1524" layer="91"/>
+<wire x1="358.14" y1="210.82" x2="358.14" y2="276.86" width="0.1524" layer="91"/>
+<wire x1="358.14" y1="276.86" x2="284.48" y2="276.86" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
