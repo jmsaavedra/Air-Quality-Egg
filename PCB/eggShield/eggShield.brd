@@ -122,8 +122,8 @@
 <wire x1="68.5675" y1="0" x2="68.5675" y2="53.33" width="0" layer="20"/>
 <wire x1="68.5675" y1="53.33" x2="0" y2="53.33" width="0" layer="20"/>
 <wire x1="0" y1="53.33" x2="0" y2="0" width="0" layer="20"/>
-<text x="3.81" y="15.24" size="1.778" layer="1" rot="R90">Air Quality Egg</text>
-<text x="7.62" y="15.24" size="1.778" layer="1" rot="R90">Sensor Shield v01</text>
+<text x="3.81" y="13.97" size="2.1844" layer="121" rot="R90">Air Quality Egg</text>
+<text x="7.62" y="13.97" size="1.778" layer="121" rot="R90">Sensor Shield v03</text>
 </plain>
 <libraries>
 <library name="resistor">
