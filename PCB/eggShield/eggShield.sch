@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.05" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="no" active="no"/>
@@ -2640,8 +2640,8 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <part name="R1" library="SparkFun" deviceset="RESISTOR" device="0805-RES"/>
 <part name="SUPPLY4" library="supply2" deviceset="GND" device=""/>
 <part name="U$5" library="SparkFun" deviceset="1.8V" device="" value="2.4V"/>
-<part name="R4" library="SparkFun" deviceset="RESISTOR" device="0805-RES" value="2.4MOhm"/>
-<part name="R5" library="SparkFun" deviceset="RESISTOR" device="0805-RES" value="1MOhm"/>
+<part name="R4" library="SparkFun" deviceset="RESISTOR" device="0805-RES" value="1.8MOhm"/>
+<part name="R5" library="SparkFun" deviceset="RESISTOR" device="0805-RES" value="750kOhm"/>
 <part name="U1" library="SparkFun" deviceset="V_REG_LDO" device="SMD"/>
 <part name="U$1" library="SparkFun" deviceset="1.8V" device="" value="1.7V"/>
 <part name="R2" library="SparkFun" deviceset="RESISTOR" device="0805-RES"/>
@@ -2650,8 +2650,8 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <part name="2.4V" library="SparkFun" deviceset="1.8V" device="" value="2.4V"/>
 <part name="C8" library="SparkFun" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
 <part name="C9" library="wicked-device" deviceset="EEE-1EA100WR" device="" value="10uF"/>
-<part name="R7" library="SparkFun" deviceset="RESISTOR" device="0805-RES" value="2.4MOhm"/>
-<part name="R8" library="SparkFun" deviceset="RESISTOR" device="0805-RES" value="2.4MOhm"/>
+<part name="R7" library="SparkFun" deviceset="RESISTOR" device="0805-RES" value="750kOhm"/>
+<part name="R8" library="SparkFun" deviceset="RESISTOR" device="0805-RES" value="750kOhm"/>
 <part name="U2" library="SparkFun" deviceset="V_REG_LDO" device="SMD"/>
 <part name="CO" library="ricardo" deviceset="E2V" device=""/>
 <part name="R6" library="SparkFun" deviceset="RESISTOR" device="0805-RES"/>
@@ -2709,19 +2709,38 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <text x="272.415" y="168.275" size="1.778" layer="91">locate near VDD pin</text>
 <text x="296.545" y="210.185" size="1.778" layer="91">Do not populate - Nanode has these resistors already</text>
 <text x="296.545" y="206.375" size="1.778" layer="91">This just provides an option for other base boards</text>
-<wire x1="209.55" y1="219.71" x2="210.82" y2="218.44" width="0.1524" layer="97"/>
-<wire x1="210.82" y1="218.44" x2="210.82" y2="214.63" width="0.1524" layer="97"/>
-<wire x1="210.82" y1="214.63" x2="210.82" y2="210.82" width="0.1524" layer="97"/>
-<wire x1="210.82" y1="210.82" x2="209.55" y2="209.55" width="0.1524" layer="97"/>
-<wire x1="210.82" y1="214.63" x2="212.09" y2="214.63" width="0.1524" layer="97"/>
+<wire x1="209.55" y1="218.44" x2="210.82" y2="217.17" width="0.1524" layer="97"/>
+<wire x1="210.82" y1="217.17" x2="210.82" y2="215.9" width="0.1524" layer="97"/>
+<wire x1="210.82" y1="215.9" x2="210.82" y2="214.63" width="0.1524" layer="97"/>
+<wire x1="210.82" y1="214.63" x2="209.55" y2="213.36" width="0.1524" layer="97"/>
+<wire x1="210.82" y1="215.9" x2="212.09" y2="215.9" width="0.1524" layer="97"/>
 <wire x1="209.55" y1="208.28" x2="214.63" y2="208.28" width="0.1524" layer="97"/>
 <wire x1="209.55" y1="205.74" x2="222.25" y2="205.74" width="0.1524" layer="97"/>
 <wire x1="209.55" y1="193.04" x2="214.63" y2="193.04" width="0.1524" layer="97"/>
-<text x="213.36" y="213.36" size="1.778" layer="97">SPI</text>
+<text x="213.36" y="215.9" size="1.778" layer="97">SPI</text>
 <text x="215.9" y="208.28" size="1.778" layer="97">SRAM</text>
 <text x="223.52" y="205.74" size="1.778" layer="97">ETHERNET</text>
 <text x="215.9" y="193.04" size="1.778" layer="97">SD CARD</text>
-<text x="233.68" y="189.23" size="1.778" layer="97">DHT22</text>
+<wire x1="209.55" y1="200.66" x2="222.25" y2="200.66" width="0.1524" layer="97"/>
+<text x="223.52" y="200.66" size="1.778" layer="97">MAC</text>
+<wire x1="209.55" y1="199.39" x2="210.82" y2="198.12" width="0.1524" layer="97"/>
+<wire x1="210.82" y1="198.12" x2="210.82" y2="196.85" width="0.1524" layer="97"/>
+<wire x1="210.82" y1="196.85" x2="210.82" y2="195.58" width="0.1524" layer="97"/>
+<wire x1="210.82" y1="195.58" x2="209.55" y2="194.31" width="0.1524" layer="97"/>
+<wire x1="210.82" y1="196.85" x2="212.09" y2="196.85" width="0.1524" layer="97"/>
+<text x="213.36" y="196.85" size="1.778" layer="97">Status LEDs</text>
+<wire x1="209.55" y1="210.82" x2="212.09" y2="210.82" width="0.1524" layer="97"/>
+<text x="213.36" y="210.82" size="1.778" layer="97">RFM12B</text>
+<wire x1="209.55" y1="190.5" x2="219.71" y2="190.5" width="0.1524" layer="97"/>
+<wire x1="219.71" y1="190.5" x2="222.25" y2="190.5" width="0.1524" layer="97"/>
+<wire x1="222.25" y1="190.5" x2="232.41" y2="190.5" width="0.1524" layer="97"/>
+<text x="233.68" y="190.5" size="1.778" layer="97">RTC INTERRUPT</text>
+<wire x1="209.55" y1="186.69" x2="210.82" y2="185.42" width="0.1524" layer="97"/>
+<wire x1="210.82" y1="185.42" x2="210.82" y2="184.15" width="0.1524" layer="97"/>
+<wire x1="210.82" y1="184.15" x2="210.82" y2="182.88" width="0.1524" layer="97"/>
+<wire x1="210.82" y1="182.88" x2="209.55" y2="181.61" width="0.1524" layer="97"/>
+<wire x1="210.82" y1="184.15" x2="212.09" y2="184.15" width="0.1524" layer="97"/>
+<text x="213.36" y="182.88" size="1.778" layer="97">UART</text>
 </plain>
 <instances>
 <instance part="FRAME1" gate="G$1" x="0" y="0"/>
@@ -3184,22 +3203,6 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <label x="132.08" y="177.8" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
-<net name="D3" class="0">
-<segment>
-<pinref part="DHT22" gate="G$1" pin="SIGNAL"/>
-<wire x1="161.29" y1="138.43" x2="171.45" y2="138.43" width="0.1524" layer="91"/>
-<wire x1="171.45" y1="138.43" x2="181.61" y2="138.43" width="0.1524" layer="91"/>
-<label x="181.61" y="138.43" size="1.778" layer="95" xref="yes"/>
-<wire x1="171.45" y1="138.43" x2="171.45" y2="137.16" width="0.1524" layer="91"/>
-<junction x="171.45" y="138.43"/>
-<pinref part="R11" gate="G$1" pin="2"/>
-</segment>
-<segment>
-<pinref part="U$7" gate="G$1" pin="D3"/>
-<wire x1="208.28" y1="190.5" x2="226.06" y2="190.5" width="0.1524" layer="91"/>
-<label x="226.06" y="190.5" size="1.778" layer="95" xref="yes"/>
-</segment>
-</net>
 <net name="N$4" class="0">
 <segment>
 <pinref part="U$7" gate="G$1" pin="AREF"/>
@@ -3375,6 +3378,22 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <pinref part="BUS2.1" gate="G$1" pin="2"/>
 <wire x1="374.65" y1="100.33" x2="368.3" y2="100.33" width="0.1524" layer="91"/>
 <label x="368.3" y="100.33" size="1.778" layer="95" rot="R180" xref="yes"/>
+</segment>
+</net>
+<net name="DHT22_IO" class="0">
+<segment>
+<pinref part="U$7" gate="G$1" pin="D2"/>
+<wire x1="208.28" y1="187.96" x2="215.9" y2="187.96" width="0.1524" layer="91"/>
+<label x="215.9" y="187.96" size="1.778" layer="95" xref="yes"/>
+</segment>
+<segment>
+<pinref part="DHT22" gate="G$1" pin="SIGNAL"/>
+<wire x1="161.29" y1="138.43" x2="171.45" y2="138.43" width="0.1524" layer="91"/>
+<wire x1="171.45" y1="138.43" x2="181.61" y2="138.43" width="0.1524" layer="91"/>
+<label x="181.61" y="138.43" size="1.778" layer="95" xref="yes"/>
+<wire x1="171.45" y1="138.43" x2="171.45" y2="137.16" width="0.1524" layer="91"/>
+<junction x="171.45" y="138.43"/>
+<pinref part="R11" gate="G$1" pin="2"/>
 </segment>
 </net>
 </nets>
