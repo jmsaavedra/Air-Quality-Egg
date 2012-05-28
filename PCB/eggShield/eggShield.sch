@@ -1298,7 +1298,11 @@ In this library the device names are the same as the pin names of the symbols, t
 <pad name="FIGSIG/E2VH+" x="-1.8" y="1.8" drill="0.62" diameter="1.3"/>
 <pad name="FIGV+/E2V-" x="1.8" y="-1.8" drill="0.62" diameter="1.3"/>
 <pad name="FIGV+/E2VSIG" x="-1.8" y="-1.8" drill="0.62" diameter="1.3"/>
-<text x="-3.429" y="4.445" size="1.27" layer="25">&gt;NAME</text>
+<text x="-2.159" y="4.445" size="0.8128" layer="25" font="vector">&gt;NAME</text>
+<text x="-3.2258" y="3.3782" size="0.8128" layer="25" font="vector" rot="R180">H+</text>
+<text x="4.572" y="3.81" size="0.8128" layer="25" font="vector" rot="R180">S+</text>
+<text x="4.6228" y="-2.8829" size="0.8128" layer="25" font="vector" rot="R180">H-</text>
+<text x="-3.3147" y="-2.8194" size="0.8128" layer="25" font="vector" rot="R180">S-</text>
 </package>
 <package name="1X04_LOCK">
 <wire x1="6.985" y1="1.27" x2="8.255" y2="1.27" width="0.2032" layer="21"/>
@@ -2635,25 +2639,25 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <part name="N02" library="ricardo" deviceset="E2V" device=""/>
 <part name="R1" library="SparkFun" deviceset="RESISTOR" device="0805-RES"/>
 <part name="SUPPLY4" library="supply2" deviceset="GND" device=""/>
-<part name="U$5" library="SparkFun" deviceset="1.8V" device="" value="2.5V"/>
-<part name="R4" library="SparkFun" deviceset="RESISTOR" device="0805-RES" value="150Ohm"/>
-<part name="R5" library="SparkFun" deviceset="RESISTOR" device="0805-RES" value="330Ohm"/>
+<part name="U$5" library="SparkFun" deviceset="1.8V" device="" value="2.4V"/>
+<part name="R4" library="SparkFun" deviceset="RESISTOR" device="0805-RES" value="2.4MOhm"/>
+<part name="R5" library="SparkFun" deviceset="RESISTOR" device="0805-RES" value="1MOhm"/>
 <part name="U1" library="SparkFun" deviceset="V_REG_LDO" device="SMD"/>
 <part name="U$1" library="SparkFun" deviceset="1.8V" device="" value="1.7V"/>
 <part name="R2" library="SparkFun" deviceset="RESISTOR" device="0805-RES"/>
 <part name="R3" library="SparkFun" deviceset="RESISTOR" device="0805-RES"/>
 <part name="SUPPLY9" library="supply2" deviceset="GND" device=""/>
-<part name="2.5V" library="SparkFun" deviceset="1.8V" device="" value="2.5V"/>
+<part name="2.4V" library="SparkFun" deviceset="1.8V" device="" value="2.4V"/>
 <part name="C8" library="SparkFun" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
 <part name="C9" library="wicked-device" deviceset="EEE-1EA100WR" device="" value="10uF"/>
-<part name="R7" library="SparkFun" deviceset="RESISTOR" device="0805-RES" value="150Ohm"/>
-<part name="R8" library="SparkFun" deviceset="RESISTOR" device="0805-RES" value="330Ohm"/>
+<part name="R7" library="SparkFun" deviceset="RESISTOR" device="0805-RES" value="2.4MOhm"/>
+<part name="R8" library="SparkFun" deviceset="RESISTOR" device="0805-RES" value="2.4MOhm"/>
 <part name="U2" library="SparkFun" deviceset="V_REG_LDO" device="SMD"/>
 <part name="CO" library="ricardo" deviceset="E2V" device=""/>
 <part name="R6" library="SparkFun" deviceset="RESISTOR" device="0805-RES"/>
 <part name="SUPPLY6" library="supply2" deviceset="GND" device=""/>
 <part name="U$3" library="SparkFun" deviceset="1.8V" device="" value="VCC"/>
-<part name="U$6" library="SparkFun" deviceset="1.8V" device="" value="2.5V"/>
+<part name="U$6" library="SparkFun" deviceset="1.8V" device="" value="2.4V"/>
 <part name="R9" library="SparkFun" deviceset="RESISTOR" device="0805-RES"/>
 <part name="R10" library="SparkFun" deviceset="RESISTOR" device="0805-RES"/>
 <part name="DHT22" library="ricardo" deviceset="RHT03" device=""/>
@@ -2705,6 +2709,19 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <text x="272.415" y="168.275" size="1.778" layer="91">locate near VDD pin</text>
 <text x="296.545" y="210.185" size="1.778" layer="91">Do not populate - Nanode has these resistors already</text>
 <text x="296.545" y="206.375" size="1.778" layer="91">This just provides an option for other base boards</text>
+<wire x1="209.55" y1="219.71" x2="210.82" y2="218.44" width="0.1524" layer="97"/>
+<wire x1="210.82" y1="218.44" x2="210.82" y2="214.63" width="0.1524" layer="97"/>
+<wire x1="210.82" y1="214.63" x2="210.82" y2="210.82" width="0.1524" layer="97"/>
+<wire x1="210.82" y1="210.82" x2="209.55" y2="209.55" width="0.1524" layer="97"/>
+<wire x1="210.82" y1="214.63" x2="212.09" y2="214.63" width="0.1524" layer="97"/>
+<wire x1="209.55" y1="208.28" x2="214.63" y2="208.28" width="0.1524" layer="97"/>
+<wire x1="209.55" y1="205.74" x2="222.25" y2="205.74" width="0.1524" layer="97"/>
+<wire x1="209.55" y1="193.04" x2="214.63" y2="193.04" width="0.1524" layer="97"/>
+<text x="213.36" y="213.36" size="1.778" layer="97">SPI</text>
+<text x="215.9" y="208.28" size="1.778" layer="97">SRAM</text>
+<text x="223.52" y="205.74" size="1.778" layer="97">ETHERNET</text>
+<text x="215.9" y="193.04" size="1.778" layer="97">SD CARD</text>
+<text x="233.68" y="189.23" size="1.778" layer="97">DHT22</text>
 </plain>
 <instances>
 <instance part="FRAME1" gate="G$1" x="0" y="0"/>
@@ -2735,7 +2752,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <instance part="R2" gate="G$1" x="66.04" y="54.61" rot="R90"/>
 <instance part="R3" gate="G$1" x="66.04" y="39.37" rot="R90"/>
 <instance part="SUPPLY9" gate="GND" x="57.15" y="111.76"/>
-<instance part="2.5V" gate="G$1" x="85.09" y="175.26" smashed="yes">
+<instance part="2.4V" gate="G$1" x="85.09" y="175.26" smashed="yes">
 <attribute name="VALUE" x="84.074" y="178.816" size="1.778" layer="96"/>
 </instance>
 <instance part="C8" gate="G$1" x="30.48" y="129.54" rot="R180"/>
@@ -3029,28 +3046,6 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <junction x="317.5" y="80.01"/>
 </segment>
 </net>
-<net name="/NO2_R1_SEL" class="0">
-<segment>
-<pinref part="R1" gate="G$1" pin="1"/>
-<pinref part="R2" gate="G$1" pin="2"/>
-<wire x1="66.04" y1="66.04" x2="66.04" y2="63.5" width="0.1524" layer="91"/>
-<wire x1="66.04" y1="63.5" x2="66.04" y2="59.69" width="0.1524" layer="91"/>
-<wire x1="66.04" y1="63.5" x2="78.74" y2="63.5" width="0.1524" layer="91"/>
-<junction x="66.04" y="63.5"/>
-<label x="78.74" y="63.5" size="1.778" layer="95" xref="yes"/>
-</segment>
-</net>
-<net name="/NO2_R2_SEL" class="0">
-<segment>
-<pinref part="R2" gate="G$1" pin="1"/>
-<wire x1="66.04" y1="49.53" x2="66.04" y2="46.99" width="0.1524" layer="91"/>
-<pinref part="R3" gate="G$1" pin="2"/>
-<wire x1="66.04" y1="46.99" x2="66.04" y2="44.45" width="0.1524" layer="91"/>
-<wire x1="66.04" y1="46.99" x2="78.74" y2="46.99" width="0.1524" layer="91"/>
-<junction x="66.04" y="46.99"/>
-<label x="78.74" y="46.99" size="1.778" layer="95" xref="yes"/>
-</segment>
-</net>
 <net name="N$1" class="0">
 <segment>
 <pinref part="R5" gate="G$1" pin="1"/>
@@ -3101,9 +3096,9 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <pinref part="U$1" gate="G$1" pin="1.8V"/>
 </segment>
 </net>
-<net name="2.5V" class="0">
+<net name="2.4V" class="0">
 <segment>
-<pinref part="2.5V" gate="G$1" pin="1.8V"/>
+<pinref part="2.4V" gate="G$1" pin="1.8V"/>
 <wire x1="77.47" y1="133.35" x2="85.09" y2="133.35" width="0.1524" layer="91"/>
 <pinref part="C9" gate="G$1" pin="1"/>
 <wire x1="85.09" y1="175.26" x2="85.09" y2="168.91" width="0.1524" layer="91"/>
@@ -3135,7 +3130,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <pinref part="U$6" gate="G$1" pin="1.8V"/>
 </segment>
 </net>
-<net name="/CO_R1_SEL" class="0">
+<net name="/SENSE_R1_SEL" class="0">
 <segment>
 <pinref part="R6" gate="G$1" pin="1"/>
 <pinref part="R9" gate="G$1" pin="2"/>
@@ -3145,8 +3140,24 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <junction x="177.8" y="63.5"/>
 <label x="190.5" y="63.5" size="1.778" layer="95" xref="yes"/>
 </segment>
+<segment>
+<pinref part="R1" gate="G$1" pin="1"/>
+<pinref part="R2" gate="G$1" pin="2"/>
+<wire x1="66.04" y1="66.04" x2="66.04" y2="63.5" width="0.1524" layer="91"/>
+<wire x1="66.04" y1="63.5" x2="66.04" y2="59.69" width="0.1524" layer="91"/>
+<wire x1="66.04" y1="63.5" x2="78.74" y2="63.5" width="0.1524" layer="91"/>
+<junction x="66.04" y="63.5"/>
+<label x="78.74" y="63.5" size="1.778" layer="95" xref="yes"/>
+</segment>
+<segment>
+<pinref part="U$7" gate="G$1" pin="A2"/>
+<wire x1="147.32" y1="187.96" x2="144.78" y2="187.96" width="0.1524" layer="91"/>
+<wire x1="144.78" y1="187.96" x2="138.43" y2="181.61" width="0.1524" layer="91"/>
+<wire x1="138.43" y1="181.61" x2="132.08" y2="181.61" width="0.1524" layer="91"/>
+<label x="132.08" y="181.61" size="1.778" layer="95" rot="R180" xref="yes"/>
+</segment>
 </net>
-<net name="/CO_R2_SEL" class="0">
+<net name="/SENSE_R2_SEL" class="0">
 <segment>
 <pinref part="R9" gate="G$1" pin="1"/>
 <wire x1="177.8" y1="49.53" x2="177.8" y2="46.99" width="0.1524" layer="91"/>
@@ -3155,6 +3166,22 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <wire x1="177.8" y1="46.99" x2="190.5" y2="46.99" width="0.1524" layer="91"/>
 <junction x="177.8" y="46.99"/>
 <label x="190.5" y="46.99" size="1.778" layer="95" xref="yes"/>
+</segment>
+<segment>
+<pinref part="R2" gate="G$1" pin="1"/>
+<wire x1="66.04" y1="49.53" x2="66.04" y2="46.99" width="0.1524" layer="91"/>
+<pinref part="R3" gate="G$1" pin="2"/>
+<wire x1="66.04" y1="46.99" x2="66.04" y2="44.45" width="0.1524" layer="91"/>
+<wire x1="66.04" y1="46.99" x2="78.74" y2="46.99" width="0.1524" layer="91"/>
+<junction x="66.04" y="46.99"/>
+<label x="78.74" y="46.99" size="1.778" layer="95" xref="yes"/>
+</segment>
+<segment>
+<pinref part="U$7" gate="G$1" pin="A3"/>
+<wire x1="147.32" y1="185.42" x2="144.78" y2="185.42" width="0.1524" layer="91"/>
+<wire x1="144.78" y1="185.42" x2="137.16" y2="177.8" width="0.1524" layer="91"/>
+<wire x1="137.16" y1="177.8" x2="132.08" y2="177.8" width="0.1524" layer="91"/>
+<label x="132.08" y="177.8" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
 <net name="D3" class="0">
@@ -3203,8 +3230,10 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <net name="NO2_SENSE" class="0">
 <segment>
 <pinref part="U$7" gate="G$1" pin="A0"/>
-<wire x1="147.32" y1="193.04" x2="144.78" y2="193.04" width="0.1524" layer="91"/>
-<label x="144.78" y="193.04" size="1.778" layer="95" rot="R180" xref="yes"/>
+<wire x1="147.32" y1="193.04" x2="146.05" y2="193.04" width="0.1524" layer="91"/>
+<wire x1="146.05" y1="193.04" x2="142.24" y2="196.85" width="0.1524" layer="91"/>
+<wire x1="142.24" y1="196.85" x2="140.97" y2="196.85" width="0.1524" layer="91"/>
+<label x="140.97" y="196.85" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
 <pinref part="N02" gate="G$1" pin="VSENS-"/>
@@ -3220,9 +3249,9 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <segment>
 <pinref part="U$7" gate="G$1" pin="A1"/>
 <wire x1="147.32" y1="190.5" x2="144.78" y2="190.5" width="0.1524" layer="91"/>
-<wire x1="144.78" y1="190.5" x2="142.24" y2="187.96" width="0.1524" layer="91"/>
-<wire x1="142.24" y1="187.96" x2="139.7" y2="187.96" width="0.1524" layer="91"/>
-<label x="139.7" y="187.96" size="1.778" layer="95" rot="R180" xref="yes"/>
+<wire x1="144.78" y1="190.5" x2="142.24" y2="193.04" width="0.1524" layer="91"/>
+<wire x1="142.24" y1="193.04" x2="139.7" y2="193.04" width="0.1524" layer="91"/>
+<label x="139.7" y="193.04" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
 <pinref part="CO" gate="G$1" pin="VSENS-"/>
@@ -3237,8 +3266,10 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <net name="SDA" class="0">
 <segment>
 <pinref part="U$7" gate="G$1" pin="A4"/>
-<wire x1="147.32" y1="182.88" x2="137.16" y2="182.88" width="0.1524" layer="91"/>
-<label x="137.16" y="182.88" size="1.778" layer="95" rot="R180" xref="yes"/>
+<wire x1="147.32" y1="182.88" x2="144.78" y2="182.88" width="0.1524" layer="91"/>
+<wire x1="144.78" y1="182.88" x2="135.89" y2="173.99" width="0.1524" layer="91"/>
+<wire x1="135.89" y1="173.99" x2="132.08" y2="173.99" width="0.1524" layer="91"/>
+<label x="132.08" y="173.99" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
 <wire x1="306.07" y1="149.86" x2="304.8" y2="149.86" width="0.1524" layer="91"/>
@@ -3259,10 +3290,10 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <net name="SCL" class="0">
 <segment>
 <pinref part="U$7" gate="G$1" pin="A5"/>
-<wire x1="147.32" y1="180.34" x2="142.24" y2="180.34" width="0.1524" layer="91"/>
-<wire x1="142.24" y1="180.34" x2="139.7" y2="177.8" width="0.1524" layer="91"/>
-<wire x1="139.7" y1="177.8" x2="137.16" y2="177.8" width="0.1524" layer="91"/>
-<label x="137.16" y="177.8" size="1.778" layer="95" rot="R180" xref="yes"/>
+<wire x1="147.32" y1="180.34" x2="144.78" y2="180.34" width="0.1524" layer="91"/>
+<wire x1="144.78" y1="180.34" x2="134.62" y2="170.18" width="0.1524" layer="91"/>
+<wire x1="134.62" y1="170.18" x2="132.08" y2="170.18" width="0.1524" layer="91"/>
+<label x="132.08" y="170.18" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
 <pinref part="I2CMUX" gate="G$1" pin="SCL"/>
