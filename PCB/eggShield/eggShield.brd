@@ -212,6 +212,16 @@ We've spent an enormous amount of time creating and checking these footprints an
 <text x="-0.889" y="1.778" size="0.4064" layer="25">&gt;NAME</text>
 <text x="-0.889" y="-2.032" size="0.4064" layer="27">&gt;Value</text>
 </package>
+<package name="STAND-OFF">
+<description>&lt;b&gt;Stand Off&lt;/b&gt;&lt;p&gt;
+This is the mechanical footprint for a #4 phillips button head screw. Use the keepout ring to avoid running the screw head into surrounding components. SKU : PRT-00447</description>
+<wire x1="0" y1="1.8542" x2="0" y2="-1.8542" width="0.2032" layer="41" curve="-180"/>
+<wire x1="0" y1="-1.8542" x2="0" y2="1.8542" width="0.2032" layer="41" curve="-180"/>
+<wire x1="0" y1="-1.8542" x2="0" y2="1.8542" width="0.2032" layer="42" curve="180"/>
+<wire x1="0" y1="-1.8542" x2="0" y2="1.8542" width="0.2032" layer="42" curve="-180"/>
+<circle x="0" y="0" radius="2.794" width="0.127" layer="39"/>
+<hole x="0" y="0" drill="3.302"/>
+</package>
 </packages>
 </library>
 <library name="wicked-device">
@@ -739,6 +749,9 @@ Please make sure your boards conform to these design rules.</description>
 <element name="BUS2.1" library="wicked-device" package="1775470-4" value="4-PIN-SMT" x="18.161" y="25.908" smashed="yes" rot="R180">
 <attribute name="NAME" x="19.616" y="32.073" size="0.8128" layer="25" font="vector" rot="R180"/>
 </element>
+<element name="JP1" library="SparkFun" package="STAND-OFF" value="STAND-OFF" x="31.115" y="13.081"/>
+<element name="JP2" library="SparkFun" package="STAND-OFF" value="STAND-OFF" x="3.937" y="42.799"/>
+<element name="JP3" library="SparkFun" package="STAND-OFF" value="STAND-OFF" x="11.176" y="7.239" rot="MR0"/>
 </elements>
 <signals>
 <signal name="GND">

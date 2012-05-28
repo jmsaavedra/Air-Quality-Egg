@@ -659,6 +659,26 @@ Commonly used for small ceramic capacitors. Like our 0.1uF (http://www.sparkfun.
 <pad name="P$3" x="-3.81" y="-2.54" drill="1" shape="square"/>
 <pad name="P$4" x="3.81" y="-2.54" drill="1" shape="square"/>
 </package>
+<package name="STAND-OFF">
+<description>&lt;b&gt;Stand Off&lt;/b&gt;&lt;p&gt;
+This is the mechanical footprint for a #4 phillips button head screw. Use the keepout ring to avoid running the screw head into surrounding components. SKU : PRT-00447</description>
+<wire x1="0" y1="1.8542" x2="0" y2="-1.8542" width="0.2032" layer="41" curve="-180"/>
+<wire x1="0" y1="-1.8542" x2="0" y2="1.8542" width="0.2032" layer="41" curve="-180"/>
+<wire x1="0" y1="-1.8542" x2="0" y2="1.8542" width="0.2032" layer="42" curve="180"/>
+<wire x1="0" y1="-1.8542" x2="0" y2="1.8542" width="0.2032" layer="42" curve="-180"/>
+<circle x="0" y="0" radius="2.794" width="0.127" layer="39"/>
+<hole x="0" y="0" drill="3.302"/>
+</package>
+<package name="STAND-OFF-TIGHT">
+<description>&lt;b&gt;Stand Off&lt;/b&gt;&lt;p&gt;
+This is the mechanical footprint for a #4 phillips button head screw. Use the keepout ring to avoid running the screw head into surrounding components. SKU : PRT-00447</description>
+<wire x1="0" y1="1.8542" x2="0" y2="-1.8542" width="0.2032" layer="41" curve="-180"/>
+<wire x1="0" y1="-1.8542" x2="0" y2="1.8542" width="0.2032" layer="41" curve="-180"/>
+<wire x1="0" y1="-1.8542" x2="0" y2="1.8542" width="0.2032" layer="42" curve="180"/>
+<wire x1="0" y1="-1.8542" x2="0" y2="1.8542" width="0.2032" layer="42" curve="-180"/>
+<circle x="0" y="0" radius="2.794" width="0.127" layer="39"/>
+<hole x="0" y="0" drill="3.048"/>
+</package>
 </packages>
 <symbols>
 <symbol name="VCC2">
@@ -731,6 +751,9 @@ Commonly used for small ceramic capacitors. Like our 0.1uF (http://www.sparkfun.
 <pin name="3" x="5.08" y="0" visible="pad" length="short" direction="pas" swaplevel="1" rot="R180"/>
 <pin name="4" x="5.08" y="-2.54" visible="pad" length="short" direction="pas" swaplevel="1" rot="R180"/>
 <pin name="2" x="-5.08" y="-2.54" visible="pad" length="short" direction="pas" swaplevel="2"/>
+</symbol>
+<symbol name="STAND-OFF">
+<circle x="0" y="0" radius="1.27" width="0.254" layer="94"/>
 </symbol>
 </symbols>
 <devicesets>
@@ -1080,6 +1103,25 @@ Button commonly used for reset or general input. Spark Fun Electronics SKU : COM
 <connect gate="S" pin="3" pad="P$3"/>
 <connect gate="S" pin="4" pad="P$4"/>
 </connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="STAND-OFF" prefix="JP">
+<description>&lt;b&gt;Stand Off&lt;/b&gt;&lt;p&gt;
+This is the mechanical footprint for a #4 phillips button head screw. Use the keepout ring to avoid running the screw head into surrounding components. SKU : PRT-00447</description>
+<gates>
+<gate name="G$1" symbol="STAND-OFF" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="STAND-OFF">
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="TIGHT" package="STAND-OFF-TIGHT">
 <technologies>
 <technology name=""/>
 </technologies>
@@ -2689,6 +2731,9 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <part name="BUS2.1" library="wicked-device" deviceset="4-PIN-SMT" device=""/>
 <part name="P+5" library="SparkFun" deviceset="VCC" device=""/>
 <part name="SUPPLY11" library="supply2" deviceset="GND" device=""/>
+<part name="JP1" library="SparkFun" deviceset="STAND-OFF" device=""/>
+<part name="JP2" library="SparkFun" deviceset="STAND-OFF" device=""/>
+<part name="JP3" library="SparkFun" deviceset="STAND-OFF" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -2731,9 +2776,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <text x="213.36" y="196.85" size="1.778" layer="97">Status LEDs</text>
 <wire x1="209.55" y1="210.82" x2="212.09" y2="210.82" width="0.1524" layer="97"/>
 <text x="213.36" y="210.82" size="1.778" layer="97">RFM12B</text>
-<wire x1="209.55" y1="190.5" x2="219.71" y2="190.5" width="0.1524" layer="97"/>
-<wire x1="219.71" y1="190.5" x2="222.25" y2="190.5" width="0.1524" layer="97"/>
-<wire x1="222.25" y1="190.5" x2="232.41" y2="190.5" width="0.1524" layer="97"/>
+<wire x1="209.55" y1="190.5" x2="232.41" y2="190.5" width="0.1524" layer="97"/>
 <text x="233.68" y="190.5" size="1.778" layer="97">RTC INTERRUPT</text>
 <wire x1="209.55" y1="186.69" x2="210.82" y2="185.42" width="0.1524" layer="97"/>
 <wire x1="210.82" y1="185.42" x2="210.82" y2="184.15" width="0.1524" layer="97"/>
@@ -2741,6 +2784,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <wire x1="210.82" y1="182.88" x2="209.55" y2="181.61" width="0.1524" layer="97"/>
 <wire x1="210.82" y1="184.15" x2="212.09" y2="184.15" width="0.1524" layer="97"/>
 <text x="213.36" y="182.88" size="1.778" layer="97">UART</text>
+<text x="224.155" y="154.305" size="1.778" layer="91">Registration Holes</text>
 </plain>
 <instances>
 <instance part="FRAME1" gate="G$1" x="0" y="0"/>
@@ -2827,6 +2871,9 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <instance part="BUS2.1" gate="G$1" x="384.81" y="97.79"/>
 <instance part="P+5" gate="1" x="243.84" y="123.19"/>
 <instance part="SUPPLY11" gate="GND" x="254" y="74.93"/>
+<instance part="JP1" gate="G$1" x="223.52" y="161.29"/>
+<instance part="JP2" gate="G$1" x="233.68" y="161.29"/>
+<instance part="JP3" gate="G$1" x="243.84" y="161.29"/>
 </instances>
 <busses>
 </busses>
