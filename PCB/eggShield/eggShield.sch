@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.05" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="no" active="no"/>
@@ -6900,7 +6900,7 @@ Source: DCJ0202.pdf</description>
 <part name="J2" library="SparkFun" deviceset="AVR_SPI_PRG_6" device="NS"/>
 <part name="SUPPLY6" library="supply2" deviceset="GND" device=""/>
 <part name="U$17" library="SparkFun" deviceset="5V" device=""/>
-<part name="J1" library="con-jack" deviceset="DCJ0202" device=""/>
+<part name="7-12VDC" library="con-jack" deviceset="DCJ0202" device=""/>
 <part name="SUPPLY2" library="supply2" deviceset="GND" device=""/>
 </parts>
 <sheets>
@@ -7057,7 +7057,7 @@ Source: DCJ0202.pdf</description>
 <instance part="J2" gate="G$1" x="344.17" y="120.65"/>
 <instance part="SUPPLY6" gate="GND" x="364.49" y="106.68"/>
 <instance part="U$17" gate="G$1" x="364.49" y="130.81"/>
-<instance part="J1" gate="G$1" x="233.68" y="170.18"/>
+<instance part="7-12VDC" gate="G$1" x="233.68" y="170.18"/>
 <instance part="SUPPLY2" gate="GND" x="246.38" y="160.02"/>
 </instances>
 <busses>
@@ -7202,7 +7202,7 @@ Source: DCJ0202.pdf</description>
 <wire x1="364.49" y1="118.11" x2="364.49" y2="109.22" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="J1" gate="G$1" pin="3"/>
+<pinref part="7-12VDC" gate="G$1" pin="3"/>
 <wire x1="241.3" y1="167.64" x2="246.38" y2="167.64" width="0.1524" layer="91"/>
 <wire x1="246.38" y1="167.64" x2="246.38" y2="162.56" width="0.1524" layer="91"/>
 <pinref part="SUPPLY2" gate="GND" pin="GND"/>
@@ -8002,7 +8002,7 @@ Source: DCJ0202.pdf</description>
 <label x="139.7" y="198.12" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="J1" gate="G$1" pin="1"/>
+<pinref part="7-12VDC" gate="G$1" pin="1"/>
 <wire x1="241.3" y1="172.72" x2="248.92" y2="172.72" width="0.1524" layer="91"/>
 <label x="248.92" y="172.72" size="1.778" layer="95" xref="yes"/>
 </segment>
