@@ -6781,20 +6781,20 @@ Source: DCJ0202.pdf</description>
 <part name="C3" library="SparkFun" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
 <part name="C4" library="wicked-device" deviceset="EEE-1EA100WR" device="" value="10uF"/>
 <part name="N02" library="ricardo" deviceset="E2V" device=""/>
-<part name="R1" library="SparkFun" deviceset="RESISTOR" device="0805-RES"/>
-<part name="R4" library="SparkFun" deviceset="RESISTOR" device="0805-RES" value="1.8MOhm"/>
+<part name="R1" library="SparkFun" deviceset="RESISTOR" device="0805-RES" value="2.2kOhm"/>
+<part name="R4" library="SparkFun" deviceset="RESISTOR" device="0805-RES" value="120kOhm"/>
 <part name="U1" library="SparkFun" deviceset="V_REG_LDO" device="SMD"/>
-<part name="R2" library="SparkFun" deviceset="RESISTOR" device="0805-RES"/>
-<part name="R3" library="SparkFun" deviceset="RESISTOR" device="0805-RES"/>
+<part name="R2" library="SparkFun" deviceset="RESISTOR" device="0805-RES" value="22kOhm"/>
+<part name="R3" library="SparkFun" deviceset="RESISTOR" device="0805-RES" value="220kOhm"/>
 <part name="SUPPLY9" library="supply2" deviceset="GND" device=""/>
 <part name="C8" library="SparkFun" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
 <part name="C9" library="wicked-device" deviceset="EEE-1EA100WR" device="" value="10uF"/>
-<part name="R7" library="SparkFun" deviceset="RESISTOR" device="0805-RES" value="750kOhm"/>
+<part name="R7" library="SparkFun" deviceset="RESISTOR" device="0805-RES" value="56kOhm"/>
 <part name="U2" library="SparkFun" deviceset="V_REG_LDO" device="SMD"/>
 <part name="CO" library="ricardo" deviceset="E2V" device=""/>
-<part name="R6" library="SparkFun" deviceset="RESISTOR" device="0805-RES"/>
-<part name="R9" library="SparkFun" deviceset="RESISTOR" device="0805-RES"/>
-<part name="R10" library="SparkFun" deviceset="RESISTOR" device="0805-RES"/>
+<part name="R6" library="SparkFun" deviceset="RESISTOR" device="0805-RES" value="68kOhm"/>
+<part name="R9" library="SparkFun" deviceset="RESISTOR" device="0805-RES" value="68kOhm"/>
+<part name="R10" library="SparkFun" deviceset="RESISTOR" device="0805-RES" value="680kOhm"/>
 <part name="DHT22" library="ricardo" deviceset="RHT03" device=""/>
 <part name="U$7" library="adafruit" deviceset="ARDUINO" device="-NOHOLE"/>
 <part name="SUPPLY1" library="supply2" deviceset="GND" device=""/>
@@ -6820,8 +6820,8 @@ Source: DCJ0202.pdf</description>
 <part name="R16" library="SparkFun" deviceset="RESISTOR" device="0805-RES" value="1.8kOhm"/>
 <part name="R17" library="SparkFun" deviceset="RESISTOR" device="0805-RES" value="1.8kOhm"/>
 <part name="U3" library="SparkFun-AnalogIC" deviceset="MCP42XXX" device=""/>
-<part name="R18" library="SparkFun" deviceset="RESISTOR" device="0805-RES"/>
-<part name="R19" library="SparkFun" deviceset="RESISTOR" device="0805-RES"/>
+<part name="R18" library="SparkFun" deviceset="RESISTOR" device="0805-RES" value="68Ohm"/>
+<part name="R19" library="SparkFun" deviceset="RESISTOR" device="0805-RES" value="68Ohm"/>
 <part name="SUPPLY12" library="supply2" deviceset="GND" device=""/>
 <part name="C7" library="SparkFun" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
 <part name="MCU" library="axeio-SparkFun" deviceset="ATTINY48" device="32A"/>
@@ -6849,7 +6849,7 @@ Source: DCJ0202.pdf</description>
 <part name="INFO" library="adafruit" deviceset="LED" device="CHIPLED_0805" value="GREEN"/>
 <part name="R5" library="SparkFun" deviceset="RESISTOR" device="0805-RES" value="270ohm"/>
 <part name="PWR" library="adafruit" deviceset="LED" device="CHIPLED_0805" value="RED"/>
-<part name="R8" library="SparkFun" deviceset="RESISTOR" device="0805-RES" value="470ohm"/>
+<part name="R8" library="SparkFun" deviceset="RESISTOR" device="0805-RES" value="270ohm"/>
 <part name="SUPPLY4" library="supply2" deviceset="GND" device=""/>
 <part name="VCC2_5" library="wicked-device" deviceset="AP7333" device="SA"/>
 <part name="C11" library="SparkFun" deviceset="CAP" device="0603-CAP" value="1uF"/>
@@ -6891,7 +6891,7 @@ Source: DCJ0202.pdf</description>
 <text x="215.9" y="208.28" size="1.778" layer="97">SRAM</text>
 <text x="223.52" y="205.74" size="1.778" layer="97">ETHERNET</text>
 <text x="215.9" y="193.04" size="1.778" layer="97">SD CARD</text>
-<wire x1="209.55" y1="200.66" x2="222.25" y2="200.66" width="0.1524" layer="97"/>
+<wire x1="210.82" y1="200.66" x2="222.25" y2="200.66" width="0.1524" layer="97"/>
 <text x="223.52" y="200.66" size="1.778" layer="97">MAC</text>
 <wire x1="209.55" y1="199.39" x2="210.82" y2="198.12" width="0.1524" layer="97"/>
 <wire x1="210.82" y1="198.12" x2="210.82" y2="196.85" width="0.1524" layer="97"/>
@@ -6921,6 +6921,10 @@ Source: DCJ0202.pdf</description>
 <text x="74.295" y="94.615" size="1.778" layer="91">2.5V</text>
 <text x="330.2" y="102.87" size="1.778" layer="91">programming header</text>
 <text x="223.52" y="176.53" size="1.778" layer="91">7-15V external power to Nanode</text>
+<text x="213.487" y="187.1472" size="1.778" layer="97">RFM12 /INT</text>
+<text x="213.5124" y="189.8904" size="1.778" layer="97">RTC /INT</text>
+<wire x1="209.4738" y1="190.4746" x2="212.3694" y2="190.4746" width="0.1524" layer="97"/>
+<wire x1="209.423" y1="187.9854" x2="213.0298" y2="187.9854" width="0.1524" layer="97"/>
 </plain>
 <instances>
 <instance part="FRAME1" gate="G$1" x="0" y="0"/>
@@ -7322,8 +7326,8 @@ Source: DCJ0202.pdf</description>
 <net name="SDA" class="0">
 <segment>
 <pinref part="U$7" gate="G$1" pin="A4"/>
-<wire x1="147.32" y1="182.88" x2="134.62" y2="182.88" width="0.1524" layer="91"/>
-<label x="134.62" y="182.88" size="1.778" layer="95" rot="R180" xref="yes"/>
+<wire x1="147.32" y1="182.88" x2="144.78" y2="182.88" width="0.1524" layer="91"/>
+<label x="144.78" y="182.88" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
 <pinref part="R12" gate="G$1" pin="1"/>
@@ -7343,8 +7347,8 @@ Source: DCJ0202.pdf</description>
 <net name="SCL" class="0">
 <segment>
 <pinref part="U$7" gate="G$1" pin="A5"/>
-<wire x1="147.32" y1="180.34" x2="143.51" y2="180.34" width="0.1524" layer="91"/>
-<label x="143.51" y="180.34" size="1.778" layer="95" rot="R180" xref="yes"/>
+<wire x1="147.32" y1="180.34" x2="133.35" y2="180.34" width="0.1524" layer="91"/>
+<label x="133.35" y="180.34" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
 <pinref part="R13" gate="G$1" pin="1"/>
@@ -7447,11 +7451,6 @@ Source: DCJ0202.pdf</description>
 </net>
 <net name="DHT22_IO" class="0">
 <segment>
-<pinref part="U$7" gate="G$1" pin="D2"/>
-<wire x1="208.28" y1="187.96" x2="215.9" y2="187.96" width="0.1524" layer="91"/>
-<label x="215.9" y="187.96" size="1.778" layer="95" xref="yes"/>
-</segment>
-<segment>
 <pinref part="DHT22" gate="G$1" pin="SIGNAL"/>
 <wire x1="130.81" y1="138.43" x2="140.97" y2="138.43" width="0.1524" layer="91"/>
 <wire x1="140.97" y1="138.43" x2="151.13" y2="138.43" width="0.1524" layer="91"/>
@@ -7459,6 +7458,11 @@ Source: DCJ0202.pdf</description>
 <wire x1="140.97" y1="138.43" x2="140.97" y2="137.16" width="0.1524" layer="91"/>
 <junction x="140.97" y="138.43"/>
 <pinref part="R11" gate="G$1" pin="2"/>
+</segment>
+<segment>
+<label x="134.62" y="185.42" size="1.778" layer="95" rot="R180" xref="yes"/>
+<pinref part="U$7" gate="G$1" pin="A3"/>
+<wire x1="134.62" y1="185.42" x2="147.32" y2="185.42" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="SCK" class="0">
