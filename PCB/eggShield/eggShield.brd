@@ -1784,6 +1784,16 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="29.083" y1="20.701" x2="22.971" y2="20.701" width="0.6096" layer="16"/>
 <wire x1="22.971" y1="20.701" x2="22.971" y2="32.131" width="0.6096" layer="16"/>
 <via x="22.971" y="32.131" extent="1-16" drill="0.3302"/>
+<contactref element="VCC2_5" pad="1"/>
+<contactref element="C11" pad="1"/>
+<wire x1="33.362" y1="26.289" x2="34.857" y2="26.289" width="0.6096" layer="1"/>
+<wire x1="34.857" y1="26.289" x2="34.991" y2="26.155" width="0.6096" layer="1"/>
+<wire x1="29.083" y1="20.701" x2="29.083" y2="27.051" width="0.6096" layer="16"/>
+<wire x1="29.083" y1="27.051" x2="30.226" y2="28.194" width="0.6096" layer="16"/>
+<wire x1="30.226" y1="28.194" x2="33.3375" y2="28.194" width="0.6096" layer="16"/>
+<via x="33.3375" y="28.194" extent="1-16" drill="0.3302"/>
+<wire x1="33.3375" y1="28.194" x2="33.362" y2="28.1695" width="0.6096" layer="1"/>
+<wire x1="33.362" y1="28.1695" x2="33.362" y2="26.289" width="0.6096" layer="1"/>
 </signal>
 <signal name="MOSI_B">
 <contactref element="U3" pad="3"/>
@@ -1990,12 +2000,6 @@ Please make sure your boards conform to these design rules.</description>
 <contactref element="R8" pad="1"/>
 <contactref element="PWR" pad="A"/>
 <wire x1="2.921" y1="32.732" x2="2.921" y2="30.491" width="0.6096" layer="1"/>
-</signal>
-<signal name="N$2">
-<contactref element="VCC2_5" pad="1"/>
-<contactref element="C11" pad="1"/>
-<wire x1="33.362" y1="26.289" x2="34.857" y2="26.289" width="0.6096" layer="1"/>
-<wire x1="34.857" y1="26.289" x2="34.991" y2="26.155" width="0.6096" layer="1"/>
 </signal>
 <signal name="VIN">
 <contactref element="U$7" pad="VIN"/>

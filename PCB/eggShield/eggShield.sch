@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.05" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="no" active="no"/>
@@ -6859,6 +6859,7 @@ Source: DCJ0202.pdf</description>
 <part name="U$17" library="SparkFun" deviceset="5V" device=""/>
 <part name="7-12VDC" library="con-jack" deviceset="DCJ0202" device=""/>
 <part name="SUPPLY2" library="supply2" deviceset="GND" device=""/>
+<part name="U$18" library="SparkFun" deviceset="5V" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -7019,6 +7020,7 @@ Source: DCJ0202.pdf</description>
 <instance part="U$17" gate="G$1" x="364.49" y="130.81"/>
 <instance part="7-12VDC" gate="G$1" x="233.68" y="170.18"/>
 <instance part="SUPPLY2" gate="GND" x="246.38" y="160.02"/>
+<instance part="U$18" gate="G$1" x="43.18" y="22.86"/>
 </instances>
 <busses>
 </busses>
@@ -7693,6 +7695,16 @@ Source: DCJ0202.pdf</description>
 <wire x1="364.49" y1="123.19" x2="364.49" y2="130.81" width="0.1524" layer="91"/>
 <pinref part="U$17" gate="G$1" pin="5V"/>
 </segment>
+<segment>
+<pinref part="VCC2_5" gate="G$1" pin="VI"/>
+<wire x1="54.61" y1="20.32" x2="48.26" y2="20.32" width="0.1524" layer="91"/>
+<pinref part="C11" gate="G$1" pin="1"/>
+<wire x1="48.26" y1="20.32" x2="48.26" y2="17.78" width="0.1524" layer="91"/>
+<wire x1="48.26" y1="20.32" x2="43.18" y2="20.32" width="0.1524" layer="91"/>
+<junction x="48.26" y="20.32"/>
+<wire x1="43.18" y1="20.32" x2="43.18" y2="22.86" width="0.1524" layer="91"/>
+<pinref part="U$18" gate="G$1" pin="5V"/>
+</segment>
 </net>
 <net name="AVCC" class="0">
 <segment>
@@ -7945,14 +7957,6 @@ Source: DCJ0202.pdf</description>
 <pinref part="R8" gate="G$1" pin="1"/>
 <pinref part="PWR" gate="G$1" pin="A"/>
 <wire x1="269.24" y1="114.3" x2="276.86" y2="114.3" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$2" class="0">
-<segment>
-<pinref part="VCC2_5" gate="G$1" pin="VI"/>
-<wire x1="54.61" y1="20.32" x2="48.26" y2="20.32" width="0.1524" layer="91"/>
-<pinref part="C11" gate="G$1" pin="1"/>
-<wire x1="48.26" y1="20.32" x2="48.26" y2="17.78" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="VIN" class="0">
