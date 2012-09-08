@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.05" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="no" active="no"/>
@@ -5336,8 +5336,8 @@ Basic Inductor/Choke - 0603 and 1206. Footprints are not proven and vary greatly
 <part name="R16" library="SparkFun" deviceset="RESISTOR" device="0805-RES" value="1.8kOhm"/>
 <part name="R17" library="SparkFun" deviceset="RESISTOR" device="0805-RES" value="1.8kOhm"/>
 <part name="U3" library="SparkFun-AnalogIC" deviceset="MCP42XXX" device=""/>
-<part name="R18" library="SparkFun" deviceset="RESISTOR" device="0805-RES" value="68Ohm"/>
-<part name="R19" library="SparkFun" deviceset="RESISTOR" device="0805-RES" value="68Ohm"/>
+<part name="R18" library="SparkFun" deviceset="RESISTOR" device="0805-RES" value="10R"/>
+<part name="R19" library="SparkFun" deviceset="RESISTOR" device="0805-RES" value="10R"/>
 <part name="SUPPLY12" library="supply2" deviceset="GND" device=""/>
 <part name="C7" library="SparkFun-Passives" deviceset="CAP" device="0805" value="0.1uF"/>
 <part name="MCU" library="axeio-SparkFun" deviceset="ATTINY48" device="32A"/>
@@ -5886,8 +5886,8 @@ Basic Inductor/Choke - 0603 and 1206. Footprints are not proven and vary greatly
 <junction x="292.1" y="200.66"/>
 </segment>
 <segment>
-<wire x1="294.64" y1="40.64" x2="313.69" y2="40.64" width="0.1524" layer="91"/>
-<label x="313.69" y="40.64" size="1.778" layer="95" xref="yes"/>
+<wire x1="294.64" y1="40.64" x2="318.77" y2="40.64" width="0.1524" layer="91"/>
+<label x="318.77" y="40.64" size="1.778" layer="95" xref="yes"/>
 <pinref part="MCU" gate="G$1" pin="PC5(ADC5/SCL/PCINT13)"/>
 </segment>
 </net>
@@ -6257,12 +6257,7 @@ Basic Inductor/Choke - 0603 and 1206. Footprints are not proven and vary greatly
 <pinref part="L1" gate="G$1" pin="1"/>
 </segment>
 </net>
-<net name="/R1_SEL" class="0">
-<segment>
-<wire x1="294.64" y1="38.1" x2="298.45" y2="38.1" width="0.1524" layer="91"/>
-<label x="298.45" y="38.1" size="1.778" layer="95" xref="yes"/>
-<pinref part="MCU" gate="G$1" pin="PC7(PCINT15)"/>
-</segment>
+<net name="/CO_R1_SEL" class="0">
 <segment>
 <pinref part="R6" gate="G$1" pin="1"/>
 <pinref part="R9" gate="G$1" pin="2"/>
@@ -6273,13 +6268,9 @@ Basic Inductor/Choke - 0603 and 1206. Footprints are not proven and vary greatly
 <label x="157.48" y="63.5" size="1.778" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="R1" gate="G$1" pin="1"/>
-<pinref part="R2" gate="G$1" pin="2"/>
-<wire x1="53.34" y1="66.04" x2="53.34" y2="63.5" width="0.1524" layer="91"/>
-<wire x1="53.34" y1="63.5" x2="53.34" y2="59.69" width="0.1524" layer="91"/>
-<wire x1="53.34" y1="63.5" x2="66.04" y2="63.5" width="0.1524" layer="91"/>
-<junction x="53.34" y="63.5"/>
-<label x="66.04" y="63.5" size="1.778" layer="95" xref="yes"/>
+<pinref part="MCU" gate="G$1" pin="PD4(PCINT20/T0)"/>
+<wire x1="294.64" y1="22.86" x2="299.72" y2="22.86" width="0.1524" layer="91"/>
+<label x="299.72" y="22.86" size="1.778" layer="95" xref="yes"/>
 </segment>
 </net>
 <net name="/R2_SEL" class="0">
@@ -6287,24 +6278,6 @@ Basic Inductor/Choke - 0603 and 1206. Footprints are not proven and vary greatly
 <label x="326.39" y="30.48" size="1.778" layer="95" xref="yes"/>
 <wire x1="326.39" y1="30.48" x2="294.64" y2="30.48" width="0.1524" layer="91"/>
 <pinref part="MCU" gate="G$1" pin="PD1(PCINT17)"/>
-</segment>
-<segment>
-<pinref part="R9" gate="G$1" pin="1"/>
-<wire x1="144.78" y1="49.53" x2="144.78" y2="46.99" width="0.1524" layer="91"/>
-<pinref part="R10" gate="G$1" pin="2"/>
-<wire x1="144.78" y1="46.99" x2="144.78" y2="44.45" width="0.1524" layer="91"/>
-<wire x1="144.78" y1="46.99" x2="157.48" y2="46.99" width="0.1524" layer="91"/>
-<junction x="144.78" y="46.99"/>
-<label x="157.48" y="46.99" size="1.778" layer="95" xref="yes"/>
-</segment>
-<segment>
-<pinref part="R2" gate="G$1" pin="1"/>
-<wire x1="53.34" y1="49.53" x2="53.34" y2="46.99" width="0.1524" layer="91"/>
-<pinref part="R3" gate="G$1" pin="2"/>
-<wire x1="53.34" y1="46.99" x2="53.34" y2="44.45" width="0.1524" layer="91"/>
-<wire x1="53.34" y1="46.99" x2="66.04" y2="46.99" width="0.1524" layer="91"/>
-<junction x="53.34" y="46.99"/>
-<label x="66.04" y="46.99" size="1.778" layer="95" xref="yes"/>
 </segment>
 </net>
 <net name="STATUS" class="0">
@@ -6516,6 +6489,49 @@ Basic Inductor/Choke - 0603 and 1206. Footprints are not proven and vary greatly
 <pinref part="MCU" gate="G$1" pin="PD7(PCINT23/AIN1)"/>
 <wire x1="294.64" y1="15.24" x2="304.8" y2="15.24" width="0.1524" layer="91"/>
 <label x="304.8" y="15.24" size="1.778" layer="95" xref="yes"/>
+</segment>
+</net>
+<net name="/NO2_R2_SEL" class="0">
+<segment>
+<pinref part="R2" gate="G$1" pin="1"/>
+<pinref part="R3" gate="G$1" pin="2"/>
+<wire x1="53.34" y1="49.53" x2="53.34" y2="46.99" width="0.1524" layer="91"/>
+<wire x1="53.34" y1="46.99" x2="53.34" y2="44.45" width="0.1524" layer="91"/>
+<wire x1="53.34" y1="46.99" x2="66.04" y2="46.99" width="0.1524" layer="91"/>
+<junction x="53.34" y="46.99"/>
+<label x="66.04" y="46.99" size="1.778" layer="95" xref="yes"/>
+</segment>
+</net>
+<net name="/NO2_R1_SEL" class="0">
+<segment>
+<pinref part="R1" gate="G$1" pin="1"/>
+<pinref part="R2" gate="G$1" pin="2"/>
+<wire x1="53.34" y1="66.04" x2="53.34" y2="63.5" width="0.1524" layer="91"/>
+<wire x1="53.34" y1="63.5" x2="53.34" y2="59.69" width="0.1524" layer="91"/>
+<wire x1="53.34" y1="63.5" x2="66.04" y2="63.5" width="0.1524" layer="91"/>
+<junction x="53.34" y="63.5"/>
+<label x="66.04" y="63.5" size="1.778" layer="95" xref="yes"/>
+</segment>
+<segment>
+<wire x1="294.64" y1="38.1" x2="298.45" y2="38.1" width="0.1524" layer="91"/>
+<label x="298.45" y="38.1" size="1.778" layer="95" xref="yes"/>
+<pinref part="MCU" gate="G$1" pin="PC7(PCINT15)"/>
+</segment>
+</net>
+<net name="/CO_R2_SEL" class="0">
+<segment>
+<pinref part="R9" gate="G$1" pin="1"/>
+<wire x1="144.78" y1="49.53" x2="144.78" y2="46.99" width="0.1524" layer="91"/>
+<pinref part="R10" gate="G$1" pin="2"/>
+<wire x1="144.78" y1="46.99" x2="144.78" y2="44.45" width="0.1524" layer="91"/>
+<wire x1="144.78" y1="46.99" x2="157.48" y2="46.99" width="0.1524" layer="91"/>
+<junction x="144.78" y="46.99"/>
+<label x="157.48" y="46.99" size="1.778" layer="95" xref="yes"/>
+</segment>
+<segment>
+<pinref part="MCU" gate="G$1" pin="PB7(PCINT7)"/>
+<wire x1="294.64" y1="58.42" x2="298.45" y2="58.42" width="0.1524" layer="91"/>
+<label x="298.45" y="58.42" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
