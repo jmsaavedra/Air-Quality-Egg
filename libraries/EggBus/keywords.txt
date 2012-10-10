@@ -1,0 +1,11 @@
+EggBus	KEYWORD1
+init	KEYWORD2
+next	KEYWORD2
+getBusAddress	KEYWORD2
+getSensorAddress	KEYWORD2
+getNumSensors	KEYWORD2
+getSensorType	KEYWORD2
+getSensorValue	KEYWORD2
+getSensorUnits	KEYWORD2
+getRawValue     KEYWORD2
+
