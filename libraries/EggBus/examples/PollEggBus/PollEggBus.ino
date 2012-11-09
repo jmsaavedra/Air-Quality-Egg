@@ -10,30 +10,25 @@ void setup(){
 }
 
 void loop(){
-  pollBus();
-  delay(2000);  
-}
-
-void printAddress(uint8_t * address){
-  for(uint8_t jj = 0; jj < 6; jj++){
-    if(address[jj] < 16) Serial.print("0");
-    Serial.print(address[jj], HEX);
-    if(jj != 5 ) Serial.print(":");
-  }
-  Serial.println();
-}
-
-void pollBus(){
   uint8_t   egg_bus_address;
+  float x_scaler = 0.0;
+  float y_scaler = 0.0;
+  float i_scaler = 0.0;
+  uint32_t measured_value = 0;
+  uint32_t r0 = 0;
+  
   eggBus.init();
-  while(egg_bus_address = eggBus.next()){
+  while((egg_bus_address = eggBus.next())){
     Serial.println("===========================");
     Serial.print("Egg Bus Address: 0x");
     Serial.println(egg_bus_address, HEX);
 
+    Serial.print("Firmware Version: ");
+    Serial.println(eggBus.getFirmwareVersion(), DEC);
+
     Serial.print("  Sensor Address: ");
-    printAddress(eggBus.getSensorAddress());        
-  
+    printAddress(eggBus.getSensorAddress());             
+    
     uint8_t numSensors = eggBus.getNumSensors();
     for(uint8_t ii = 0; ii < numSensors; ii++){
     
@@ -43,21 +38,68 @@ void pollBus(){
       
       Serial.print("    Sensor Type: ");
       Serial.println(eggBus.getSensorType(ii));
+     
+      Serial.print("   Indep. Scaler: ");
+      i_scaler = eggBus.getIndependentScaler(ii);
+      Serial.println(i_scaler, 8);
+      
+      Serial.print("  Table X Scaler: ");
+      x_scaler = eggBus.getTableXScaler(ii);
+      Serial.println(x_scaler, 8);     
+     
+      Serial.print("  Table Y Scaler: ");
+      y_scaler = eggBus.getTableYScaler(ii);
+      Serial.println(y_scaler, 8);         
+
+      Serial.print(" Measured Value: ");
+      measured_value = eggBus.getSensorIndependentVariableMeasure(ii);
+      Serial.print(measured_value, DEC);        
+      Serial.print(" => ");
+      Serial.println(measured_value * i_scaler, 8);
+
+      Serial.print("              R0: ");
+      r0 = eggBus.getSensorR0(ii);
+      Serial.println(r0);
+      
+      Serial.print("Implied Resistance: ");
+      if(measured_value == 0xffffffff){
+        Serial.println("OPEN CIRCUIT");
+      }
+      else{
+        Serial.println(measured_value * i_scaler * r0, 8);
+      }
+      
+      uint8_t xval, yval, row = 0;
+      while(eggBus.getTableRow(ii, row++, &xval, &yval)){
+        Serial.print("     Table Row ");
+        Serial.print(row);
+        Serial.print(": [");
+        Serial.print(xval, DEC);
+        Serial.print(", ");        
+        Serial.print(yval, DEC);        
+        Serial.print("] => [");
+        Serial.print(x_scaler * xval, 8);
+        Serial.print(", ");
+        Serial.print(y_scaler * yval, 8);
+        Serial.println("]");
+      }
       
       Serial.print("    Sensor Value: ");
-      Serial.println(eggBus.getSensorValue(ii), DEC);
+      Serial.println(eggBus.getSensorValue(ii), DEC);    
       
       Serial.print("    Sensor Units: ");
-      Serial.println(eggBus.getSensorUnits(ii));
-      
-      uint32_t adc_value = -1;
-      uint32_t low_side_resistance = -1;
-      eggBus.getRawValue(ii, &adc_value, &low_side_resistance);
-      
-      Serial.print("    Raw Value ADC: ");
-      Serial.println(adc_value, DEC);
-      Serial.print("    Raw Value Low Side Resistance: ");
-      Serial.println(low_side_resistance, DEC);
+      Serial.println(eggBus.getSensorUnits(ii));            
     }
-  } 
+  }
+  
+  delay(5000);
+}
+
+void printAddress(uint8_t * address){
+  for(uint8_t jj = 0; jj < 6; jj++){
+    if(address[jj] < 16) Serial.print("0");
+    Serial.print(address[jj], HEX);
+    if(jj != 5 ) Serial.print(":");
+  }
+  Serial.println();
 }

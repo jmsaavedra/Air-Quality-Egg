@@ -4,8 +4,13 @@ next	KEYWORD2
 getBusAddress	KEYWORD2
 getSensorAddress	KEYWORD2
 getNumSensors	KEYWORD2
+getFirmwareVersion KEYWORD2
 getSensorType	KEYWORD2
 getSensorValue	KEYWORD2
 getSensorUnits	KEYWORD2
-getRawValue     KEYWORD2
-
+getSensorR0 KEYWORD2
+getSensorIndependentVariableMeasure KEYWORD2
+getTableXScaler KEYWORD2
+getTableYScaler KEYWORD2
+getTableRow KEYWORD2
+getIndependentScaler KEYWORD2

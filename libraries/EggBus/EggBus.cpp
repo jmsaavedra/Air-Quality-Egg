@@ -89,6 +89,14 @@ uint8_t EggBus::getNumSensors(){
 }
 
 /*
+  gets the number of sensors
+*/  
+uint8_t EggBus::getFirmwareVersion(){
+  i2cGetValue(currentBusAddress, METADATA_BASE_OFFSET + METADATA_VERSION_FIELD_OFFSET, 4);
+  return buf_to_value(buffer);
+}
+
+/*
   gets the sensor type of the index as a string
   the pointer is only valid until another 
   call that overwrites it (e.g. getSensor*)
@@ -99,11 +107,67 @@ char * EggBus::getSensorType(uint8_t sensorIndex){
 }
   
 /*
-  returns the sensor value of the index as a 32-bit integer
+  returns the computed sensor value of the index as a 32-bit integer
 */
-uint32_t EggBus::getSensorValue(uint8_t sensorIndex){
-  i2cGetValue(currentBusAddress, SENSOR_DATA_BASE_OFFSET + sensorIndex * SENSOR_DATA_ADDRESS_BLOCK_SIZE + SENSOR_RAW_VALUE_SENSED_RESISTANCE_OFFSET, 4);
-  return buf_to_value(buffer);
+float EggBus::getSensorValue(uint8_t sensorIndex){
+  float slope = 0.0;  
+  float x_scaler = getTableXScaler(sensorIndex);
+  float y_scaler = getTableYScaler(sensorIndex);
+  float i_scaler = getIndependentScaler(sensorIndex);
+  uint32_t measured_value = getSensorIndependentVariableMeasure(sensorIndex);
+  uint32_t r0 = getSensorR0(sensorIndex);
+  
+  float independent_variable_value = (i_scaler * measured_value) / r0;
+  uint8_t xval, yval, row = 0;
+  float real_table_value_x, real_table_value_y;
+  float previous_real_table_value_x = 0.0, previous_real_table_value_y = 0.0;
+    
+  while(getTableRow(sensorIndex, row++, &xval, &yval)){
+    real_table_value_x = x_scaler * xval;
+    real_table_value_y = y_scaler * yval;
+    
+    // case 1: this row is an exact match, just return the table value for y
+    if(real_table_value_x == independent_variable_value){
+      return real_table_value_y;
+    }
+    
+    // case 2: this is the first row and the independent variable is smaller than it
+    //         therefore extrapolation backward is required
+    else if((row == 0) 
+      && (real_table_value_x > independent_variable_value)){
+
+      // look up the value in row 1 to calculate the slope to extrapolate
+      previous_real_table_value_x = real_table_value_x;
+      previous_real_table_value_y = real_table_value_y;
+      
+      getTableRow(sensorIndex, row++, &xval, &yval);
+      real_table_value_x = x_scaler * xval;
+      real_table_value_y = y_scaler * yval;      
+      
+      slope = (real_table_value_y - previous_real_table_value_y) / (real_table_value_x - previous_real_table_value_x);     
+      return previous_real_table_value_y - slope * (previous_real_table_value_x - independent_variable_value);
+    }
+    
+    // case 3: the independent variable is between the current row and the previous row
+    //         interpolation is required
+    else if((row > 0) 
+      && (real_table_value_x > independent_variable_value)
+      && (independent_variable_value > previous_real_table_value_x)){
+      // interpolate between the two values
+      slope = (real_table_value_y - previous_real_table_value_y) / (real_table_value_x - previous_real_table_value_x);            
+      return    previous_real_table_value_y + (independent_variable_value - previous_real_table_value_x) * slope;
+    }
+    
+    // store into the previous values for use in interpolation/extrapolation
+    previous_real_table_value_x = real_table_value_x;
+    previous_real_table_value_y = real_table_value_y;
+  }  
+  
+  // case 4: the independent variable is must be greater than the largest value in the table, so we need to extrapolate forward
+  //         if you got through the entire table without an early return that means the independent_variable_value  
+  // the last values stored should be used for the slope calculation
+  slope = (real_table_value_y - previous_real_table_value_y) / (real_table_value_x - previous_real_table_value_x);   
+  return real_table_value_y + slope * (independent_variable_value - real_table_value_x);
 }
 
 /*
@@ -122,7 +186,7 @@ void EggBus::i2cWriteAddressRegister(uint8_t slave_address, uint16_t register_ad
   /*
     In order to read a value from the Memory Map, the Nanode 
     must write the target Sensor Module’s I2C address to bus with the Write bit set to 0 (SLA+W), 
-    then write the “READ” command to the bus (0x11), 
+    then write the "READ" command to the bus (0x11), 
     then write the address to be read to the bus (high byte then low byte), 
     and finally an I2C stop condition. 
   */  
@@ -131,6 +195,14 @@ void EggBus::i2cWriteAddressRegister(uint8_t slave_address, uint16_t register_ad
   Wire.write(CMD_READ);                        // sends READ command
   Wire.write(high_byte(register_address));     // sends register address high byte
   Wire.write(low_byte(register_address));      // sends register address low byte  
+  Wire.endTransmission();                      // stop transmitting    
+}
+
+void EggBus::i2cWriteRegister(uint8_t slave_address, uint8_t * data_to_write, uint8_t num_bytes){
+  Wire.beginTransmission(slave_address); 
+  for(uint8_t ii = 0; ii < num_bytes; ii++){
+    Wire.write(data_to_write[ii]);
+  }  
   Wire.endTransmission();                      // stop transmitting    
 }
 
@@ -151,9 +223,9 @@ void EggBus::i2cReadRegisterValue(uint8_t slave_address, uint8_t * buf, uint8_t 
 
 void EggBus::i2cGetValue(uint8_t slave_address, uint16_t register_address, uint8_t response_length){
   i2cWriteAddressRegister(slave_address, register_address);
-  delay(10); // this is definitely necessary (though shorter may be ok too)
+  delay(1); // this is definitely necessary (though shorter may be ok too)
   i2cReadRegisterValue(slave_address, buffer, response_length);  
-  delay(10); // this may not be necessary
+  delay(1); // this may not be necessary
 }
 
 uint8_t EggBus::high_byte(uint16_t value){
@@ -196,9 +268,78 @@ void EggBus::i2cBusSwitch(uint8_t busNumber){
   // and if not... maybe try again or something
 }
 
-void EggBus::getRawValue(uint8_t sensor_index, uint32_t * adc_result, uint32_t * low_side_resistance){
-  i2cGetValue(currentBusAddress, SENSOR_DATA_BASE_OFFSET + sensor_index * SENSOR_DATA_ADDRESS_BLOCK_SIZE + SENSOR_RAW_VALUE_FIELD_OFFSET, 8);
-  *adc_result = buf_to_value(buffer);
-  *low_side_resistance = buf_to_value(buffer + 4);
+/*
+  gets the x scaler value for the requested sensor
+*/
+float EggBus::getTableXScaler(uint8_t sensorIndex){
+  i2cGetValue(currentBusAddress, SENSOR_DATA_BASE_OFFSET + sensorIndex * SENSOR_DATA_ADDRESS_BLOCK_SIZE + SENSOR_TABLE_X_SCALER_OFFSET, 4);
+  return buf_to_fvalue(buffer);
 }
 
+/*
+  gets the y scaler value for the requested sensor
+*/
+float EggBus::getTableYScaler(uint8_t sensorIndex){
+  i2cGetValue(currentBusAddress, SENSOR_DATA_BASE_OFFSET + sensorIndex * SENSOR_DATA_ADDRESS_BLOCK_SIZE + SENSOR_TABLE_Y_SCALER_OFFSET, 4);
+  return buf_to_fvalue(buffer);
+}
+
+/*
+  gets the independent variable scaler value for the requested sensor
+*/
+float EggBus::getIndependentScaler(uint8_t sensorIndex){
+  i2cGetValue(currentBusAddress, SENSOR_DATA_BASE_OFFSET + sensorIndex * SENSOR_DATA_ADDRESS_BLOCK_SIZE + SENSOR_INDEPENDENT_SCALER_OFFSET, 4); 
+  return buf_to_fvalue(buffer);  
+}
+
+/*
+  gets the requested table row for the requested sensor
+*/
+bool EggBus::getTableRow(uint8_t sensorIndex, uint8_t row_number, uint8_t * xval, uint8_t *yval){
+  i2cGetValue(currentBusAddress, SENSOR_DATA_BASE_OFFSET + sensorIndex * SENSOR_DATA_ADDRESS_BLOCK_SIZE + SENSOR_COMPUTED_MAPPING_TABLE_OFFSET + SENSOR_COMPUTED_MAPPING_TABLE_ROW_SIZE*row_number, 2);
+  *xval = buffer[0];
+  *yval = buffer[1];
+  return (buffer[0] != SENSOR_COMPUTED_MAPPING_TABLE_TERMINATOR && buffer[1] != SENSOR_COMPUTED_MAPPING_TABLE_TERMINATOR);
+}
+
+/*
+  gets the independent variable measure for the requested sensor
+*/
+uint32_t EggBus::getSensorIndependentVariableMeasure(uint8_t sensorIndex){
+  i2cGetValue(currentBusAddress, SENSOR_DATA_BASE_OFFSET + sensorIndex * SENSOR_DATA_ADDRESS_BLOCK_SIZE + SENSOR_MEASURED_INDEPENDENT_OFFSET, 4);
+  return buf_to_value(buffer);
+}
+
+/*
+  gets the R0 value for the requested sensor
+*/
+uint32_t EggBus::getSensorR0(uint8_t sensorIndex){
+  i2cGetValue(currentBusAddress, SENSOR_DATA_BASE_OFFSET + sensorIndex * SENSOR_DATA_ADDRESS_BLOCK_SIZE + SENSOR_R0_FIELD_OFFSET, 4);
+  return buf_to_value(buffer);
+}
+
+void EggBus::setSensorR0(uint8_t sensorIndex, uint32_t value){
+    #define SET_SENSOR_R0_CMD_LENGTH 7
+    uint8_t tmp[SET_SENSOR_R0_CMD_LENGTH] = {CMD_WRITE,0,0,0,0,0,0};
+    uint16_t address = SENSOR_DATA_BASE_OFFSET + sensorIndex * SENSOR_DATA_ADDRESS_BLOCK_SIZE + SENSOR_R0_FIELD_OFFSET;
+    tmp[1] = (address >> 8) & 0xff; // address high byte
+    tmp[2] = address & 0xff;        // address low byte
+    tmp[3] = (value >> 24) & 0xff;  // value[3]
+    tmp[4] = (value >> 16) & 0xff;  // value[2]
+    tmp[5] = (value >> 8)  & 0xff;  // value[1]
+    tmp[6] = (value >> 0)  & 0xff;  // value[0]
+    i2cWriteRegister(currentBusAddress, tmp, SET_SENSOR_R0_CMD_LENGTH); // fire away
+    delay(100); // give the target sensor time to write to eeprom
+}
+
+float EggBus::buf_to_fvalue(uint8_t * buf){
+  float returnValue = 0;  
+  uint32_t ret = buf[0];  
+  uint8_t index = 1;
+  for(index = 1; index < 4; index++){
+    ret = (ret << 8);         // make space for the next byte
+    ret = (ret | buf[index]); // slide in the next byte
+  }  
+  memcpy(&returnValue, &ret, 4);
+  return returnValue;
+}

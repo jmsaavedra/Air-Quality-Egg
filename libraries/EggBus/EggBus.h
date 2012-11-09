@@ -32,6 +32,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.  */
 
 #define  MAX_RESPONSE_LENGTH            (16)  
 #define  CMD_READ                       (0x11)
+#define  CMD_WRITE                      (0x33)
 
 // BASE ADDRESSES
 #define METADATA_BASE_OFFSET             (0)
@@ -48,10 +49,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.  */
 #define SENSOR_TYPE_FIELD_OFFSET                  (0)
 #define SENSOR_UNITS_FIELD_OFFSET                 (16)
 #define SENSOR_R0_FIELD_OFFSET                    (32)
-#define SENSOR_COMPUTED_VALUE_FIELD_OFFSET        (36)
-#define SENSOR_UNITS_MULTIPLIER_FIELD_OFFSET      (40)
+#define SENSOR_MEASURED_INDEPENDENT_OFFSET        (36)
+#define SENSOR_TABLE_X_SCALER_OFFSET              (40)
 #define SENSOR_RAW_VALUE_FIELD_OFFSET             (44)
-#define SENSOR_RAW_VALUE_SENSED_RESISTANCE_OFFSET (48)
+#define SENSOR_TABLE_Y_SCALER_OFFSET              (48)
+#define SENSOR_INDEPENDENT_SCALER_OFFSET          (52)
+#define SENSOR_COMPUTED_MAPPING_TABLE_OFFSET      (56)
+#define SENSOR_COMPUTED_MAPPING_TABLE_ROW_SIZE     (8)
+#define SENSOR_COMPUTED_MAPPING_TABLE_TERMINATOR (0xff)
 
 // DEBUG DATA FIELD OFFSETS
 #define DEBUG_NO2_HEATER_V_PLUS              (0)
@@ -71,11 +76,13 @@ class EggBus {
   uint8_t buffer[16];         // storage space for the current address and strings
   
   void i2cGetValue(uint8_t slave_address, uint16_t register_address, uint8_t response_length);
+  void i2cWriteRegister(uint8_t slave_address, uint8_t * data_to_write, uint8_t num_bytes);
   void i2cWriteAddressRegister(uint8_t slave_address, uint16_t register_address);
   void i2cReadRegisterValue(uint8_t slave_address, uint8_t * buf, uint8_t response_length);
   uint8_t high_byte(uint16_t value);
   uint8_t low_byte(uint16_t value);  
-  uint32_t buf_to_value(uint8_t * buf);
+  uint32_t buf_to_value(uint8_t * buf);  
+  float buf_to_fvalue(uint8_t * buf);
   void clearBus();
   void i2cBusSwitch(uint8_t busNumber);
   
@@ -85,10 +92,17 @@ class EggBus {
   uint8_t next(); 
   uint8_t * getSensorAddress();
   uint8_t getNumSensors();
+  uint8_t getFirmwareVersion();
   char * getSensorType(uint8_t sensorIndex);
-  uint32_t getSensorValue(uint8_t sensorIndex);
+  float getSensorValue(uint8_t sensorIndex);
   char * getSensorUnits(uint8_t sensorIndex);
-  void getRawValue(uint8_t sensor_index, uint32_t * adc_result, uint32_t * low_side_resistance);
+  uint32_t getSensorIndependentVariableMeasure(uint8_t sensorIndex);
+  float getTableXScaler(uint8_t sensorIndex);  
+  float getTableYScaler(uint8_t sensorIndex);
+  float getIndependentScaler(uint8_t sensorIndex);
+  bool getTableRow(uint8_t sensorIndex, uint8_t row_number, uint8_t * xval, uint8_t *y_val); 
+  uint32_t getSensorR0(uint8_t sensorIndex);  
+  void setSensorR0(uint8_t sensorIndex, uint32_t value);
 };
 
 #endif /*_EGG_BUS_LIB_H */
