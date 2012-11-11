@@ -115,9 +115,8 @@ float EggBus::getSensorValue(uint8_t sensorIndex){
   float y_scaler = getTableYScaler(sensorIndex);
   float i_scaler = getIndependentScaler(sensorIndex);
   uint32_t measured_value = getSensorIndependentVariableMeasure(sensorIndex);
-  uint32_t r0 = getSensorR0(sensorIndex);
   
-  float independent_variable_value = (i_scaler * measured_value) / r0;
+  float independent_variable_value = (i_scaler * measured_value);
   uint8_t xval, yval, row = 0;
   float real_table_value_x, real_table_value_y;
   float previous_real_table_value_x = 0.0, previous_real_table_value_y = 0.0;
@@ -133,7 +132,7 @@ float EggBus::getSensorValue(uint8_t sensorIndex){
     
     // case 2: this is the first row and the independent variable is smaller than it
     //         therefore extrapolation backward is required
-    else if((row == 0) 
+    else if((row == 1) 
       && (real_table_value_x > independent_variable_value)){
 
       // look up the value in row 1 to calculate the slope to extrapolate
@@ -150,7 +149,7 @@ float EggBus::getSensorValue(uint8_t sensorIndex){
     
     // case 3: the independent variable is between the current row and the previous row
     //         interpolation is required
-    else if((row > 0) 
+    else if((row > 1) 
       && (real_table_value_x > independent_variable_value)
       && (independent_variable_value > previous_real_table_value_x)){
       // interpolate between the two values
