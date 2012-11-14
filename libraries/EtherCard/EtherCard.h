@@ -97,7 +97,7 @@ public:
   static void prepare (PGM_P fmt, ...);
   static uint16_t length ();
   static void extract (uint16_t offset, uint16_t count, void* buf);
-  static uint16_t cleanup ();
+  static void cleanup ();
 
   friend void dumpBlock (const char* msg, uint8_t idx); // optional
   friend void dumpStash (const char* msg, void* ptr);   // optional
@@ -110,7 +110,8 @@ public:
   BufferFiller (uint8_t* buf) : start (buf), ptr (buf) {}
       
   void emit_p (PGM_P fmt, ...);
-  void emit_raw (const char* s, uint8_t n) { memcpy(ptr, s, n); ptr += n; }
+  void emit_raw (const char* s, uint16_t n) { memcpy(ptr, s, n); ptr += n; }
+  void emit_raw_p (PGM_P p, uint16_t n) { memcpy_P(ptr, p, n); ptr += n; }
   
   uint8_t* buffer () const { return start; }
   uint16_t position () const { return ptr - start; }
@@ -128,6 +129,9 @@ public:
   static uint8_t dnsip[4];  // dns server
   static uint8_t hisip[4];  // dns result
   static uint16_t hisport;  // tcp port to connect to (default 80)
+  static bool using_dhcp;   // whether dhcp is active or not
+  static bool persist_tcp_connection; // whether to break connections on first packet received
+
   // EtherCard.cpp
   static uint8_t begin (const uint16_t size, const uint8_t* macaddr,
                         uint8_t csPin =8);  
@@ -135,10 +139,6 @@ public:
                             const uint8_t* gw_ip =0,
                              const uint8_t* dns_ip =0);
   // tcpip.cpp
-    
-   static bool msgReceived();
-    
-   // static bool messageRecieved2;
   static void initIp (uint8_t *myip,uint16_t wwwp);
   static void makeUdpReply (char *data,uint8_t len, uint16_t port);
   static uint16_t packetLoop (uint16_t plen);
@@ -165,15 +165,25 @@ public:
   static void sendWol (uint8_t *wolmac);
   // new stash-based API
   static uint8_t tcpSend ();
+  static const char* tcpReply (byte fd);
+
+  static void persistTcpConnection(bool persist);
+
   // dhcp.cpp
+  static void DhcpStateMachine(word len);
+  static uint32_t dhcpStartTime ();
+  static uint32_t dhcpLeaseTime ();
+  static bool dhcpLease ();
+  static bool dhcpSetup (const char *);
   static bool dhcpSetup ();
-  static bool dhcpExpired ();
   // dns.cpp
-  static bool dnsLookup (prog_char* name);
+  static bool dnsLookup (prog_char* name, bool fromRam =false);
   // webutil.cpp
   static void copyIp (uint8_t *dst, const uint8_t *src);
   static void copyMac (uint8_t *dst, const uint8_t *src);
+  static void printIp (const byte *buf);
   static void printIp (const char* msg, const uint8_t *buf);
+  static void printIp (const __FlashStringHelper *ifsh, const uint8_t *buf);
   static uint8_t findKeyVal(const char *str,char *strbuf,
                             uint8_t maxlen, const char *key);
   static void urlDecode(char *urlbuf);

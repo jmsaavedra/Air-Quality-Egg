@@ -13,6 +13,8 @@
 #include <stdarg.h>
 #include <avr/eeprom.h>
 
+//#define FLOATEMIT // uncomment line to enable $T in emit_P for float emitting
+
 byte Stash::map[256/8];
 Stash::Block Stash::bufs[2];
 
@@ -161,14 +163,13 @@ void Stash::prepare (PGM_P fmt, ...) {
         case 'S':
           arglen = strlen((const char*) argval);
           break;
-        case 'F': {
+        case 'F':
           arglen = strlen_P((PGM_P) argval);
           break;
-        }
         case 'E': {
           byte* s = (byte*) argval;
-          char c;
-          while ((c = eeprom_read_byte(s++)) != 0)
+          char d;
+          while ((d = eeprom_read_byte(s++)) != 0)
             ++arglen;
           break;
         }
@@ -195,7 +196,7 @@ void Stash::extract (word offset, word count, void* buf) {
   word* segs = Stash::bufs[0].words;
   PGM_P fmt = (PGM_P) *++segs;
   Stash stash;
-  char mode = '@', tmp[7], *ptr, *out = (char*) buf;
+  char mode = '@', tmp[7], *ptr = NULL, *out = (char*) buf;
   for (word i = 0; i < offset + count; ) {
     char c = 0;
     switch (mode) {
@@ -248,7 +249,7 @@ void Stash::extract (word offset, word count, void* buf) {
   }
 }
 
-word Stash::cleanup () {
+void Stash::cleanup () {
   Stash::load(0, 0);
   word* segs = Stash::bufs[0].words;
   PGM_P fmt = (PGM_P) *++segs;
@@ -282,21 +283,42 @@ void BufferFiller::emit_p(PGM_P fmt, ...) {
             case 'D':
                 wtoa(va_arg(ap, word), (char*) ptr);
                 break;
+            #ifdef FLOATEMIT
+            case 'T':
+                dtostrf	(	va_arg(ap, double), 10, 3, (char*)ptr );
+            break;
+            #endif
+            case 'H': {
+                char p1 =  va_arg(ap, word);
+                char p2;
+                p2 = (p1 >> 4) & 0x0F;
+                p1 = p1 & 0x0F;
+                if (p1 > 9) p1 += 0x07; // adjust 0x0a-0x0f to come out 'a'-'f'
+                p1 += 0x30;             // and complete
+                if (p2 > 9) p2 += 0x07; // adjust 0x0a-0x0f to come out 'a'-'f'
+                p2 += 0x30;             // and complete
+                *ptr++ = p2;
+                *ptr++ = p1;
+                continue;
+            }
+            case 'L':
+                ltoa(va_arg(ap, long), (char*) ptr, 10);
+                break;
             case 'S':
                 strcpy((char*) ptr, va_arg(ap, const char*));
                 break;
             case 'F': {
                 PGM_P s = va_arg(ap, PGM_P);
-                char c;
-                while ((c = pgm_read_byte(s++)) != 0)
-                    *ptr++ = c;
+                char d;
+                while ((d = pgm_read_byte(s++)) != 0)
+                    *ptr++ = d;
                 continue;
             }
             case 'E': {
                 byte* s = va_arg(ap, byte*);
-                char c;
-                while ((c = eeprom_read_byte(s++)) != 0)
-                    *ptr++ = c;
+                char d;
+                while ((d = eeprom_read_byte(s++)) != 0)
+                    *ptr++ = d;
                 continue;
             }
             default:
@@ -318,10 +340,13 @@ uint8_t EtherCard::dhcpip[4]; // dhcp server
 uint8_t EtherCard::dnsip[4];  // dns server
 uint8_t EtherCard::hisip[4];  // dns result
 uint16_t EtherCard::hisport = 80; // tcp port to browse to
+bool EtherCard::using_dhcp = false;
+bool EtherCard::persist_tcp_connection = false;
 
 uint8_t EtherCard::begin (const uint16_t size,
                            const uint8_t* macaddr,
                             uint8_t csPin) {
+  using_dhcp = false;
   Stash::initMap(56);
   copyMac(mymac, macaddr);
   return initialize(size, mymac, csPin);
@@ -330,6 +355,8 @@ uint8_t EtherCard::begin (const uint16_t size,
 bool EtherCard::staticSetup (const uint8_t* my_ip,
                               const uint8_t* gw_ip,
                                const uint8_t* dns_ip) {
+  using_dhcp = false;
+
   if (my_ip != 0)
     copyIp(myip, my_ip);
   if (gw_ip != 0)

@@ -26,10 +26,6 @@
 #undef PSTR 
 #define PSTR(s) (__extension__({static prog_char c[] PROGMEM = (s); &c[0];}))
 
-//static int msgReceived();
-static bool messageReceived;
-static void resetRecieveFlag();
-
 static byte tcpclient_src_port_l=1; 
 static byte tcp_fd; // a file descriptor, will be encoded into the port
 static byte tcp_client_state;
@@ -55,6 +51,8 @@ static byte waitgwmac; // 0=wait, 1=first req no anser, 2=have gwmac, 4=refeshin
 #define WGW_ACCEPT_ARP_REPLY 8
 static word info_data_len;
 static byte seqnum = 0xa; // my initial tcp sequence number
+static byte result_fd = 123; // session id of last reply
+static const char* result_ptr;
 
 #define CLIENTMSS 550
 #define TCP_DATA_START ((word)TCP_SRC_PORT_H_P+(gPB[TCP_HEADER_LEN_P]>>4)*4)
@@ -63,6 +61,7 @@ const char arpreqhdr[] PROGMEM = { 0,1,8,0,6,4,0,1 };
 const char iphdr[] PROGMEM = { 0x45,0,0,0x82,0,0,0x40,0,0x20 };
 const char ntpreqhdr[] PROGMEM = { 0xE3,0,4,0xFA,0,1,0,0,0,1 };
 const byte allOnes[] = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };
+const byte ipBroadcast[] = {255, 255, 255, 255};
 
 static void fill_checksum(byte dest, byte off, word len,byte type) {
   const byte* ptr = gPB + off;
@@ -315,7 +314,8 @@ byte EtherCard::ntpProcessAnswer (uint32_t *time,byte dstport_l) {
 void EtherCard::udpPrepare (word sport, byte *dip, word dport) {
   setMACandIPs(gwmacaddr, dip);
   // see http://tldp.org/HOWTO/Multicast-HOWTO-2.html
-  if ((dip[0] & 0xF0) == 0xE0) // multicast address
+  // multicast or broadcast address, https://github.com/jcw/ethercard/issues/59
+  if ((dip[0] & 0xF0) == 0xE0 || *((long*) dip) == 0xFFFFFFFF)
     EtherCard::copyMac(gPB + ETH_DST_MAC, allOnes);
   gPB[ETH_TYPE_H_P] = ETHTYPE_IP_H_V;
   gPB[ETH_TYPE_L_P] = ETHTYPE_IP_L_V;
@@ -350,12 +350,12 @@ void EtherCard::sendUdp (char *data,byte datalen,word sport, byte *dip, word dpo
 }
 
 void EtherCard::sendWol (byte *wolmac) {
-  setMACandIPs(allOnes, EtherCard::myip);
+  setMACandIPs(allOnes, ipBroadcast);
   gPB[ETH_TYPE_H_P] = ETHTYPE_IP_H_V;
   gPB[ETH_TYPE_L_P] = ETHTYPE_IP_L_V;
   memcpy_P(gPB + IP_P,iphdr,9);
-  gPB[IP_TOTLEN_L_P] = 0x54;
-  gPB[IP_PROTO_P] = IP_PROTO_ICMP_V;
+  gPB[IP_TOTLEN_L_P] = 0x82;
+  gPB[IP_PROTO_P] = IP_PROTO_UDP_V;
   fill_ip_hdr_checksum();
   gPB[UDP_DST_PORT_H_P] = 0;
   gPB[UDP_DST_PORT_L_P] = 0x9; // wol = normally 9
@@ -372,7 +372,7 @@ void EtherCard::sendWol (byte *wolmac) {
     copyMac(gPB + pos, wolmac);
   }
   fill_checksum(UDP_CHECKSUM_H_P, IP_SRC_P, 16 + 102,1);
-  packetSend(pos);
+  packetSend(pos + 6);
 }
 
 // make a arp request
@@ -457,20 +457,18 @@ static word www_client_internal_datafill_cb(byte fd) {
   BufferFiller bfill = EtherCard::tcpOffset();
   if (fd==www_fd) {
     if (client_postval == 0) {
-      bfill.emit_p(PSTR("GET $F$S HTTP/1.1\r\n"
+      bfill.emit_p(PSTR("GET $F$S HTTP/1.0\r\n"
                         "Host: $F\r\n"
                         "Accept: text/html\r\n"
-                        "Connection: close\r\n"
                         "\r\n"), client_urlbuf,
                                  client_urlbuf_var,
                                  client_hoststr);
     } else {
       prog_char* ahl = client_additionalheaderline;
-      bfill.emit_p(PSTR("POST $F HTTP/1.1\r\n"
+      bfill.emit_p(PSTR("POST $F HTTP/1.0\r\n"
                         "Host: $F\r\n"
                         "$F$S"
                         "Accept: */*\r\n"
-                        "Connection: close\r\n"
                         "Content-Length: $D\r\n"
                         "Content-Type: application/x-www-form-urlencoded\r\n"
                         "\r\n"
@@ -518,35 +516,34 @@ static word tcp_datafill_cb(byte fd) {
   Stash::extract(0, len, EtherCard::tcpOffset());
   Stash::cleanup();
   EtherCard::tcpOffset()[len] = 0;
+#if SERIAL
   Serial.print("REQUEST: ");
   Serial.println(len);
   Serial.println((char*) EtherCard::tcpOffset());
-    messageReceived = false;
+#endif
+  result_fd = 123; // bogus value
   return len;
 }
 
 static byte tcp_result_cb(byte fd, byte status, word datapos, word datalen) {
-   messageReceived = true;
-    //EtherCard::messageReceived2 = true;
-    // Serial.prinln(ether.msgReceived());
-  Serial.println("REPLY:");
-  Serial.println((char*) ether.buffer + datapos);
-    //resetRecieveFlag();
+  if (status == 0) {
+    result_fd = fd; // a valid result has been received, remember its session id
+    result_ptr = (char*) ether.buffer + datapos;
+    // result_ptr[datalen] = 0;
+  }
   return 1;
 }
-
-bool EtherCard::msgReceived(){
-    return messageReceived;
-    resetRecieveFlag();
-}
-
-/*void resetRecieveFlag(){
-    messageReceived = false;
-}*/
 
 byte EtherCard::tcpSend () {
   www_fd = clientTcpReq(&tcp_result_cb, &tcp_datafill_cb, hisport);
   return www_fd;
+}
+
+const char* EtherCard::tcpReply (byte fd) {
+  if (result_fd != fd)
+    return 0;
+  result_fd = 123; // set to a bogus value to prevent future match
+  return result_ptr;
 }
 
 void EtherCard::registerPingCallback (void (*callback)(byte *srcip)) {
@@ -561,12 +558,12 @@ byte EtherCard::packetLoopIcmpCheckReply (const byte *ip_monitoredhost) {
 }
 
 word EtherCard::packetLoop (word plen) {
-    
-    if (messageReceived == true) {
-        messageReceived = false;
-    }
-    
   word len;
+
+  if(using_dhcp){
+    ether.DhcpStateMachine(plen);
+  }
+
   if (plen==0) {
     if ((waitgwmac & WGW_INITIAL_ARP || waitgwmac & WGW_REFRESHING) &&
                                           delaycnt==0 && isLinkUp())
@@ -586,8 +583,9 @@ word EtherCard::packetLoop (word plen) {
       waitgwmac = WGW_HAVE_GW_MAC;
     return 0;
   }
-  if (eth_type_is_ip_and_my_ip(plen)==0)
+  if (eth_type_is_ip_and_my_ip(plen)==0) {
     return 0;
+  }
   if (gPB[IP_PROTO_P]==IP_PROTO_ICMP_V && gPB[ICMP_TYPE_P]==ICMP_TYPE_ECHOREQUEST_V) {
     if (icmp_cb)
       (*icmp_cb)(&(gPB[IP_SRC_P]));
@@ -602,7 +600,7 @@ word EtherCard::packetLoop (word plen) {
     if (gPB[TCP_FLAGS_P] & TCP_FLAGS_RST_V) {
       if (client_tcp_result_cb)
         (*client_tcp_result_cb)((gPB[TCP_DST_PORT_L_P]>>5)&0x7,3,0,0);
-      tcp_client_state = 5;
+	  tcp_client_state = 5;
       return 0;
     }
     len = get_tcp_data_len();
@@ -626,32 +624,39 @@ word EtherCard::packetLoop (word plen) {
       return 0;
     }
     if (tcp_client_state==3 && len>0) { 
-      // Comment out to enable large files, e.g. mp3 streams to be downloaded
-//      tcp_client_state = 4;
-      if (client_tcp_result_cb) {
+	  if (client_tcp_result_cb) {
         word tcpstart = TCP_DATA_START; // TCP_DATA_START is a formula
         if (tcpstart>plen-8)
           tcpstart = plen-8; // dummy but save
         word save_len = len;
         if (tcpstart+len>plen)
           save_len = plen-tcpstart;
-        byte send_fin = (*client_tcp_result_cb)((gPB[TCP_DST_PORT_L_P]>>5)&0x7,0,tcpstart,save_len);
-        if (send_fin) {
-          make_tcp_ack_from_any(len,TCP_FLAGS_PUSH_V|TCP_FLAGS_FIN_V);
-          tcp_client_state = 5;
-          return 0;
+        (*client_tcp_result_cb)((gPB[TCP_DST_PORT_L_P]>>5)&0x7,0,tcpstart,save_len);
+
+        if(persist_tcp_connection){
+            make_tcp_ack_from_any(len,TCP_FLAGS_PUSH_V);
         }
+        else{
+		    make_tcp_ack_from_any(len,TCP_FLAGS_PUSH_V|TCP_FLAGS_FIN_V);
+            tcp_client_state = 6;
+        }
+        return 0;
       }
     }
     if (tcp_client_state != 5) {
       if (gPB[TCP_FLAGS_P] & TCP_FLAGS_FIN_V) {
+	    if(tcp_client_state == 3) {
+			return 0; // In some instances FIN is received *before* DATA.  If that is the case, we just return here and keep looking for the data packet
+		}
         make_tcp_ack_from_any(len+1,TCP_FLAGS_PUSH_V|TCP_FLAGS_FIN_V);
-        tcp_client_state = 5; // connection terminated
-      } else if (len>0)
+        tcp_client_state = 6; // connection terminated
+      } else if (len>0) {
         make_tcp_ack_from_any(len,0);
+	  }
     }
     return 0;
   }
+
   if (gPB[TCP_DST_PORT_H_P] == (hisport >> 8) &&
       gPB[TCP_DST_PORT_L_P] == ((byte) hisport)) {
     if (gPB[TCP_FLAGS_P] & TCP_FLAGS_SYN_V)
@@ -667,4 +672,8 @@ word EtherCard::packetLoop (word plen) {
     }
   }
   return 0;
+}
+
+void EtherCard::persistTcpConnection(bool persist){
+  persist_tcp_connection = persist;
 }
