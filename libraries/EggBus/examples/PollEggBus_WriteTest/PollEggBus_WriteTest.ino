@@ -4,7 +4,7 @@
 #include "EggBus.h"
 
 EggBus eggBus;
-uint32_t r0_values[2] = {1234567, 7654321};
+uint32_t r0_values[2] = {2200, 750000};
 boolean flag[2] = {true, true};
 uint8_t counter = 0;
 
