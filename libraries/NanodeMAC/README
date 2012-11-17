@@ -1,0 +1,38 @@
+NanodeMAC
+Rufus Cable, June 2011 (threebytesfull)
+
+Original sketch at https://gist.github.com/1020951
+
+Library version created by Andrew Lindsay for use with Nanode and 
+EtherShield Library at https://github.com/thiseldo/EtherShield
+
+Based on sample code to read the MAC address from the 11AA02E48 on the
+back of the Nanode V5 board.
+
+This code is hacky and basic - it doesn't check for bus errors
+and will probably fail horribly if it's interrupted. It's best
+run in setup() - fetch the MAC address once and keep it. After
+the address is fetched, it puts the chip back in standby mode
+in which it apparently only consumes 1uA.
+
+Feel free to reuse this code - suggestions for improvement are
+welcome! :)
+
+BITS    7   6   5   4   3   2   1   0
+PORTD = D7  D6  D5  D4  D3  D2  D1  D0
+PORTB = -   -   D13 D12 D11 D10 D9  D8
+
+Nanode has UNI/O SCIO on DIG7
+
+
+To use the library:
+
+#include <NanodeMAC.h>
+
+static uint8_t mymac[6] = { 0,0,0,0,0,0 };
+NanodeMAC mac( mymac );
+
+Then wherever mymac is used, the value will be the one from the chip.
+
+
+
