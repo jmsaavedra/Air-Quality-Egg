@@ -196,7 +196,7 @@ void setupHumidityPacket(){
     rflink.setRemoteFirmwareVersion(0);
     rflink.setRemoteStationAddress(mymac);
     rflink.setSourceSensorAddress(mymac);
-    rflink.setSensorIndex(0);
+    rflink.setSensorIndex(1);
     rflink.setSensorType(sensor_type_humidity);
     rflink.setSensorUnits(sensor_units_humidity);
     rflink.setSensorValue(getHumidity());  
