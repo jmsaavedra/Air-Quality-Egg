@@ -1,10 +1,10 @@
 #include <EtherCard.h>
 #include <NanodeMAC.h>
 #include <StackPaint.h>
-#include <SoftRestart.h>
+#include <SoftReset.h>
 #include <stdint.h>
 
-#define ETHERNET_BUFFER_LENGTH 450
+#define ETHERNET_BUFFER_LENGTH 500
 extern uint8_t mymac[6];
 
 char website[] PROGMEM = "api.cosm.com";

@@ -8,7 +8,9 @@
 #include "MemoryLocations.h" 
 
 extern char website[] PROGMEM;
-uint32_t last_cosm_response_timestamp = 0;
+
+long previousCosmResponseTimestamp = 0;
+const long TOO_LONG_FOR_COSM_RESPONSE = 600000; // 10 minutes
 
 Stash stash;
 static byte tcp_session;
@@ -19,7 +21,6 @@ void postSensorData(){
   char temp2[8] = {0};
   char delimiter[2] = "_";
   boolean isRaw = false;
-  
   int sensor_type_length = strlen(rflink.getSensorType());
   strcat(temp, rflink.getSensorType());
   strcat(temp, delimiter);
@@ -35,7 +36,7 @@ void postSensorData(){
   stash.print(F("\",\"tags\":[\"aqe:sensor_type="));
 
   if(strstr_P(rflink.getSensorType(), PSTR("_raw")) != NULL){
-    memset(temp, 0, 32);
+    memset(temp, 0, 64);
     strncpy(temp, rflink.getSensorType(), strlen(rflink.getSensorType()) - 4); // always ends in "_raw" if it has it
     stash.print(temp);    
     isRaw = true;    
@@ -45,7 +46,7 @@ void postSensorData(){
   }  
   
   stash.print(F("\",\"aqe:sensor_address="));
-  memset(temp, 0, 32);
+  memset(temp, 0, 64);
   stringConvertMAC(rflink.getSourceSensorAddress(), temp, ':');
   stash.print(temp);
   
@@ -67,6 +68,7 @@ void postSensorData(){
   stash.print(F("\"}}]}"));
  
   stash.save();
+  
   Serial.println(F("Preparing stash"));  
   Stash::prepare(PSTR("PUT http://$F/v2/feeds/$E.json HTTP/1.0" "\r\n"
     "Host: $F" "\r\n"
@@ -100,29 +102,29 @@ void checkCosmReply(){
   const char *reply = ether.tcpReply(tcp_session);
   if(reply != 0){
     Serial.println(F(">>> RESPONSE RECEIVED ---"));
-    Serial.println(reply);
-    last_cosm_response_timestamp = millis();
+    markCosmResponse();
   }  
-}
-
-uint32_t getTimeSinceLastCosmResponse(){
-   uint32_t now = millis();
-   if(now >= last_cosm_response_timestamp){
-     return now - last_cosm_response_timestamp;
-   }
-   else{
-     return ((uint32_t) 0xffffffff) - last_cosm_response_timestamp + now;
-   }
+  
 }
 
 void stringConvertMAC(uint8_t * mac, char * buf, char delimiter){
-    int bufIdx = 0;
-    char hex[16] = {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'};
-    for(uint8_t i = 0; i < 6; i++){
-        buf[bufIdx++] = hex[mac[i] >>   8];
-        buf[bufIdx++] = hex[mac[i] & 0x0f];
-        if(i != 5){        
-            buf[bufIdx++] = delimiter;
-        }
-    }
+  for(uint8_t ii = 0; ii < 6; ii++){
+    convertByteArrayToAsciiHex(mac + ii, buf + 3*ii, 1);
+    if(ii == 5) buf[3*ii+2] = '\0';
+    else buf[3*ii+2] = delimiter;
+  }
 }
+
+boolean haventHeardFromCosmLately(){
+  unsigned long currentMillis = millis();  
+  if((currentMillis - previousCosmResponseTimestamp) > TOO_LONG_FOR_COSM_RESPONSE){
+    return true; 
+  }
+  return false; 
+}
+
+void markCosmResponse(){
+   previousCosmResponseTimestamp = millis();
+
+}
+

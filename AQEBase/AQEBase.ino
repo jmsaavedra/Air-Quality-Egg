@@ -8,8 +8,6 @@
 #include <SoftReset.h>
 #include <avr/wdt.h>
 
-#define TOO_LONG_FOR_COSM_RESPONSE 600000L // 10 minutes
-
 // read your MAC address
 static uint8_t mymac[6] = {0,0,0,0,0,0};
 NanodeMAC mac(mymac);
@@ -20,6 +18,7 @@ AQERF_Base rflink(mymac);
 
 void printReceivedData();
 void printMAC(uint8_t * mac);
+
 
 void setup(){
     Serial.begin(115200);
@@ -34,19 +33,20 @@ void setup(){
     
     setupNanode();
     activateWithCosm();    
-    
+    markCosmResponse();
 }
 
 void loop(){
+  
     ether.packetLoop(ether.packetReceive());    
     checkCosmReply();  
   
-    if(rflink.dataReceived()){
+    if(rflink.dataReceived()){    
         printReceivedData();
         postSensorData();
     }
     
-    if(getTimeSinceLastCosmResponse() > TOO_LONG_FOR_COSM_RESPONSE){
+    if(haventHeardFromCosmLately()){
       Serial.println(F("Too Long Since Last Response From Cosm, Resetting"));
       Serial.flush();
       delay(1000);
