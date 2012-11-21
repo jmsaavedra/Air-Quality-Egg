@@ -1,0 +1,10 @@
+RGB_LED	KEYWORD1
+setColor KEYWORD2
+setDutyCycle KEYWORD2
+fade KEYWORD2
+bounceColor KEYWORD2
+setPins KEYWORD2
+render KEYWORD2
+animation_complete KEYWORD2
+stop_animation KEYWORD2
+
