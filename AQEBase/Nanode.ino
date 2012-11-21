@@ -28,6 +28,8 @@ void setupNanode(){
     
   if (!ether.dhcpSetup()){
     Serial.println(F("DHCP failed resetting"));
+    rgb.setColor(magenta);
+    delay(10000);
     soft_restart();
   }
   

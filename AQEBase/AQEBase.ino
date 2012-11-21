@@ -70,7 +70,8 @@ void loop(){
     if(haventHeardFromCosmLately()){
       Serial.println(F("Too Long Since Last Response From Cosm, Resetting"));
       Serial.flush();
-      delay(1000);
+      rgb.setColor(yellow);
+      delay(10000);      
       soft_restart(); 
     }
     

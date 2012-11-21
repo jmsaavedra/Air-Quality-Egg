@@ -113,6 +113,8 @@ static void provisioningCallback (byte status, word off, word len) {
         Serial.print(F("FEED LENGTH = "));
         Serial.println(feed_id_strlen);
         eeprom_write_byte((uint8_t *) ACTIVATION_STATUS_EEPROM_ADDRESS, PROVISIONING_STATUS_GOOD);   
+        rgb.setColor(green);
+        delay(10000);
         soft_restart();     
       }
       
@@ -129,7 +131,7 @@ static void provisioningCallback (byte status, word off, word len) {
 #define ACTIVATION_RETRY_INTERVAL_MS 15000L // retry every 15 seconds
 void activateWithCosm(){
   uint8_t test = eeprom_read_byte((const uint8_t *) ACTIVATION_STATUS_EEPROM_ADDRESS);
-  if(test == PROVISIONING_STATUS_GOOD){
+  if(0 && test == PROVISIONING_STATUS_GOOD){
     Serial.println(F("Previously provisioned"));
     return;   
   }
@@ -157,7 +159,8 @@ void doProvisioning(){
       Serial.print(MAX_ACTIVATION_ATTEMPTS);
       Serial.println(F(" times, restarting"));
       Serial.flush();
-      delay(1000);      
+      rgb.setColor(red);
+      delay(10000);      
       soft_restart(); // better reset at this point...
     }
     
