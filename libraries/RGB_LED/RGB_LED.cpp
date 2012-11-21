@@ -72,6 +72,7 @@ void RGB_LED::fade(uint8_t from_color[3], uint8_t to_color[3], int32_t period_ms
         color_step[ii] = ((int16_t) color_end[ii]) - ((int16_t) color_start[ii]);
     }    
     is_bouncy = false;
+    bounce_limit = 0;
     animation_start = millis();
     animation_period = period_ms;
 }
@@ -85,10 +86,16 @@ void RGB_LED::bounceColor(uint8_t color[3], int32_t period_ms){
         color_step[ii] = ((int16_t) color_end[ii]) - ((int16_t) color_start[ii]);
     }    
     is_bouncy = true;
+    bounce_limit = 0;
     animation_start = millis();
     animation_period = period_ms / 2;
 }
 
+void RGB_LED::bounceColorN(uint8_t color[3], int32_t period_ms, uint8_t n){
+    bounceColor(color, period_ms);
+    bounce_limit = n;
+    bounce_counter = 0;
+}
 
 void RGB_LED::setPins(uint8_t r, uint8_t g, uint8_t b){
     rgb_pins[0] = r;
@@ -104,6 +111,7 @@ void RGB_LED::setPins(uint8_t r, uint8_t g, uint8_t b){
 // this function must be called in the loop with adequate frequency to
 // achieve the required level of animation smoothness
 void RGB_LED::render(){
+    uint8_t black[3] = {0,0,0};
     uint32_t now = millis();
     uint32_t elapsed_time = now - animation_start;
     uint16_t percent_elapsed = (uint16_t) ((100.0 * elapsed_time) / animation_period);
@@ -127,6 +135,15 @@ void RGB_LED::render(){
     if(is_bouncy){ 
         if(end_color_reached){                
             // switch the start and end colors
+            if(bounce_limit != 0){
+                bounce_counter++;
+                if(bounce_counter / 2 == bounce_limit){
+                    setColor(black);
+                    stop_animation();
+                    return;                
+                }
+            }           
+
             for(uint8_t ii = 0; ii < 3; ii++){                
                 color[ii] = color_start[ii];
                 color_start[ii] = color_end[ii];
@@ -147,7 +164,9 @@ boolean RGB_LED::animation_complete(){
 
 void RGB_LED::stop_animation(){
     for(uint8_t ii = 0; ii < 3; ii++){
-        color_step[ii] = 0;
+        color_step[ii]   = 0;
+        color_start[ii]  = 0; // lights out
+        color_end[ii]    = 0; // lights out
     }
     is_bouncy = false;
     animation_start = 0;   

@@ -40,6 +40,8 @@ class RGB_LED {
     int32_t animation_start;   // timestamp of animation start
     int32_t animation_period;  // period of animation
     boolean is_bouncy;         // whether the bouncy behavior is called to be executed
+    uint16_t bounce_counter;   // number of bounces so far
+    uint8_t bounce_limit;      // number of times to bounce (0 means forever)
  public:
     uint16_t bright[3];         // normalization factors
     RGB_LED();
@@ -49,6 +51,7 @@ class RGB_LED {
     void setDutyCycle(uint8_t duty_cycle[3]);
     void fade(uint8_t from_color[3], uint8_t to_color[3], int32_t period_ms);
     void bounceColor(uint8_t color[3], int32_t period_ms);
+    void bounceColorN(uint8_t color[3], int32_t period_ms, uint8_t n);
     void setPins(uint8_t r, uint8_t g, uint8_t b);
     void render();
     boolean animation_complete();
