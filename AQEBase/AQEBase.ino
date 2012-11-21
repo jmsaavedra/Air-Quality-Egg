@@ -5,12 +5,14 @@
 #include <StackPaint.h>
 #include <string.h>
 #include <StackPaint.h>
+#include <RGB_LED.h>
 #include <SoftReset.h>
 #include <avr/wdt.h>
 
 // read your MAC address
 static uint8_t mymac[6] = {0,0,0,0,0,0};
 NanodeMAC mac(mymac);
+RGB_LED rgb;
 
 // create an AQERF_Base object to handle the RF Link
 // informing it what the unit MAC address is
@@ -19,6 +21,14 @@ AQERF_Base rflink(mymac);
 void printReceivedData();
 void printMAC(uint8_t * mac);
 
+uint8_t black[3]    = {0x00,0x00,0x00};
+uint8_t red[3]      = {0xff,0x00,0x00};
+uint8_t green[3]    = {0x00,0xff,0x00};
+uint8_t blue[3]     = {0x00,0x00,0xff};
+uint8_t cyan[3]     = {0x00,0xff,0xff};
+uint8_t yellow[3]   = {0xff,0xff,0x09};
+uint8_t magenta[3]  = {0xff,0x00,0xff};
+uint8_t white[3]    = {0xff,0xff,0xff};
 
 void setup(){
     Serial.begin(115200);
@@ -28,7 +38,13 @@ void setup(){
     Serial.print(F("Unit Address: "));
     printlnMAC(mymac);
     
-    rflink.pair();
+    rgb.bounceColor(yellow, 3000);
+    rflink.pairInit();
+    while(!rflink.pair()){
+      rgb.render(); 
+    }
+    rgb.setColor(black);
+    
     Serial.println(F("Pairing complete"));    
     
     setupNanode();
