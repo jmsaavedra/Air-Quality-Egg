@@ -35,9 +35,13 @@ class AQERF_Base {
  private:
     uint8_t packet[RF12_MAXDATA];
     uint8_t base_station_address[6];
+    uint32_t end_time;
+    int32_t previous_time;
+    uint8_t need_to_send;
  public:
     AQERF_Base(uint8_t * mac);
-    void pair(void);
+    boolean pair(void);
+    void pairInit(void);
     uint8_t dataReceived(void);
     uint8_t getPacketType(void);
     uint16_t getRemoteFirmwareVersion(void);

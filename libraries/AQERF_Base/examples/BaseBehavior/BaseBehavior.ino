@@ -18,8 +18,10 @@ void setup(){
     Serial.println("AQE Base RF Unit Test");
     Serial.print("Unit Address: ");
     printlnMAC(mymac);
-    
-    rflink.pair();
+    rflink.pairInit();
+    while(!rflink.pair()){
+        // do nothing... or 'other stuff'
+    }
     Serial.println("Pairing complete");
 }
 

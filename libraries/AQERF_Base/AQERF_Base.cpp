@@ -84,16 +84,21 @@ AQERF_Base::AQERF_Base(uint8_t * mac){
 
 #define PAIRING_DURATION_MS            10000L
 #define PAIRING_BROADCAST_INTERVAL_MS  2000L
-void AQERF_Base::pair(void){
+
+void AQERF_Base::pairInit(void){
     uint32_t current_time = millis();
-    uint32_t previous_time = current_time - PAIRING_BROADCAST_INTERVAL_MS - 1;
-    uint32_t end_time = current_time + PAIRING_DURATION_MS;    
-    uint8_t need_to_send = 1;
+    previous_time = 0;
+    end_time = current_time + PAIRING_DURATION_MS;    
+    need_to_send = 1;
 
     packet[AQERF_PACKET_TYPE_OFFSET] = AQERF_PACKET_TYPE_BASE_STATION_ADVERTISEMENT;
     memcpy(packet + AQERF_BASE_ADDRESS_OFFSET, base_station_address, AQERF_BASE_ADDRESS_LENGTH);
-    while(current_time < end_time){
-        current_time = millis();
+}
+
+boolean AQERF_Base::pair(void){
+    uint32_t current_time = millis();
+    boolean pairing_done = false;
+    if(current_time < end_time){
         rf12_recvDone();
         if(current_time - previous_time > PAIRING_BROADCAST_INTERVAL_MS) {
             previous_time = current_time; 
@@ -104,7 +109,14 @@ void AQERF_Base::pair(void){
             rf12_sendStart(0, packet, AQERF_BASE_STATION_ADVERTISEMENT_PACKET_LENGTH);
             need_to_send = 0;
         }
+
+        pairing_done = false;
     }       
+    else{
+        pairing_done = true;
+    }
+
+    return pairing_done;
 }
 
 // this function must be called frequently in order to keep the RF12 state machine moving
