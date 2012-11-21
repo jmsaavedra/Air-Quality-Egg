@@ -29,6 +29,8 @@ uint8_t cyan[3]     = {0x00,0xff,0xff};
 uint8_t yellow[3]   = {0xff,0xff,0x09};
 uint8_t magenta[3]  = {0xff,0x00,0xff};
 uint8_t white[3]    = {0xff,0xff,0xff};
+uint8_t * color_cycle[] = { green, blue, cyan, magenta };
+uint8_t color_cycle_index = 0;
 
 void setup(){
     Serial.begin(115200);
@@ -43,6 +45,7 @@ void setup(){
     while(!rflink.pair()){
       rgb.render(); 
     }
+    rgb.stop_animation();
     rgb.setColor(black);
     
     Serial.println(F("Pairing complete"));    
@@ -58,6 +61,8 @@ void loop(){
     checkCosmReply();  
   
     if(rflink.dataReceived()){    
+        rgb.bounceColorN(color_cycle[color_cycle_index++], 1000, 1);
+        if(color_cycle_index > 3) color_cycle_index = 0;
         printReceivedData();
         postSensorData();
     }
@@ -68,6 +73,8 @@ void loop(){
       delay(1000);
       soft_restart(); 
     }
+    
+    rgb.render();
 }
 
 void printReceivedData(){
