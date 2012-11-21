@@ -131,7 +131,7 @@ static void provisioningCallback (byte status, word off, word len) {
 #define ACTIVATION_RETRY_INTERVAL_MS 15000L // retry every 15 seconds
 void activateWithCosm(){
   uint8_t test = eeprom_read_byte((const uint8_t *) ACTIVATION_STATUS_EEPROM_ADDRESS);
-  if(0 && test == PROVISIONING_STATUS_GOOD){
+  if(test == PROVISIONING_STATUS_GOOD){
     Serial.println(F("Previously provisioned"));
     return;   
   }
