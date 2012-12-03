@@ -72,7 +72,7 @@ void postSensorData(){
   Serial.println(F("Preparing stash"));  
   Stash::prepare(PSTR("PUT http://$F/v2/feeds/$E.json HTTP/1.0" "\r\n"
     "Host: $F" "\r\n"
-    "X-PachubeApiKey: $E" "\r\n"
+    "X-ApiKey: $E" "\r\n"
     "Content-Length: $D" "\r\n"
     "\r\n"
     "$H"),
