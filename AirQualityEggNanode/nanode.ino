@@ -4,7 +4,7 @@
 //https://github.com/jcw/ethercard
 
 //----- vars
-char website[] PROGMEM = "api.pachube.com";
+char website[] PROGMEM = "api.cosm.com";
 
 // ethernet interface mac address, must be unique on the LAN
 // add in find nanode MAC code!
@@ -113,7 +113,7 @@ void nanodeSendData(){
   // and that a "stash descriptor" is passed in as argument using "$H"
   Stash::prepare(PSTR("PUT http://$F/v2/feeds/$F.csv HTTP/1.0" "\r\n"
     "Host: $F" "\r\n"
-    "X-PachubeApiKey: $F" "\r\n"
+    "X-ApiKey: $F" "\r\n"
     "Content-Length: $D" "\r\n"
     "\r\n"
     "$H"),

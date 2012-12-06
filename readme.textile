@@ -15,7 +15,7 @@ h3. notes
 ** this *must* be disconnected when programming the board.
 
 h3. collaborators
-* "http://pachube.com":http://pachube.com
+* "http://cosm.com":http://cosm.com
 * "http://citizensensor.cc":http://citizensensor.cc | "http://jos.ph":http://jos.ph
 * "http://wickeddevice.com":Wicked Device
 * Ricardo Piedrahita, Nick Masson - UC Boulder (-link-)
