@@ -60,6 +60,9 @@ void postSensorData(){
   else{
     stash.print(F("computed"));    
   }
+
+  stash.print(F("\",\"aqe:firmware_version="));  
+  stash.print(rflink.getRemoteFirmwareVersion());
   
   stash.print(F("\"],\"unit\":{\"label\":\""));
   stash.print(rflink.getSensorUnits());
