@@ -1,12 +1,12 @@
 #include <EtherCard.h>
 #include <NanodeMAC.h>
 #include <StackPaint.h>
+#include <SoftReset.h>
+#include <stdint.h>
 
-#define ETHERNET_BUFFER_LENGTH 450
-static uint8_t mymac[6] = { 
-  0,0,0,0,0,0 };
+#define ETHERNET_BUFFER_LENGTH 500
+extern uint8_t mymac[6];
 
-NanodeMAC mac( mymac );
 char website[] PROGMEM = "api.cosm.com";
 
 byte Ethernet::buffer[ETHERNET_BUFFER_LENGTH];
@@ -26,8 +26,10 @@ void setupNanode(){
   if (ether.begin(sizeof Ethernet::buffer, mymac) == 0) 
     Serial.println(F("Failed to access Ethernet controller"));
     
-  if (!ether.dhcpSetup())
-    Serial.println(F("DHCP failed"));
+  if (!ether.dhcpSetup()){
+    Serial.println(F("DHCP failed resetting"));
+    soft_restart();
+  }
   
   Serial.print(F("IP: "));
   ether.printIp(ether.myip);
@@ -52,3 +54,6 @@ void setupNanode(){
   ether.disableBroadcast();
 }
 
+void loopNanode(){
+    ether.packetLoop(ether.packetReceive());     
+}
