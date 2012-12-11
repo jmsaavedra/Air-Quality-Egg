@@ -146,6 +146,7 @@ uint16_t AQERF_Base::getRemoteFirmwareVersion(void){
     uint16_t ret = (uint16_t) packet[AQERF_REMOTE_FIRMWARE_VERSION_OFFSET];
     ret <<= 8;    
     ret |= packet[AQERF_REMOTE_FIRMWARE_VERSION_OFFSET + 1];
+    return ret;
 }
 
 uint8_t * AQERF_Base::getRemoteStationAddress(void){
