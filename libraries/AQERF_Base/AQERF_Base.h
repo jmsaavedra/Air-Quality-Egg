@@ -50,7 +50,7 @@ class AQERF_Base {
     uint8_t getSensorIndex(void);
     char * getSensorType(void);
     char * getSensorUnits(void);
-    uint32_t getSensorValue(void);
+    int32_t getSensorValue(void);
 };
 
 #endif /* _AQERF_BASE_LIB_H */

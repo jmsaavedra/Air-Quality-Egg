@@ -169,8 +169,8 @@ char * AQERF_Base::getSensorUnits(void){
     return ((char *) (packet + AQERF_SENSOR_UNITS_OFFSET));
 }
 
-uint32_t AQERF_Base::getSensorValue(void){
-    uint32_t ret = packet[AQERF_SENSOR_VALUE_OFFSET];
+int32_t AQERF_Base::getSensorValue(void){
+    int32_t ret = packet[AQERF_SENSOR_VALUE_OFFSET];
     for(uint8_t ii = 1; ii < 4; ii++){
         ret <<= 8;
         ret |= packet[AQERF_SENSOR_VALUE_OFFSET + ii];

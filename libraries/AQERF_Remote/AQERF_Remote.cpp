@@ -159,7 +159,7 @@ void AQERF_Remote::setSensorUnits(char * sensor_units){
     packet[AQERF_SENSOR_UNITS_OFFSET + AQERF_SENSOR_UNITS_LENGTH - 1] = '\0'; // guarantee null terminated
 }
 
-void AQERF_Remote::setSensorValue(uint32_t sensor_value){        
+void AQERF_Remote::setSensorValue(int32_t sensor_value){        
     packet[AQERF_SENSOR_VALUE_OFFSET]     = (sensor_value >> 24) & 0xff;
     packet[AQERF_SENSOR_VALUE_OFFSET + 1] = (sensor_value >> 16) & 0xff;        
     packet[AQERF_SENSOR_VALUE_OFFSET + 2] = (sensor_value >>  8) & 0xff;        

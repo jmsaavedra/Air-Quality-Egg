@@ -32,7 +32,7 @@ void postSensorData(){
   stash.print(F("{\"datastreams\":[{\"id\": \""));
   stash.print(temp);
   stash.print(F("\",\"current_value\":\""));
-  stash.print(rflink.getSensorValue(), 8);
+  stash.print(rflink.getSensorValue());
   stash.print(F("\",\"tags\":[\"aqe:sensor_type="));
 
   if(strstr_P(rflink.getSensorType(), PSTR("_raw")) != NULL){

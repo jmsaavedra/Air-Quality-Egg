@@ -54,7 +54,7 @@ class AQERF_Remote {
     void setSensorIndex(uint8_t sensor_index);
     void setSensorType(char * sensor_type);
     void setSensorUnits(char * sensor_units);
-    void setSensorValue(uint32_t sensor_value);
+    void setSensorValue(int32_t sensor_value);
     uint32_t getTransmitInterval(void);
     void setTransmitInterval(uint32_t tx_interval);
     uint8_t previouslyPaired(void);
