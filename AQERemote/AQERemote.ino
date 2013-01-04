@@ -42,16 +42,16 @@ void setup(){
     randomSeed(analogRead(0));
 
     Serial.begin(115200);
-    Serial.println(F("\n[Air Quality Egg - Base Remote - v1.00]"));
-    Serial.print("Unit Address: ");
+    Serial.println(F("\n[Air Quality Egg - Base Remote - v1.01]"));
+    Serial.print(F("Unit Address: "));
     printlnMAC(mymac);
-    Serial.print("Last Paired Base: ");
+    Serial.print(F("Last Paired Base: "));
     printlnMAC(rflink.getBaseStationAddress());
 
     for(;;){ // until some condition results in a break
         if(rflink.pair()){
-            Serial.println("Pairing Successful");
-            Serial.print("Base Station Address: ");
+            Serial.println(F("Pairing Successful"));
+            Serial.print(F("Base Station Address: "));
             printlnMAC(rflink.getBaseStationAddress());
 
             // after pairing succeeds, ensure that the pairing phase is complete before 
@@ -61,16 +61,16 @@ void setup(){
             break; // go to loop
         }
         else{
-            Serial.println("Pairing Failed");
+            Serial.println(F("Pairing Failed"));
             // check to see if we already know who are base station is from EEPROM
             // if we do, then use it and proceed to runtime behavior (i.e. loop)
             if(rflink.previouslyPaired()){
-                Serial.println("Assuming previously paired Base Station");
+                Serial.println(F("Assuming previously paired Base Station"));
                 break;
             }
             else{
                 // otherwise fall through and re-attempt pairing
-                Serial.println("Retrying"); 
+                Serial.println(F("Retrying")); 
             }
         }
     }
@@ -180,7 +180,7 @@ void setupTemperaturePacket(){
     memcpy(feed_name, 0, 32);    
     strncpy(feed_name, sensor_type_temperature, 20);  
     rflink.setPacketType(AQERF_PACKET_TYPE_REMOTE_STATION_DATUM);
-    rflink.setRemoteFirmwareVersion(0);
+    rflink.setRemoteFirmwareVersion(1);
     rflink.setRemoteStationAddress(mymac);
     rflink.setSourceSensorAddress(mymac);
     rflink.setSensorIndex(0);
@@ -193,7 +193,7 @@ void setupHumidityPacket(){
     memcpy(feed_name, 0, 32);    
     strncpy(feed_name, sensor_type_humidity, 20);  
     rflink.setPacketType(AQERF_PACKET_TYPE_REMOTE_STATION_DATUM);
-    rflink.setRemoteFirmwareVersion(0);
+    rflink.setRemoteFirmwareVersion(1);
     rflink.setRemoteStationAddress(mymac);
     rflink.setSourceSensorAddress(mymac);
     rflink.setSensorIndex(1);
