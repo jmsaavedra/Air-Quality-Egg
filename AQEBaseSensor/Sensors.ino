@@ -195,7 +195,7 @@ void sendTemperature(){
   memcpy(current_sensor_address, mymac, 6);
   current_sensor_value = getTemperature();
   current_sensor_index = 1; 
-  current_firmware_version = 0x16;
+  current_firmware_version = 0x17;
 }
 
 void sendHumidity(){
@@ -205,7 +205,7 @@ void sendHumidity(){
   memcpy(current_sensor_address, mymac, 6);
   current_sensor_value = getHumidity();
   current_sensor_index = 0; 
-  current_firmware_version = 0x16;
+  current_firmware_version = 0x17;
 }
 
 void sendEggBus(uint8_t sendType){

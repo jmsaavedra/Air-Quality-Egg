@@ -72,57 +72,53 @@ static void provisioningCallback (byte status, word off, word len) {
   Serial.println((int) off);
   Serial.println((int) len);
 
-  if (status == 1){ //we're getting the body ---
-    char* token = strtok((char *)cbuf, ":,\"\n"); //tokenize
+  char* token = strtok((char *)cbuf, ":,\"\n"); //tokenize
 
-    while ( token != 0 ){
+  while ( token != 0 ){
 
-      Serial.print(F("Token: "));
-      Serial.println(token);
+    Serial.print(F("Token: "));
+    Serial.println(token);
 
-      //--- setting the apikey and feedid (after they've been found)
-      if (foundApiKey){
-        // strncpy(apiKey, token, API_KEY_LENGTH);
-        // put the token in EEPROM to be retrieved later
-        setApiKeyInEEPROM(token);
-        api_key_strlen = strlen(token);
-        foundApiKey = false;
-      } 
-      if (foundFeedId){ 
-        // strncpy(feedId, token, FEED_ID_LENGTH);
-        // put the token in EEPROM to be retrieved later
-        setFeedIdInEEPROM(token);
-        feed_id_strlen = strlen(token);
-        foundFeedId = false;
-      }
-
-      //--- looking for the apikey and feedid
-      if(strncmp_P(token, PSTR("apikey"),6)==0){
-        Serial.print(F(">>>FOUND APIKEY\n"));
-        foundApiKey = true; //the next token will be the apikey
-      } 
-      if(strncmp_P(token,PSTR("feed_id"),6)==0){
-        Serial.print(F(">>>FOUND FEED_ID\n"));
-        foundFeedId = true; //the next token will be the feedid
-      }
-
-      if(feed_id_strlen > 0 && api_key_strlen > 0){
-        activated = true;
-        Serial.print(F("API KEY LENGTH = "));
-        Serial.println(api_key_strlen);        
-        Serial.print(F("FEED LENGTH = "));
-        Serial.println(feed_id_strlen);
-        eeprom_write_byte((uint8_t *) ACTIVATION_STATUS_EEPROM_ADDRESS, PROVISIONING_STATUS_GOOD);   
-        delay(1000);
-        soft_restart();     
-      }
-      
-      token = strtok (0, ":,\"\n"); // advance token pointer
+    //--- setting the apikey and feedid (after they've been found)
+    if (foundApiKey){
+      // strncpy(apiKey, token, API_KEY_LENGTH);
+      // put the token in EEPROM to be retrieved later
+      setApiKeyInEEPROM(token);
+      api_key_strlen = strlen(token);
+      foundApiKey = false;
+    } 
+    if (foundFeedId){ 
+      // strncpy(feedId, token, FEED_ID_LENGTH);
+      // put the token in EEPROM to be retrieved later
+      setFeedIdInEEPROM(token);
+      feed_id_strlen = strlen(token);
+      foundFeedId = false;
     }
-  } 
-  else Serial.println(cbuf); //prints the entire buffer, it's missing the body
 
-  Serial.println(F("..."));
+    //--- looking for the apikey and feedid
+    if(strncmp_P(token, PSTR("apikey"),6)==0){
+      Serial.print(F(">>>FOUND APIKEY\n"));
+      foundApiKey = true; //the next token will be the apikey
+    } 
+    if(strncmp_P(token,PSTR("feed_id"),6)==0){
+      Serial.print(F(">>>FOUND FEED_ID\n"));
+      foundFeedId = true; //the next token will be the feedid
+    }
+
+    if(feed_id_strlen > 0 && api_key_strlen > 0){
+      activated = true;
+      Serial.print(F("API KEY LENGTH = "));
+      Serial.println(api_key_strlen);        
+      Serial.print(F("FEED LENGTH = "));
+      Serial.println(feed_id_strlen);
+      eeprom_write_byte((uint8_t *) ACTIVATION_STATUS_EEPROM_ADDRESS, PROVISIONING_STATUS_GOOD);   
+      delay(1000);
+      soft_restart();     
+    }
+    
+    token = strtok (0, ":,\"\n"); // advance token pointer
+  }
+
 }
 
 #define MAX_ACTIVATION_ATTEMPTS         100
