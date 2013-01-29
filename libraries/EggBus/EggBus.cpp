@@ -120,6 +120,7 @@ float EggBus::getSensorValue(uint8_t sensorIndex){
   uint8_t xval, yval, row = 0;
   float real_table_value_x, real_table_value_y;
   float previous_real_table_value_x = 0.0, previous_real_table_value_y = 0.0;
+  float previous_previous_real_table_value_x = 0.0, previous_previous_real_table_value_y = 0.0;
     
   while(getTableRow(sensorIndex, row++, &xval, &yval)){
     real_table_value_x = x_scaler * xval;
@@ -158,6 +159,9 @@ float EggBus::getSensorValue(uint8_t sensorIndex){
     }
     
     // store into the previous values for use in interpolation/extrapolation
+    previous_previous_real_table_value_x = previous_real_table_value_x;
+    previous_previous_real_table_value_y = previous_real_table_value_y;    
+    
     previous_real_table_value_x = real_table_value_x;
     previous_real_table_value_y = real_table_value_y;
   }  
@@ -165,8 +169,8 @@ float EggBus::getSensorValue(uint8_t sensorIndex){
   // case 4: the independent variable is must be greater than the largest value in the table, so we need to extrapolate forward
   //         if you got through the entire table without an early return that means the independent_variable_value  
   // the last values stored should be used for the slope calculation
-  slope = (real_table_value_y - previous_real_table_value_y) / (real_table_value_x - previous_real_table_value_x);   
-  return real_table_value_y + slope * (independent_variable_value - real_table_value_x);
+  slope = (real_table_value_y - previous_previous_real_table_value_y) / (real_table_value_x - previous_previous_real_table_value_x);
+  return real_table_value_y + slope * (independent_variable_value - real_table_value_x);  
 }
 
 /*

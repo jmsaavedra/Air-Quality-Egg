@@ -42,7 +42,7 @@ void setup(){
     randomSeed(analogRead(0));
 
     Serial.begin(115200);
-    Serial.println(F("\n[Air Quality Egg - Base Remote - v1.01]"));
+    Serial.println(F("\n[Air Quality Egg - Remote - v1.02]"));
     Serial.print(F("Unit Address: "));
     printlnMAC(mymac);
     Serial.print(F("Last Paired Base: "));
