@@ -42,7 +42,7 @@ void setup(){
     randomSeed(analogRead(0));
 
     Serial.begin(115200);
-    Serial.println(F("\n[Air Quality Egg - Remote - v1.02]"));
+    Serial.println(F("\n[Air Quality Egg - Remote - v1.03]"));
     Serial.print(F("Unit Address: "));
     printlnMAC(mymac);
     Serial.print(F("Last Paired Base: "));
@@ -118,11 +118,11 @@ void loop(){
       case TRANSMIT_STATE_POLL_EGG_BUS:
         if(eggbus_sensor_index < eggBus.getNumSensors()){ // there are more sensors at the current address
           if(SEND_RAW == send_type){
-            setupEggBusPacketRaw(); 
+            setupEggBusPacketRaw();             
             send_type = SEND_CALCULATED;          
           }
           else{
-            setupEggBusPacket();
+            setupEggBusPacket();                                         
             send_type = SEND_RAW;
             eggbus_sensor_index++;            
           }
@@ -131,9 +131,6 @@ void loop(){
         }
         else if(eggBus.next()){ // there are more sensors on the bus
           eggbus_sensor_index = 0;
-          setupEggBusPacket();
-          eggbus_sensor_index++;
-          need_to_send = 1;    
         }
         else{ // there are no sensors left on the bus
           need_to_send = 0;
@@ -180,7 +177,7 @@ void setupTemperaturePacket(){
     memcpy(feed_name, 0, 32);    
     strncpy(feed_name, sensor_type_temperature, 20);  
     rflink.setPacketType(AQERF_PACKET_TYPE_REMOTE_STATION_DATUM);
-    rflink.setRemoteFirmwareVersion(1);
+    rflink.setRemoteFirmwareVersion(3);
     rflink.setRemoteStationAddress(mymac);
     rflink.setSourceSensorAddress(mymac);
     rflink.setSensorIndex(0);
@@ -193,7 +190,7 @@ void setupHumidityPacket(){
     memcpy(feed_name, 0, 32);    
     strncpy(feed_name, sensor_type_humidity, 20);  
     rflink.setPacketType(AQERF_PACKET_TYPE_REMOTE_STATION_DATUM);
-    rflink.setRemoteFirmwareVersion(1);
+    rflink.setRemoteFirmwareVersion(3);
     rflink.setRemoteStationAddress(mymac);
     rflink.setSourceSensorAddress(mymac);
     rflink.setSensorIndex(1);
