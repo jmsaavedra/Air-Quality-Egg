@@ -39,11 +39,11 @@ class AQERF_Remote {
  private:
     uint8_t packet[RF12_MAXDATA];
     uint8_t base_station_address[6];
-    uint8_t unit_address[6];
+    uint8_t * unit_address;
     uint32_t transmit_interval;
  public:
     AQERF_Remote(uint8_t * mac);
-    uint8_t pair(void);
+    uint8_t pair();
     void transmit(void);
     uint8_t clearToSend(void);
     uint8_t * getBaseStationAddress(void);

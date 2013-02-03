@@ -13,6 +13,7 @@
 static uint8_t mymac[6] = {0,0,0,0,0,0};
 NanodeMAC mac(mymac);
 RGB_LED rgb;
+uint8_t pairing_rx_count = 0;
 
 // create an AQERF_Base object to handle the RF Link
 // informing it what the unit MAC address is
@@ -36,22 +37,36 @@ void setup(){
     Serial.begin(115200);
     PRINT_STACK_SPACE;
     
-    Serial.println(F("\n[Air Quality Egg - Base Egg - v1.02]"));
+    Serial.println(F("\n[Air Quality Egg - Base Egg - v1.03]"));
     Serial.print(F("Unit Address: "));
     printlnMAC(mymac);
     
     rgb.bounceColor(yellow, 3000);
     rflink.pairInit();
+    rflink.setPairingRxCallback(pairingRx);
     while(!rflink.pair()){
       rgb.render(); 
     }
     rgb.stop_animation();
     rgb.setColor(black);
     
+    if(pairing_rx_count > 0){
+      blinkColorN(blue, 3, 1000);
+    }
+    else{
+      blinkColorN(magenta, 3, 1000);
+    }
+    
     Serial.println(F("Pairing complete"));    
     
     setupNanode();
-    activateWithCosm();    
+    
+    blinkColorN(cyan, 3, 1000);
+    
+    activateWithCosm();  
+  
+    blinkColorN(green, 3, 1000);      
+    
     markCosmResponse();
 }
 
@@ -109,4 +124,29 @@ void printlnMAC(uint8_t * mac){
         }
     }
     Serial.println();
+}
+
+void pairingRx(uint8_t * packet){
+  Serial.print(millis());
+  Serial.println(F(" Received Packet During Pairing"));
+  for(int i = 0; i < 8; i++){
+    Serial.print(packet[i]);
+    Serial.print(F(" "));
+  }
+  Serial.println();
+  
+  pairing_rx_count++;
+  Serial.print(F("Pairing Event Count: "));
+  Serial.println(pairing_rx_count);
+}
+
+void blinkColorN(uint8_t * color, uint8_t num_times, uint32_t period_ms){
+    for(uint16_t ii = 0; ii < num_times; ii++){
+      rgb.setColor(black);
+      delay(period_ms / 2);
+      rgb.setColor(color);
+      delay(period_ms / 2);       
+    }
+    
+    rgb.setColor(black);
 }

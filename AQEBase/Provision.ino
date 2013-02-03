@@ -124,7 +124,7 @@ static void provisioningCallback (byte status, word off, word len) {
   Serial.println(F("..."));
 }
 
-#define MAX_ACTIVATION_ATTEMPTS         100
+#define MAX_ACTIVATION_ATTEMPTS         4   // about 1 minutes worth of attempts
 #define INITIAL_PACKET_DELAY_MS      10000L // 10 seconds
 #define ACTIVATION_RETRY_INTERVAL_MS 15000L // retry every 15 seconds
 void activateWithCosm(){

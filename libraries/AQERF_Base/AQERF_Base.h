@@ -38,8 +38,10 @@ class AQERF_Base {
     uint32_t end_time;
     int32_t previous_time;
     uint8_t need_to_send;
+    void (*pairingRxCallback)(uint8_t *);
  public:
     AQERF_Base(uint8_t * mac);
+    void setPairingRxCallback(void (*fp)(uint8_t *));
     boolean pair(void);
     void pairInit(void);
     uint8_t dataReceived(void);

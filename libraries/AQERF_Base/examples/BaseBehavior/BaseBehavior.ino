@@ -13,12 +13,23 @@ AQERF_Base rflink(mymac);
 void printReceivedData();
 void printMAC(uint8_t * mac);
 
+void pairingRx(uint8_t * packet){
+  Serial.print(millis());
+  Serial.println(F(" Received Packet During Pairing"));
+  for(int i = 0; i < 8; i++){
+    Serial.print(packet[i]);
+    Serial.print(F(" "));
+  }
+  Serial.println();
+}
+
 void setup(){
     Serial.begin(9600);
     Serial.println("AQE Base RF Unit Test");
     Serial.print("Unit Address: ");
     printlnMAC(mymac);
     rflink.pairInit();
+    rflink.setPairingRxCallback(pairingRx);
     while(!rflink.pair()){
         // do nothing... or 'other stuff'
     }

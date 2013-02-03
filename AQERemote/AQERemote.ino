@@ -40,7 +40,9 @@ int need_to_send = 0;
 
 void setup(){
     randomSeed(analogRead(0));
-
+    
+    rflink.setTransmitInterval(120000L); // transmit every two minutes
+    
     Serial.begin(115200);
     Serial.println(F("\n[Air Quality Egg - Remote - v1.03]"));
     Serial.print(F("Unit Address: "));

@@ -81,15 +81,15 @@ typedef struct{
 #define AQERF_EEPROM_LAST_KNOWN_BASE_ADDRESS 42
 AQERF_Remote::AQERF_Remote(uint8_t * mac){
     transmit_interval = AQERF_SENSOR_DATUM_TRANSMIT_INTERVAL;
-    memcpy(unit_address, mac, 6);
+    unit_address = mac;
     
     rf12_initialize('A', RF12_433MHZ);
-    //TODO: Read the last known Base Address out of EEPROM into base_station_address
+    //Read the last known Base Address out of EEPROM into base_station_address
     eeprom_read_block(base_station_address, (const void *) AQERF_EEPROM_LAST_KNOWN_BASE_ADDRESS, 6);
     
 }
 
-uint8_t AQERF_Remote::pair(void){
+uint8_t AQERF_Remote::pair(){
     // try this for a period of time up to the pairing duration
     for(uint32_t ii = 0; ii < AQERF_PAIRING_DURATION_MS; ii++){
         if (rf12_recvDone()) {   // incoming data is present
@@ -99,7 +99,24 @@ uint8_t AQERF_Remote::pair(void){
                     //   store the advertised base address in RAM and EEPROM
                     memcpy(base_station_address, (const void *) (rf12_data + AQERF_BASE_ADDRESS_OFFSET), AQERF_BASE_ADDRESS_LENGTH);
                     
-                    //TODO: Store the base_station_address to EEPROM
+                    // ping back to the base to let it know you are all set by echoing the packet with your address
+                    memcpy(packet + AQERF_BASE_ADDRESS_OFFSET, unit_address, AQERF_BASE_ADDRESS_LENGTH);
+
+                    delay(200);
+                    
+                    while(!rf12_canSend()){
+                      rf12_recvDone();
+                    }
+                    
+                    rf12_sendStart(0, packet, AQERF_BASE_STATION_ADVERTISEMENT_PACKET_LENGTH);
+                    
+                    //for(uint8_t jj = 0; jj < 100; jj++){
+                    //  rf12_recvDone();  // ensures the packet gets sent                  
+                    //}     
+                    
+                    Serial.println(F("Sent ACK"));
+                    
+                    //Store the base_station_address to EEPROM
                     eeprom_write_block(base_station_address, (void *) AQERF_EEPROM_LAST_KNOWN_BASE_ADDRESS, 6);
                     return 1;
                 }

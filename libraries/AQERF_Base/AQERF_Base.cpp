@@ -78,6 +78,7 @@ typedef struct{
 */
 
 AQERF_Base::AQERF_Base(uint8_t * mac){
+    pairingRxCallback = 0;
     memcpy(base_station_address, mac, 6);
     rf12_initialize('A', RF12_433MHZ); // 'A' is arbitrary, doesn't matter for broadcast
 }
@@ -95,17 +96,29 @@ void AQERF_Base::pairInit(void){
     memcpy(packet + AQERF_BASE_ADDRESS_OFFSET, base_station_address, AQERF_BASE_ADDRESS_LENGTH);
 }
 
-boolean AQERF_Base::pair(void){
+void AQERF_Base::setPairingRxCallback(void (*fp)(uint8_t *)){
+    pairingRxCallback = fp;
+}
+
+boolean AQERF_Base::pair(){
     uint32_t current_time = millis();
     boolean pairing_done = false;
-    if(current_time < end_time){
-        rf12_recvDone();
+    
+    if (rf12_recvDone()) {   // incoming data is present
+        if(0 == rf12_crc){   // otherwise the data is unreliable                    
+            if(pairingRxCallback != 0){
+                pairingRxCallback(packet);
+            }
+        }
+    }    
+    
+    if(current_time < end_time){       
         if(current_time - previous_time > PAIRING_BROADCAST_INTERVAL_MS) {
             previous_time = current_time; 
             need_to_send = 1;
         }
 
-        if(rf12_canSend() && need_to_send){
+        if(need_to_send && rf12_canSend()){
             rf12_sendStart(0, packet, AQERF_BASE_STATION_ADVERTISEMENT_PACKET_LENGTH);
             need_to_send = 0;
         }
