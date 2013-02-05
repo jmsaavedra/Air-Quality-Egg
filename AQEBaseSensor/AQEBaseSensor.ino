@@ -21,7 +21,6 @@ EggBus eggBus;
 #define SEND_CALCULATED 1
 byte send_type = SEND_RAW;
 
-
 void printMAC(uint8_t * mac);
 
 // support variables
@@ -69,7 +68,7 @@ void loop(){
     }
     
     if(currentMillis - heartbeatPreviousMillis > heartbeatInterval){
-      Serial.print(transmit_state);
+      //Serial.print(transmit_state);
       heartbeatPreviousMillis = currentMillis;
     }    
     
@@ -77,14 +76,18 @@ void loop(){
       switch(transmit_state){
       case TRANSMIT_STATE_SEND_TEMPERATURE:
         sendTemperature();
-        need_to_send = 1;    
+        need_to_send = 1; 
+        Serial.print(millis()); 
+        Serial.println(F(" Sent Temperature"));
         transmit_state = TRANSMIT_STATE_SEND_HUMIDITY;
         break;
       case TRANSMIT_STATE_SEND_HUMIDITY:
         sendHumidity();
-        need_to_send = 1;    
+        need_to_send = 1;          
         eggbus_sensor_index = 0;
-        if(eggBus.next()){
+        Serial.print(millis());         
+        Serial.println(F(" Sent Humidity"));        
+        if(eggBus.next()){            
           transmit_state = TRANSMIT_STATE_POLL_EGG_BUS;
         }
         else{
@@ -95,10 +98,16 @@ void loop(){
         if(eggbus_sensor_index < eggBus.getNumSensors()){ // there are more sensors at the current address
           if(SEND_RAW == send_type){
             sendEggBus(SEND_RAW); 
+            Serial.print(millis());             
+            Serial.print(F(" Sent Egg Bus Raw :: "));            
+            Serial.println(eggBus.getSensorType(eggbus_sensor_index));
             send_type = SEND_CALCULATED;          
           }
           else{
             sendEggBus(SEND_CALCULATED); 
+            Serial.print(millis());             
+            Serial.print(F(" Sent Egg Bus Calculated :: "));            
+            Serial.println(eggBus.getSensorType(eggbus_sensor_index));            
             send_type = SEND_RAW;
             eggbus_sensor_index++;            
           }
@@ -107,7 +116,6 @@ void loop(){
         }
         else if(eggBus.next()){ // there are more sensors on the bus
           eggbus_sensor_index = 0;
-          eggbus_sensor_index++;
           need_to_send = 1;    
         }
         else{ // there are no sensors left on the bus
@@ -137,10 +145,11 @@ void loop(){
       
       // transmit the packet
       postSensorData();  
+      Serial.print(millis());       
+      Serial.println(F(" Posted Sensor Data"));
+      Serial.println();
       need_to_send = 0;
       clear_to_send = 0;
-      Serial.println(F("Transmitted Packet")); 
-
       cosmDelayPreviousMillis = currentMillis;      
     }     
     
@@ -149,7 +158,8 @@ void loop(){
       delay(1000);
       soft_restart(); 
     }    
-
+    
+    checkCosmReply();    
 }
 
 void printlnMAC(uint8_t * mac){

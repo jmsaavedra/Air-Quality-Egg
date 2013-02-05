@@ -37,7 +37,7 @@ float getHumidity(){
       return -1; 
     }
   } 
-  else return h;
+  return h;
 }
 
 //--------- DHT22 temperature ---------

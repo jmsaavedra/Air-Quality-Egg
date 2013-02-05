@@ -32,21 +32,22 @@ void computeActivationUrl(char * activation_url){
   };
   
   //--- pull MAC address from Nanode, stick it in serialNumber  
-  char serial_number[18] = {0};
+  //char serial_number[18] = {0};
+  memset((char *) Ethernet::buffer, 0, 18);
   Serial.print(F("Serial #: "));
   for(uint8_t ii = 0; ii < 6; ii++){
-    convertByteArrayToAsciiHex(mymac + ii, serial_number + 3*ii, 1);
-    if(ii == 5) serial_number[3*ii+2] = '\0';
-    else serial_number[3*ii+2] = ':';
+    convertByteArrayToAsciiHex(mymac + ii, (char *) Ethernet::buffer + 3*ii, 1);
+    if(ii == 5) Ethernet::buffer[3*ii+2] = '\0';
+    else Ethernet::buffer[3*ii+2] = ':';
   }
-  Serial.println(serial_number);  
+  Serial.println((char *)Ethernet::buffer);  
   
   //--- generate SHA1
   Serial.println(F("compute sha: "));
   
   #define HMAC_LENGTH 20
   Sha1.initHmac(deviceKey,HMAC_LENGTH); 
-  Sha1.print(serial_number);
+  Sha1.print((char *)Ethernet::buffer);
   
   convertByteArrayToAsciiHex(Sha1.resultHmac(), activation_url, HMAC_LENGTH);
   
@@ -121,7 +122,7 @@ static void provisioningCallback (byte status, word off, word len) {
 
 }
 
-#define MAX_ACTIVATION_ATTEMPTS         100
+#define MAX_ACTIVATION_ATTEMPTS         4   // about 1 minutes worth of attempts
 #define INITIAL_PACKET_DELAY_MS      10000L // 10 seconds
 #define ACTIVATION_RETRY_INTERVAL_MS 15000L // retry every 15 seconds
 void activateWithCosm(){
