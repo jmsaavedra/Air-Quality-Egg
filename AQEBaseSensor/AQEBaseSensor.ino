@@ -4,7 +4,9 @@
 #include <SoftReset.h>
 #include <avr/wdt.h>
 
-#define SENSOR_PACKET_DELAY 5000L
+#define SENSOR_PACKET_DELAY  5000L
+#define FORCED_RESET_TIME_MS 600000L
+
 #define TRANSMIT_STATE_SEND_TEMPERATURE 1
 #define TRANSMIT_STATE_SEND_HUMIDITY    2
 #define TRANSMIT_STATE_POLL_EGG_BUS     3
@@ -37,13 +39,15 @@ void setup(){
     randomSeed(analogRead(0));
 
     Serial.begin(115200);
-    Serial.println(F("\n[Air Quality Egg - Base Sensor - v1.09]"));
+    Serial.println(F("\n[Air Quality Egg - Base Sensor - v1.10]"));
     Serial.print("Unit Address: ");
     printlnMAC(mymac);    
     cosmPostPreviousMillis = 71243411;
     
     setupNanode();
-    activateWithCosm();    
+    activateWithCosm();
+
+        
 }  
 
 void loop(){
@@ -124,7 +128,14 @@ void loop(){
         }
         break;
       case TRANSMIT_STATE_WAITING:
-        // nothing to do here ...
+        // reset after about 10 minutes
+        if(currentMillis > FORCED_RESET_TIME_MS){
+           Serial.println(F("Time for our regularly scheduled Restart!"));
+           delay(1000);
+           soft_restart(); 
+        }
+        
+        // nothing else to do here ...
         break;
       default: 
         Serial.print(F("Transmit State = "));

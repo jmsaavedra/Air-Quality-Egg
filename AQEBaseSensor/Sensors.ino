@@ -7,7 +7,7 @@
 #include <string.h>
 #include "MemoryLocations.h" 
 
-#define AQE_BASESENSOR_FIRMWARE_VERSION 0x19
+#define AQE_BASESENSOR_FIRMWARE_VERSION 0x1A
 
 extern char website[] PROGMEM;
 extern uint8_t eggbus_sensor_index;
