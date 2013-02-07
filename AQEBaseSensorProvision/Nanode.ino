@@ -4,7 +4,7 @@
 #include <SoftReset.h>
 #include <stdint.h>
 
-#define ETHERNET_BUFFER_LENGTH 600
+#define ETHERNET_BUFFER_LENGTH 500
 extern uint8_t mymac[6];
 
 char website[] PROGMEM = "api.cosm.com";
@@ -57,13 +57,4 @@ void setupNanode(){
 
 void loopNanode(){
     ether.packetLoop(ether.packetReceive());     
-}
-
-static void convertByteArrayToAsciiHex(uint8_t* hash, char * returnString, uint8_t byte_array_length) {
-  const char digit2Ascii[16] = {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'};
-  for (int i=0; i<byte_array_length; i++) {
-    returnString[2*i    ] = digit2Ascii[hash[i]>>4];
-    returnString[2*i + 1] = digit2Ascii[hash[i]&0xf];
-  }
-  returnString[2*(byte_array_length-1) + 2] = '\0';
 }
