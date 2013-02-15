@@ -137,15 +137,17 @@ float EggBus::getSensorValue(uint8_t sensorIndex){
       && (real_table_value_x > independent_variable_value)){
 
       // look up the value in row 1 to calculate the slope to extrapolate
-      previous_real_table_value_x = real_table_value_x;
-      previous_real_table_value_y = real_table_value_y;
+      // previous_real_table_value_x = real_table_value_x;
+      // previous_real_table_value_y = real_table_value_y;
       
-      getTableRow(sensorIndex, row++, &xval, &yval);
-      real_table_value_x = x_scaler * xval;
-      real_table_value_y = y_scaler * yval;      
+      // getTableRow(sensorIndex, row++, &xval, &yval);
+      // real_table_value_x = x_scaler * xval;
+      // real_table_value_y = y_scaler * yval;      
       
-      slope = (real_table_value_y - previous_real_table_value_y) / (real_table_value_x - previous_real_table_value_x);     
-      return previous_real_table_value_y - slope * (previous_real_table_value_x - independent_variable_value);
+      // slope = (real_table_value_y - previous_real_table_value_y) / (real_table_value_x - previous_real_table_value_x);     
+      // return previous_real_table_value_y - slope * (previous_real_table_value_x - independent_variable_value);
+      
+      return (real_table_value_y / real_table_value_x) * independent_variable_value;
     }
     
     // case 3: the independent variable is between the current row and the previous row

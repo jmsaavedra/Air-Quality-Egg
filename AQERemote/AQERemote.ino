@@ -6,6 +6,8 @@
 #include <SoftReset.h>
 #include <avr/wdt.h>
 
+#define FIRMWARE_REVISION 4
+
 #define SENSOR_PACKET_DELAY 5000L
 #define TRANSMIT_STATE_SEND_TEMPERATURE 1
 #define TRANSMIT_STATE_SEND_HUMIDITY    2
@@ -44,7 +46,7 @@ void setup(){
     rflink.setTransmitInterval(120000L); // transmit every two minutes
     
     Serial.begin(115200);
-    Serial.println(F("\n[Air Quality Egg - Remote - v1.03]"));
+    Serial.println(F("\n[Air Quality Egg - Remote - v1.04]"));
     Serial.print(F("Unit Address: "));
     printlnMAC(mymac);
     Serial.print(F("Last Paired Base: "));
@@ -179,7 +181,7 @@ void setupTemperaturePacket(){
     memcpy(feed_name, 0, 32);    
     strncpy(feed_name, sensor_type_temperature, 20);  
     rflink.setPacketType(AQERF_PACKET_TYPE_REMOTE_STATION_DATUM);
-    rflink.setRemoteFirmwareVersion(3);
+    rflink.setRemoteFirmwareVersion(FIRMWARE_REVISION);
     rflink.setRemoteStationAddress(mymac);
     rflink.setSourceSensorAddress(mymac);
     rflink.setSensorIndex(0);
@@ -192,7 +194,7 @@ void setupHumidityPacket(){
     memcpy(feed_name, 0, 32);    
     strncpy(feed_name, sensor_type_humidity, 20);  
     rflink.setPacketType(AQERF_PACKET_TYPE_REMOTE_STATION_DATUM);
-    rflink.setRemoteFirmwareVersion(3);
+    rflink.setRemoteFirmwareVersion(FIRMWARE_REVISION);
     rflink.setRemoteStationAddress(mymac);
     rflink.setSourceSensorAddress(mymac);
     rflink.setSensorIndex(1);
