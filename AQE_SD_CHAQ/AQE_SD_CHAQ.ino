@@ -51,7 +51,7 @@ File file;
 void setup(){
   //randomSeed(analogRead(0));
 
-  Serial.begin(115200);
+  Serial.begin(9600);
   Serial.println(F("\n[Air Quality Egg - CHAQ - v1]"));
   //Serial.print("Unit Address: ");
   //printlnMAC(mymac);    
@@ -92,7 +92,7 @@ void setup(){
   Serial.println("card initialized.");
 
   // Open up the file we're going to log to!
-  file = SD.open("CHAQ_01.txt", FILE_WRITE); // this is the ID of the EGG!!!!!
+  file = SD.open("CHAQ_10.txt", FILE_WRITE); // this is the ID of the EGG!!!!!
   if (!file) {
     Serial.println("error opening file");
     // Wait forever since we cant write data

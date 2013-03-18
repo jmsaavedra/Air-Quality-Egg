@@ -27,7 +27,7 @@ void printMAC(uint8_t * mac);
 
 // support variables
 long cosmPostPreviousMillis = 0;
-long cosmPostInterval = 60000L;
+long cosmPostInterval = 30000L;
 long cosmDelayPreviousMillis = 0;
 long cosmDelayInterval = 5000L;
 long heartbeatPreviousMillis = 0;
@@ -44,22 +44,22 @@ void setup(){
     printlnMAC(mymac);    
     cosmPostPreviousMillis = 71243411;
     
-    setupNanode();
+    //setupNanode();
         
 }  
 
 void loop(){
     unsigned long currentMillis = millis(); 
     
-    loopNanode();
+    //loopNanode();
 
     if(currentMillis - cosmPostPreviousMillis > cosmPostInterval) {
-        if(transmit_state != TRANSMIT_STATE_WAITING){
-          Serial.println(F("Something is taking longer than expected, Resetting"));
-          Serial.flush();
-          delay(1000);
-          soft_restart(); 
-        }
+//        if(transmit_state != TRANSMIT_STATE_WAITING){
+//          Serial.println(F("Something is taking longer than expected, Resetting"));
+//          Serial.flush();
+//          delay(1000);
+//          soft_restart(); 
+//        }
         
         Serial.println(F("Kicking off transmit cycle"));
         cosmPostPreviousMillis = currentMillis;              

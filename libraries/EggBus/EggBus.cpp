@@ -51,7 +51,7 @@ uint8_t EggBus::next(){
     
     for( uint8_t addr = currentBusAddress + 1; addr <= 127; addr++ ) {      
       if(addr == 0x70) continue; // this is the I2C Mux skip it
-      
+      if(addr == 0x68) continue; // this is the RTC
       rc = twi_writeTo(addr, &data, 0, 1, 0);
       if(rc == 0){
         // device found
@@ -137,17 +137,15 @@ float EggBus::getSensorValue(uint8_t sensorIndex){
       && (real_table_value_x > independent_variable_value)){
 
       // look up the value in row 1 to calculate the slope to extrapolate
-      // previous_real_table_value_x = real_table_value_x;
-      // previous_real_table_value_y = real_table_value_y;
+      previous_real_table_value_x = real_table_value_x;
+      previous_real_table_value_y = real_table_value_y;
       
-      // getTableRow(sensorIndex, row++, &xval, &yval);
-      // real_table_value_x = x_scaler * xval;
-      // real_table_value_y = y_scaler * yval;      
+      getTableRow(sensorIndex, row++, &xval, &yval);
+      real_table_value_x = x_scaler * xval;
+      real_table_value_y = y_scaler * yval;      
       
-      // slope = (real_table_value_y - previous_real_table_value_y) / (real_table_value_x - previous_real_table_value_x);     
-      // return previous_real_table_value_y - slope * (previous_real_table_value_x - independent_variable_value);
-      
-      return (real_table_value_y / real_table_value_x) * independent_variable_value;
+      slope = (real_table_value_y - previous_real_table_value_y) / (real_table_value_x - previous_real_table_value_x);     
+      return previous_real_table_value_y - slope * (previous_real_table_value_x - independent_variable_value);
     }
     
     // case 3: the independent variable is between the current row and the previous row

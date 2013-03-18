@@ -77,66 +77,66 @@ void postSensorData(){
   itoa(current_sensor_index, temp2, 10);
   strcat(temp, temp2);
   
-  stash.print(F("{\"datastreams\":[{\"id\": \""));
-  stash.print(temp);
-  stash.print(F("\",\"current_value\":\""));
-  stash.print(current_sensor_value, 8);
-  stash.print(F("\",\"tags\":[\"aqe:sensor_type="));
+  Serial.print(F("{\"datastreams\":[{\"id\": \""));
+  Serial.print(temp);
+  Serial.print(F("\",\"current_value\":\""));
+  Serial.print(current_sensor_value, 8);
+  Serial.print(F("\",\"tags\":[\"aqe:sensor_type="));
 
   if(strstr_P(current_sensor_type, PSTR("_raw")) != NULL){
     memset(temp, 0, 64);
     strncpy(temp, current_sensor_type, strlen(current_sensor_type) - 4); // always ends in "_raw" if it has it
-    stash.print(temp);    
+    Serial.print(temp);    
     isRaw = true;    
   }
   else{
-    stash.print(current_sensor_type);
+    Serial.print(current_sensor_type);
   }  
   
-  stash.print(F("\",\"aqe:sensor_address="));
+  Serial.print(F("\",\"aqe:sensor_address="));
   memset(temp, 0, 64);
   stringConvertMAC(current_sensor_address, temp, ':');
-  stash.print(temp);
+  Serial.print(temp);
   
-  stash.print(F("\",\"aqe:sensor_index="));
-  stash.print(current_sensor_index);  
+  Serial.print(F("\",\"aqe:sensor_index="));
+  Serial.print(current_sensor_index);  
   
-  stash.print(F("\",\"aqe:firmware_version="));
-  stash.print(current_firmware_version);    
+  Serial.print(F("\",\"aqe:firmware_version="));
+  Serial.print(current_firmware_version);    
   
-  stash.print(F("\",\"aqe:data_origin="));  
+  Serial.print(F("\",\"aqe:data_origin="));  
   if(isRaw){
-    stash.print(F("raw"));
+    Serial.print(F("raw"));
   }
   else{
-    stash.print(F("computed"));    
+    Serial.print(F("computed"));    
   }
   
-  stash.print(F("\"],\"unit\":{\"label\":\""));
-  stash.print(current_sensor_units);
-  stash.print(F("\",\"symbol\":\""));
-  stash.print(current_sensor_units);
-  stash.print(F("\"}}]}"));
+  Serial.print(F("\"],\"unit\":{\"label\":\""));
+  Serial.print(current_sensor_units);
+  Serial.print(F("\",\"symbol\":\""));
+  Serial.print(current_sensor_units);
+  Serial.print(F("\"}}]}"));
  
-  stash.save();
+  //stash.save();
   
   Serial.println(F("Preparing stash"));  
-  Stash::prepare(PSTR("PUT http://$F/v2/feeds/$E.json HTTP/1.0" "\r\n"
-    "Host: $F" "\r\n"
-    "X-ApiKey: $E" "\r\n"
-    "Content-Length: $D" "\r\n"
-    "\r\n"
-    "$H"),
-  website, 
-  (const void *) FEED_ID_EEPROM_ADDRESS, 
-  website, 
-  (const void *) API_KEY_EEPROM_ADDRESS, 
-  stash.size(), 
-  sd);
+//  Stash::prepare(PSTR("PUT http://$F/v2/feeds/$E.json HTTP/1.0" "\r\n"
+//    "Host: $F" "\r\n"
+//    "X-ApiKey: $E" "\r\n"
+//    "Content-Length: $D" "\r\n"
+//    "\r\n"
+//    "$H"),
+//  website, 
+//  (const void *) FEED_ID_EEPROM_ADDRESS, 
+//  website, 
+//  (const void *) API_KEY_EEPROM_ADDRESS, 
+//  stash.size(), 
+//  sd);
 
   Serial.println(F("Sending data to Cosm"));
   
-  tcp_session = ether.tcpSend();  
+  //tcp_session = ether.tcpSend();  
   Serial.print(F("Data sent for "));  
   Serial.println(current_sensor_type);
 }
