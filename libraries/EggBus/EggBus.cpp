@@ -348,3 +348,10 @@ float EggBus::buf_to_fvalue(uint8_t * buf){
   memcpy(&returnValue, &ret, 4);
   return returnValue;
 }
+
+void EggBus::getSensorAdcAndLow(uint8_t sensorIndex, uint32_t *adc, uint32_t * low_r){
+  i2cGetValue(currentBusAddress, SENSOR_DATA_BASE_OFFSET + sensorIndex * SENSOR_DATA_ADDRESS_BLOCK_SIZE + SENSOR_RAW_VALUE_FIELD_OFFSET, 8);
+  *adc = buf_to_value(buffer);  
+  *low_r = buf_to_value(buffer+4);  
+  return;
+}

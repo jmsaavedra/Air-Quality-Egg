@@ -103,6 +103,7 @@ class EggBus {
   bool getTableRow(uint8_t sensorIndex, uint8_t row_number, uint8_t * xval, uint8_t *y_val); 
   uint32_t getSensorR0(uint8_t sensorIndex);  
   void setSensorR0(uint8_t sensorIndex, uint32_t value);
+  void getSensorAdcAndLow(uint8_t sensorIndex, uint32_t *adc, uint32_t * low_r);
 };
 
 #endif /*_EGG_BUS_LIB_H */
