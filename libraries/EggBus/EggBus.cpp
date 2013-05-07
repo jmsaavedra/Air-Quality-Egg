@@ -113,10 +113,10 @@ float EggBus::getSensorValue(uint8_t sensorIndex){
   float slope = 0.0;  
   float x_scaler = getTableXScaler(sensorIndex);
   float y_scaler = getTableYScaler(sensorIndex);
-  float i_scaler = getIndependentScaler(sensorIndex);
-  uint32_t measured_value = getSensorIndependentVariableMeasure(sensorIndex);
+
+  float independent_variable_value = getSensorResistance(sensorIndex);
+  independent_variable_value /= getSensorR0(sensorIndex);
   
-  float independent_variable_value = (i_scaler * measured_value);
   uint8_t xval, yval, row = 0;
   float real_table_value_x, real_table_value_y;
   float previous_real_table_value_x = 0.0, previous_real_table_value_y = 0.0;
@@ -349,9 +349,24 @@ float EggBus::buf_to_fvalue(uint8_t * buf){
   return returnValue;
 }
 
-void EggBus::getSensorAdcAndLow(uint8_t sensorIndex, uint32_t *adc, uint32_t * low_r){
-  i2cGetValue(currentBusAddress, SENSOR_DATA_BASE_OFFSET + sensorIndex * SENSOR_DATA_ADDRESS_BLOCK_SIZE + SENSOR_RAW_VALUE_FIELD_OFFSET, 8);
+void EggBus::getSensorAdcAndLow(uint8_t sensorIndex, uint32_t *adc, uint32_t * low_r, uint32_t * sensor_vcc_millivolts, uint32_t * adc_vcc_millivolts, uint32_t * max_adc_value){
+  i2cGetValue(currentBusAddress, SENSOR_DATA_BASE_OFFSET + sensorIndex * SENSOR_DATA_ADDRESS_BLOCK_SIZE + SENSOR_RAW_VALUE_FIELD_OFFSET, 20);
   *adc = buf_to_value(buffer);  
   *low_r = buf_to_value(buffer+4);  
+  *sensor_vcc_millivolts = buf_to_value(buffer+8);  
+  *adc_vcc_millivolts = buf_to_value(buffer+12);  
+  *max_adc_value = buf_to_value(buffer+16);  
   return;
+}
+
+float EggBus::getSensorResistance(uint8_t sensorIndex){
+    uint32_t adc, low_r, sensor_voltage_mv, adc_voltage_mv, max_adc_value;    
+    float vx;
+    
+    getSensorAdcAndLow(sensorIndex, &adc, &low_r, &sensor_voltage_mv, &adc_voltage_mv, &max_adc_value);
+    
+    vx = 1.0 * adc;
+    vx /= max_adc_value;
+    vx *= adc_voltage_mv;      
+    return ((1.0*sensor_voltage_mv) - vx)*(1.0*low_r) / vx;  
 }

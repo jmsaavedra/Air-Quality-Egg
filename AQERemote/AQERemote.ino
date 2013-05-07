@@ -6,7 +6,7 @@
 #include <SoftReset.h>
 #include <avr/wdt.h>
 
-#define FIRMWARE_REVISION 4
+#define FIRMWARE_REVISION 5
 
 #define SENSOR_PACKET_DELAY 5000L
 #define TRANSMIT_STATE_SEND_TEMPERATURE 1
@@ -28,6 +28,8 @@ EggBus eggBus;
 
 #define SEND_RAW        0
 #define SEND_CALCULATED 1
+#define SEND_R0         2
+
 byte send_type = SEND_RAW;
 
 // create an AQERF_Base object to handle the RF Link
@@ -123,7 +125,11 @@ void loop(){
         if(eggbus_sensor_index < eggBus.getNumSensors()){ // there are more sensors at the current address
           if(SEND_RAW == send_type){
             setupEggBusPacketRaw();             
-            send_type = SEND_CALCULATED;          
+            send_type = SEND_R0;          
+          }
+          else if(SEND_R0 == send_type){
+            setupEggBusPacketR0();             
+            send_type = SEND_CALCULATED;             
           }
           else{
             setupEggBusPacket();                                         
@@ -218,17 +224,27 @@ void setupEggBusPacket(){
 
 void setupEggBusPacketRaw(){ 
     char * ohms = "ohms";
-    uint32_t measured_value = eggBus.getSensorIndependentVariableMeasure(eggbus_sensor_index);
-    float i_scaler = eggBus.getIndependentScaler(eggbus_sensor_index);
-    uint32_t r0 = eggBus.getSensorR0(eggbus_sensor_index);
-    memcpy(feed_name, 0, 32);
-    uint32_t resistance = 0xffffffff;    
-    if(measured_value != 0xffffffff){
-      resistance = (uint32_t) (measured_value * i_scaler * r0); 
-    }
     
     strncpy(feed_name, eggBus.getSensorType(eggbus_sensor_index), 20);
     strcat(feed_name, "_raw");
+    
+    rflink.setPacketType(AQERF_PACKET_TYPE_REMOTE_STATION_DATUM);
+    rflink.setRemoteFirmwareVersion(eggBus.getFirmwareVersion());
+    rflink.setRemoteStationAddress(mymac);
+    rflink.setSourceSensorAddress(eggBus.getSensorAddress());
+    rflink.setSensorIndex(eggbus_sensor_index);
+    rflink.setSensorType(feed_name);
+    rflink.setSensorUnits(ohms);
+    rflink.setSensorValue((uint32_t) eggBus.getSensorResistance(eggbus_sensor_index));         
+}
+
+void setupEggBusPacketR0(){ 
+    char * ohms = "ohms";
+    uint32_t resistance = eggBus.getSensorR0(eggbus_sensor_index);
+    memcpy(feed_name, 0, 32);
+    
+    strncpy(feed_name, eggBus.getSensorType(eggbus_sensor_index), 20);
+    strcat(feed_name, "_r0");
     
     rflink.setPacketType(AQERF_PACKET_TYPE_REMOTE_STATION_DATUM);
     rflink.setRemoteFirmwareVersion(eggBus.getFirmwareVersion());

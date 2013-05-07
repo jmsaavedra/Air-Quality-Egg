@@ -21,10 +21,10 @@
 
 // Avoid spurious pgmspace warnings - http://forum.jeelabs.net/node/327
 // See also http://gcc.gnu.org/bugzilla/show_bug.cgi?id=34734
-#undef PROGMEM 
-#define PROGMEM __attribute__(( section(".progmem.data") )) 
-#undef PSTR 
-#define PSTR(s) (__extension__({static prog_char c[] PROGMEM = (s); &c[0];}))
+//#undef PROGMEM 
+//#define PROGMEM __attribute__(( section(".progmem.data") )) 
+//#undef PSTR 
+//#define PSTR(s) (__extension__({static prog_char c[] PROGMEM = (s); &c[0];}))
 
 static byte tcpclient_src_port_l=1; 
 static byte tcp_fd; // a file descriptor, will be encoded into the port
@@ -459,10 +459,10 @@ static word www_client_internal_datafill_cb(byte fd) {
     if (client_postval == 0) {
       bfill.emit_p(PSTR("GET $F$S HTTP/1.0\r\n"
                         "Host: $F\r\n"
-                        "Accept: text/html\r\n"
+                        "$F\r\n"
                         "\r\n"), client_urlbuf,
                                  client_urlbuf_var,
-                                 client_hoststr);
+                                 client_hoststr, client_additionalheaderline);
     } else {
       prog_char* ahl = client_additionalheaderline;
       bfill.emit_p(PSTR("POST $F HTTP/1.0\r\n"
@@ -493,10 +493,15 @@ static byte www_client_internal_result_cb(byte fd, byte statuscode, word datapos
   return 0;
 }
 
-void EtherCard::browseUrl (prog_char *urlbuf, const char *urlbuf_varpart, prog_char *hoststr,void (*callback)(byte,word,word)) {
+void EtherCard::browseUrl (prog_char *urlbuf, const char *urlbuf_varpart, prog_char *hoststr, void (*callback)(byte,word,word)) {
+  browseUrl(urlbuf, urlbuf_varpart, hoststr, PSTR("Accept: text/html"), callback);
+}
+
+void EtherCard::browseUrl (prog_char *urlbuf, const char *urlbuf_varpart, prog_char *hoststr, prog_char *additionalheaderline, void (*callback)(byte,word,word)) {
   client_urlbuf = urlbuf;
   client_urlbuf_var = urlbuf_varpart;
   client_hoststr = hoststr;
+  client_additionalheaderline = additionalheaderline;
   client_postval = 0;
   client_browser_cb = callback;
   www_fd = clientTcpReq(&www_client_internal_result_cb,&www_client_internal_datafill_cb,hisport);
@@ -557,6 +562,27 @@ byte EtherCard::packetLoopIcmpCheckReply (const byte *ip_monitoredhost) {
             check_ip_message_is_from(ip_monitoredhost);
 }
 
+word EtherCard::accept(const word port, word plen) {
+  word len;
+  len = get_tcp_data_len();
+  
+  if (gPB[TCP_DST_PORT_H_P] == (port >> 8) &&
+      gPB[TCP_DST_PORT_L_P] == ((byte) port)) {
+    if (gPB[TCP_FLAGS_P] & TCP_FLAGS_SYN_V)
+      make_tcp_synack_from_syn();
+    else if (gPB[TCP_FLAGS_P] & TCP_FLAGS_ACK_V) {
+      info_data_len = get_tcp_data_len();
+      if (info_data_len > 0) {
+        len = TCP_DATA_START; // TCP_DATA_START is a formula
+        if (len <= plen - 8)
+          return len;
+      } else if (gPB[TCP_FLAGS_P] & TCP_FLAGS_FIN_V)
+        make_tcp_ack_from_any(0,0);
+    }
+  }
+  return 0;
+}
+
 word EtherCard::packetLoop (word plen) {
   word len;
 
@@ -591,6 +617,10 @@ word EtherCard::packetLoop (word plen) {
       (*icmp_cb)(&(gPB[IP_SRC_P]));
     make_echo_reply_from_request(plen);
     return 0;
+  }
+  if (ether.udpServerListening() && gPB[IP_PROTO_P]==IP_PROTO_UDP_V) {
+  	if(ether.udpServerHasProcessedPacket(plen))
+	  	return 0;
   }
   if (plen<54 && gPB[IP_PROTO_P]!=IP_PROTO_TCP_V )
     return 0;
@@ -657,21 +687,7 @@ word EtherCard::packetLoop (word plen) {
     return 0;
   }
 
-  if (gPB[TCP_DST_PORT_H_P] == (hisport >> 8) &&
-      gPB[TCP_DST_PORT_L_P] == ((byte) hisport)) {
-    if (gPB[TCP_FLAGS_P] & TCP_FLAGS_SYN_V)
-      make_tcp_synack_from_syn();
-    else if (gPB[TCP_FLAGS_P] & TCP_FLAGS_ACK_V) {
-      info_data_len = get_tcp_data_len();
-      if (info_data_len > 0) {
-        len = TCP_DATA_START; // TCP_DATA_START is a formula
-        if (len <= plen - 8)
-          return len;
-      } else if (gPB[TCP_FLAGS_P] & TCP_FLAGS_FIN_V)
-        make_tcp_ack_from_any(0,0);
-    }
-  }
-  return 0;
+  return accept(hisport, plen);
 }
 
 void EtherCard::persistTcpConnection(bool persist){

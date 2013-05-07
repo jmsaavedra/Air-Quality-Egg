@@ -8,6 +8,17 @@
 // Hence: GPL V2
 //
 // 2010-05-19 <jc@wippler.nl>
+//
+//
+// PIN Connections (Using Arduino UNO):
+//   VCC -   3.3V
+//   GND -    GND
+//   SCK - Pin 13
+//   SO  - Pin 12
+//   SI  - Pin 11
+//   CS  - Pin  8
+//
+#define __PROG_TYPES_COMPAT__
 
 #ifndef EtherCard_h
 #define EtherCard_h
@@ -26,6 +37,12 @@
 #include <avr/pgmspace.h>
 #include "enc28j60.h"
 #include "net.h"
+
+typedef void (*UdpServerCallback)(
+	uint16_t dest_port,	// the port the packet was sent to
+	uint8_t src_ip[4],	// the ip of the sender
+	const char *data,			// the data
+	uint16_t len);		// the length of the data
 
 typedef struct {
   uint8_t count;     // number of allocated pages
@@ -142,11 +159,15 @@ public:
   static void initIp (uint8_t *myip,uint16_t wwwp);
   static void makeUdpReply (char *data,uint8_t len, uint16_t port);
   static uint16_t packetLoop (uint16_t plen);
+  static uint16_t accept(uint16_t port, uint16_t plen);
   static void httpServerReply (uint16_t dlen);
   static void setGwIp (const uint8_t *gwipaddr);
   static uint8_t clientWaitingGw ();
   static uint8_t clientTcpReq (uint8_t (*r)(uint8_t,uint8_t,uint16_t,uint16_t),
                                uint16_t (*d)(uint8_t),uint16_t port);
+  static void browseUrl (prog_char *urlbuf, const char *urlbuf_varpart,
+                         prog_char *hoststr, prog_char *header,
+                         void (*cb)(uint8_t,uint16_t,uint16_t));
   static void browseUrl (prog_char *urlbuf, const char *urlbuf_varpart,
                          prog_char *hoststr,
                          void (*cb)(uint8_t,uint16_t,uint16_t));
@@ -168,6 +189,13 @@ public:
   static const char* tcpReply (byte fd);
 
   static void persistTcpConnection(bool persist);
+
+  //udpserver.cpp
+  static void udpServerListenOnPort(UdpServerCallback callback, uint16_t port);
+  static void udpServerPauseListenOnPort(uint16_t port);
+  static void udpServerResumeListenOnPort(uint16_t port);
+  static bool udpServerListening();						//called by tcpip, in packetLoop
+  static bool udpServerHasProcessedPacket(word len);	//called by tcpip, in packetLoop
 
   // dhcp.cpp
   static void DhcpStateMachine(word len);

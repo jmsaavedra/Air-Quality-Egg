@@ -73,7 +73,7 @@ class EggBus {
  private:
   uint8_t currentBusNumber;   // 0, 1, 2 for the three busses implied by the I2C Mux
   uint8_t currentBusAddress;  // 1 .. 127 (0 is reserved on I2C for "general call"
-  uint8_t buffer[16];         // storage space for the current address and strings
+  uint8_t buffer[20];         // storage space for the current address and strings
   
   void i2cGetValue(uint8_t slave_address, uint16_t register_address, uint8_t response_length);
   void i2cWriteRegister(uint8_t slave_address, uint8_t * data_to_write, uint8_t num_bytes);
@@ -103,7 +103,8 @@ class EggBus {
   bool getTableRow(uint8_t sensorIndex, uint8_t row_number, uint8_t * xval, uint8_t *y_val); 
   uint32_t getSensorR0(uint8_t sensorIndex);  
   void setSensorR0(uint8_t sensorIndex, uint32_t value);
-  void getSensorAdcAndLow(uint8_t sensorIndex, uint32_t *adc, uint32_t * low_r);
+  void getSensorAdcAndLow(uint8_t sensorIndex, uint32_t *adc, uint32_t * low_r, uint32_t * sensor_vcc_millivolts, uint32_t * adc_vcc_millivolts, uint32_t * max_adc_value);
+  float getSensorResistance(uint8_t sensorIndex);
 };
 
 #endif /*_EGG_BUS_LIB_H */

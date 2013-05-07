@@ -37,7 +37,7 @@ void setup(){
     Serial.begin(115200);
     PRINT_STACK_SPACE;
     
-    Serial.println(F("\n[Air Quality Egg - Base Egg - v1.03]"));
+    Serial.println(F("\n[Air Quality Egg - Base Egg - v1.04]"));
     Serial.print(F("Unit Address: "));
     printlnMAC(mymac);
     

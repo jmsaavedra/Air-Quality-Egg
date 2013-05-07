@@ -21,6 +21,8 @@ void postSensorData(){
   char temp2[8] = {0};
   char delimiter[2] = "_";
   boolean isRaw = false;
+  boolean isR0 = false;
+  
   int sensor_type_length = strlen(rflink.getSensorType());
   strcat(temp, rflink.getSensorType());
   strcat(temp, delimiter);
@@ -41,6 +43,12 @@ void postSensorData(){
     stash.print(temp);    
     isRaw = true;    
   }
+  if(strstr_P(rflink.getSensorType(), PSTR("_r0")) != NULL){
+    memset(temp, 0, 64);
+    strncpy(temp, rflink.getSensorType(), strlen(rflink.getSensorType()) - 3); // always ends in "_r0" if it has it
+    stash.print(temp);    
+    isR0 = true;    
+  }  
   else{
     stash.print(rflink.getSensorType());
   }  
@@ -56,6 +64,9 @@ void postSensorData(){
   stash.print(F("\",\"aqe:data_origin="));  
   if(isRaw){
     stash.print(F("raw"));
+  }
+  else if(isR0){
+    stash.print(F("r0"));
   }
   else{
     stash.print(F("computed"));    
