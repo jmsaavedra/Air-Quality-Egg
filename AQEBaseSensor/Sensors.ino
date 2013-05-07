@@ -69,6 +69,7 @@ void postSensorData(){
   char temp2[8] = {0};
   char delimiter[2] = "_";
   boolean isRaw = false;
+  boolean isR0 = false;  
   int sensor_type_length = strlen(current_sensor_type);
   strcat(temp, current_sensor_type);
   strcat(temp, delimiter);
@@ -89,6 +90,12 @@ void postSensorData(){
     stash.print(temp);    
     isRaw = true;    
   }
+  else if(strstr_P(current_sensor_type, PSTR("_r0")) != NULL){
+    memset(temp, 0, 64);
+    strncpy(temp, current_sensor_type, strlen(current_sensor_type) - 3); // always ends in "_r0" if it has it
+    stash.print(temp);    
+    isR0 = true;     
+  }
   else{
     stash.print(current_sensor_type);
   }  
@@ -107,6 +114,9 @@ void postSensorData(){
   stash.print(F("\",\"aqe:data_origin="));  
   if(isRaw){
     stash.print(F("raw"));
+  }
+  else if(isR0){
+    stash.print(F("r0"));
   }
   else{
     stash.print(F("computed"));    
@@ -221,15 +231,12 @@ void sendEggBus(uint8_t sendType){
   if(sendType == SEND_RAW){
       strcpy_P(current_sensor_units, PSTR("ohms"));
       strcat_P(current_sensor_type, PSTR("_raw"));
-      uint32_t measured_value = eggBus.getSensorIndependentVariableMeasure(eggbus_sensor_index);
-      float i_scaler = eggBus.getIndependentScaler(eggbus_sensor_index);
-      uint32_t r0 = eggBus.getSensorR0(eggbus_sensor_index);
-      uint32_t resistance = 0xffffffff;    
-      if(measured_value != 0xffffffff){
-        resistance = (uint32_t) (measured_value * i_scaler * r0); 
-      }      
-      
-      current_sensor_value = resistance;
+      current_sensor_value = (uint32_t) eggBus.getSensorResistance(eggbus_sensor_index);
+  }
+  else if(sendType == SEND_R0){
+      strcpy_P(current_sensor_units, PSTR("ohms"));
+      strcat_P(current_sensor_type, PSTR("_r0"));
+      current_sensor_value = eggBus.getSensorR0(eggbus_sensor_index);    
   }
   else{
       strcpy(current_sensor_units, eggBus.getSensorUnits(eggbus_sensor_index));   

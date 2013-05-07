@@ -21,6 +21,7 @@ EggBus eggBus;
 
 #define SEND_RAW        0
 #define SEND_CALCULATED 1
+#define SEND_R0         2
 byte send_type = SEND_RAW;
 
 void printMAC(uint8_t * mac);
@@ -103,7 +104,14 @@ void loop(){
             Serial.print(millis());             
             Serial.print(F(" Sent Egg Bus Raw :: "));            
             Serial.println(eggBus.getSensorType(eggbus_sensor_index));
-            send_type = SEND_CALCULATED;          
+            send_type = SEND_R0;          
+          }
+          else if(SEND_R0 == send_type){
+            sendEggBus(SEND_R0); 
+            Serial.print(millis());             
+            Serial.print(F(" Sent Egg Bus R0 :: "));            
+            Serial.println(eggBus.getSensorType(eggbus_sensor_index));
+            send_type = SEND_CALCULATED;             
           }
           else{
             sendEggBus(SEND_CALCULATED); 
