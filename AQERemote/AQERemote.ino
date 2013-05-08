@@ -6,7 +6,7 @@
 #include <SoftReset.h>
 #include <avr/wdt.h>
 
-#define FIRMWARE_REVISION 5
+#define FIRMWARE_REVISION 0x20
 
 #define SENSOR_PACKET_DELAY 5000L
 #define TRANSMIT_STATE_SEND_TEMPERATURE 1
@@ -48,7 +48,7 @@ void setup(){
     rflink.setTransmitInterval(120000L); // transmit every two minutes
     
     Serial.begin(115200);
-    Serial.println(F("\n[Air Quality Egg - Remote - v1.04]"));
+    Serial.println(F("\n[Air Quality Egg - Remote - v2.0]"));
     Serial.print(F("Unit Address: "));
     printlnMAC(mymac);
     Serial.print(F("Last Paired Base: "));
