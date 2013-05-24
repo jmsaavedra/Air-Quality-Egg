@@ -19,9 +19,8 @@ void setup(){
 
 void loop(){
   uint8_t   egg_bus_address;
-  float i_scaler = 0.0;
   uint32_t r0 = 0;
-  uint32_t measured_value = 0;
+  float sensor_resistance;
   
   eggBus.init();
     
@@ -34,9 +33,8 @@ void loop(){
       Serial.print(eggBus.getSensorType(ii));
       Serial.print(F(", "));
       
-      i_scaler = eggBus.getIndependentScaler(ii);      
-      measured_value = eggBus.getSensorIndependentVariableMeasure(ii);
       r0 = eggBus.getSensorR0(ii);
+      sensor_resistance = eggBus.getSensorResistance(ii);
       
       Serial.print(eggBus.getSensorValue(ii), 8);          
       Serial.print(F(", "));      
@@ -44,12 +42,7 @@ void loop(){
       Serial.print(eggBus.getSensorUnits(ii));            
       Serial.print(F(", "));      
       
-      if(measured_value == 0xffffffff){
-        Serial.print(F("OPEN CIRCUIT"));
-      }
-      else{
-        Serial.print(measured_value * i_scaler * r0, 8);
-      }      
+      Serial.print(sensor_resistance, 3);
       
       Serial.println();
     }

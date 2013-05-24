@@ -13,8 +13,7 @@ void loop(){
   uint8_t   egg_bus_address;
   float x_scaler = 0.0;
   float y_scaler = 0.0;
-  float i_scaler = 0.0;
-  uint32_t measured_value = 0;
+  float sensor_resistance;
   uint32_t r0 = 0;
   
   eggBus.init();
@@ -39,10 +38,6 @@ void loop(){
       Serial.print("    Sensor Type: ");
       Serial.println(eggBus.getSensorType(ii));
      
-      Serial.print("   Indep. Scaler: ");
-      i_scaler = eggBus.getIndependentScaler(ii);
-      Serial.println(i_scaler, 8);
-      
       Serial.print("  Table X Scaler: ");
       x_scaler = eggBus.getTableXScaler(ii);
       Serial.println(x_scaler, 8);     
@@ -51,23 +46,17 @@ void loop(){
       y_scaler = eggBus.getTableYScaler(ii);
       Serial.println(y_scaler, 8);         
 
-      Serial.print(" Measured Value: ");
-      measured_value = eggBus.getSensorIndependentVariableMeasure(ii);
-      Serial.print(measured_value, DEC);        
-      Serial.print(" => ");
-      Serial.println(measured_value * i_scaler, 8);
-
       Serial.print("              R0: ");
       r0 = eggBus.getSensorR0(ii);
       Serial.println(r0);
       
-      Serial.print("Implied Resistance: ");
-      if(measured_value == 0xffffffff){
-        Serial.println("OPEN CIRCUIT");
-      }
-      else{
-        Serial.println(measured_value * i_scaler * r0, 8);
-      }
+      sensor_resistance = eggBus.getSensorResistance(ii);
+      
+      Serial.print("      Resistance: ");
+      Serial.println(sensor_resistance, 3);
+      
+      Serial.print("            R/R0: ");
+      Serial.println(sensor_resistance/r0, 3);
       
       uint8_t xval, yval, row = 0;
       while(eggBus.getTableRow(ii, row++, &xval, &yval)){
