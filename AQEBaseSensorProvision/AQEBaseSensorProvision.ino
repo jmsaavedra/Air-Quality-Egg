@@ -38,7 +38,7 @@ byte clear_to_send = 1;
 void setup(){
 
     Serial.begin(115200);
-    Serial.println(F("\n[Air Quality Egg - Base Sensor Provisioning - v1.10]"));
+    Serial.println(F("\n[Air Quality Egg - Base Sensor Provisioning - v2.0]"));
     Serial.print("Unit Address: ");
     printlnMAC(mymac);    
     

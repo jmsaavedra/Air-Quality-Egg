@@ -8,6 +8,6 @@
 #define ACTIVATION_URL_LENGTH   52 // always 40 char code + "/activation" + null terminator
 #define ACTIVATION_CODE_LENGTH  41 // always 40 characters + null terminator
 #define API_KEY_LENGTH          49 // maximum length including null terminator
-#define FEED_ID_LENGTH          10 // maximum length including null terminator
+#define FEED_ID_LENGTH          17 // maximum length including null terminator
 
 #endif

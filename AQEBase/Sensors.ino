@@ -37,13 +37,15 @@ void postSensorData(){
   stash.print(rflink.getSensorValue());
   stash.print(F("\",\"tags\":[\"aqe:sensor_type="));
 
+  Serial.print(F("Sensor Type: "));
+  Serial.println(rflink.getSensorType());
   if(strstr_P(rflink.getSensorType(), PSTR("_raw")) != NULL){
     memset(temp, 0, 64);
     strncpy(temp, rflink.getSensorType(), strlen(rflink.getSensorType()) - 4); // always ends in "_raw" if it has it
     stash.print(temp);    
     isRaw = true;    
   }
-  if(strstr_P(rflink.getSensorType(), PSTR("_r0")) != NULL){
+  else if(strstr_P(rflink.getSensorType(), PSTR("_r0")) != NULL){
     memset(temp, 0, 64);
     strncpy(temp, rflink.getSensorType(), strlen(rflink.getSensorType()) - 3); // always ends in "_r0" if it has it
     stash.print(temp);    
