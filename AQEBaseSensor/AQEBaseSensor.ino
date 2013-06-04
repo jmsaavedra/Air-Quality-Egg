@@ -28,7 +28,7 @@ void printMAC(uint8_t * mac);
 
 // support variables
 long cosmPostPreviousMillis = 0;
-long cosmPostInterval = 60000L;
+long cosmPostInterval = 150000L;
 long cosmDelayPreviousMillis = 0;
 long cosmDelayInterval = 5000L;
 long heartbeatPreviousMillis = 0;
