@@ -37,7 +37,7 @@ void setup(){
     Serial.begin(115200);
     PRINT_STACK_SPACE;
     
-    Serial.println(F("\n[Air Quality Egg - Base Egg - v2.01]"));
+    Serial.println(F("\n[Air Quality Egg - Base Egg - v2.02]"));
     Serial.print(F("Unit Address: "));
     printlnMAC(mymac);
     
@@ -68,6 +68,8 @@ void setup(){
     blinkColorN(green, 3, 1000);      
     
     markCosmResponse();
+    
+    wdt_enable(WDTO_8S);
 }
 
 void loop(){
@@ -91,6 +93,7 @@ void loop(){
     }
     
     rgb.render();
+    wdt_reset();
 }
 
 void printReceivedData(){

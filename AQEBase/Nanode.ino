@@ -7,7 +7,7 @@
 #define ETHERNET_BUFFER_LENGTH 500
 extern uint8_t mymac[6];
 
-char website[] PROGMEM = "api.cosm.com";
+char website[] PROGMEM = "api.xively.com";
 
 byte Ethernet::buffer[ETHERNET_BUFFER_LENGTH];
 
