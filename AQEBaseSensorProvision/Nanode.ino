@@ -7,7 +7,7 @@
 #define ETHERNET_BUFFER_LENGTH 500
 extern uint8_t mymac[6];
 
-char website[] PROGMEM = "api.cosm.com";
+char website[] PROGMEM = "api.xively.com";
 
 byte Ethernet::buffer[ETHERNET_BUFFER_LENGTH];
 
@@ -46,8 +46,18 @@ void setupNanode(){
 
   PRINT_STACK_SPACE;
   
-  if (!ether.dnsLookup(website))
+  if (!ether.dnsLookup(website)){
     Serial.println(F("DNS failed"));
+    Serial.println(F("Falling back to Xively Static IP"));
+    ether.hisip[0] = 173;
+    ether.hisip[1] = 203;
+    ether.hisip[2] = 98;
+    ether.hisip[3] = 29;    
+  }
+  else{
+    Serial.println(F("DNS lookup succeeded."));
+  }
+  
   Serial.print(F("SRV: "));
   ether.printIp(ether.hisip);
   Serial.println();

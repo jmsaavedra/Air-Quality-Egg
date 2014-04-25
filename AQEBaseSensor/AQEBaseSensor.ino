@@ -40,7 +40,7 @@ void setup(){
     randomSeed(analogRead(0));
 
     Serial.begin(115200);
-    Serial.println(F("\n[Air Quality Egg - Base Sensor - v2.02]"));
+    Serial.println(F("\n[Air Quality Egg - Base Sensor - v2.03]"));
     Serial.print("Unit Address: ");
     printlnMAC(mymac);    
     cosmPostPreviousMillis = 71243411;
