@@ -91,6 +91,7 @@ AQERF_Remote::AQERF_Remote(uint8_t * mac){
 
 uint8_t AQERF_Remote::pair(){
     // try this for a period of time up to the pairing duration
+    uint8_t return_value = 0;
     for(uint32_t ii = 0; ii < AQERF_PAIRING_DURATION_MS; ii++){
         if (rf12_recvDone()) {   // incoming data is present
             if(0 == rf12_crc){   // otherwise the data is unreliable
@@ -118,13 +119,14 @@ uint8_t AQERF_Remote::pair(){
                     
                     //Store the base_station_address to EEPROM
                     eeprom_write_block(base_station_address, (void *) AQERF_EEPROM_LAST_KNOWN_BASE_ADDRESS, 6);
-                    return 1;
+                    return_value = 1;
                 }
             }
         }
         delay(1);
     }
-    return 0;
+    
+    return return_value;
 }
 
 // must be called often to keep the driver moving

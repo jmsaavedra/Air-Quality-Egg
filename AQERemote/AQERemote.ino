@@ -39,6 +39,7 @@ AQERF_Remote rflink(mymac);
 void printMAC(uint8_t * mac);
 
 // support variables
+byte first_time = 1;
 long previous_millis = 0;
 int need_to_send = 0;
 
@@ -48,7 +49,7 @@ void setup(){
     rflink.setTransmitInterval(120000L); // transmit every two minutes
     
     Serial.begin(115200);
-    Serial.println(F("\n[Air Quality Egg - Remote - v2.0]"));
+    Serial.println(F("\n[Air Quality Egg - Remote - v2.01]"));
     Serial.print(F("Unit Address: "));
     printlnMAC(mymac);
     Serial.print(F("Last Paired Base: "));
@@ -87,15 +88,16 @@ void setup(){
 void loop(){
     unsigned long currentMillis = millis(); 
 
-    if(currentMillis - previous_millis > rflink.getTransmitInterval()) {
-        if(transmit_state != TRANSMIT_STATE_WAITING){
+    if((first_time == 1) || (currentMillis - previous_millis > rflink.getTransmitInterval())) {             
+
+      if(transmit_state != TRANSMIT_STATE_WAITING){
           Serial.println(F("Something is taking longer than expected, Resetting"));
           Serial.flush();
           delay(1000);
           soft_restart(); 
         }
-        
-        
+                
+        first_time = 0;
         previous_millis = currentMillis;              
         need_to_send = 0;   
         transmit_state = TRANSMIT_STATE_SEND_TEMPERATURE;
