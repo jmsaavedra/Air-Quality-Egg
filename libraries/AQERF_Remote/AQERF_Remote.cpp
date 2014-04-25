@@ -92,13 +92,16 @@ AQERF_Remote::AQERF_Remote(uint8_t * mac){
 uint8_t AQERF_Remote::pair(){
     // try this for a period of time up to the pairing duration
     uint8_t return_value = 0;
+    uint8_t rx_base_station_address[6];   
+    uint8_t comparison = 0; 
+    eeprom_read_block(base_station_address, (const void *) AQERF_EEPROM_LAST_KNOWN_BASE_ADDRESS, 6);
     for(uint32_t ii = 0; ii < AQERF_PAIRING_DURATION_MS; ii++){
         if (rf12_recvDone()) {   // incoming data is present
             if(0 == rf12_crc){   // otherwise the data is unreliable
                 if(AQERF_PACKET_TYPE_BASE_STATION_ADVERTISEMENT == rf12_data[AQERF_PACKET_TYPE_OFFSET]){
                     // we have a pairing ... 
                     //   store the advertised base address in RAM and EEPROM
-                    memcpy(base_station_address, (const void *) (rf12_data + AQERF_BASE_ADDRESS_OFFSET), AQERF_BASE_ADDRESS_LENGTH);
+                    memcpy(rx_base_station_address, (const void *) (rf12_data + AQERF_BASE_ADDRESS_OFFSET), AQERF_BASE_ADDRESS_LENGTH);
                     
                     // ping back to the base to let it know you are all set by echoing the packet with your address
                     memcpy(packet + AQERF_BASE_ADDRESS_OFFSET, unit_address, AQERF_BASE_ADDRESS_LENGTH);
@@ -117,8 +120,20 @@ uint8_t AQERF_Remote::pair(){
                     
                     Serial.println(F("Sent ACK"));
                     
-                    //Store the base_station_address to EEPROM
-                    eeprom_write_block(base_station_address, (void *) AQERF_EEPROM_LAST_KNOWN_BASE_ADDRESS, 6);
+                    //Store the base_station_address to EEPROM         
+                    comparison = 1;
+                    for(uint8_t jj = 0; jj < 6; jj++){
+                      if(rx_base_station_address[jj] != base_station_address[jj]){
+                        comparison = 0;
+                      }
+                    }   
+                    
+                    if(comparison == 0){     
+                      Serial.println(F("Overwriting EEPROM"));
+                      eeprom_write_block(rx_base_station_address, (void *) AQERF_EEPROM_LAST_KNOWN_BASE_ADDRESS, 6);
+                      eeprom_read_block(base_station_address, (const void *) AQERF_EEPROM_LAST_KNOWN_BASE_ADDRESS, 6);                      
+                    }
+                     
                     return_value = 1;
                 }
             }
