@@ -6,7 +6,7 @@
 #include <SoftReset.h>
 #include <avr/wdt.h>
 
-#define FIRMWARE_REVISION 0x20
+#define FIRMWARE_REVISION 0x21
 
 #define SENSOR_PACKET_DELAY 5000L
 #define TRANSMIT_STATE_SEND_TEMPERATURE 1
@@ -49,7 +49,7 @@ void setup(){
     rflink.setTransmitInterval(120000L); // transmit every two minutes
     
     Serial.begin(115200);
-    Serial.println(F("\n[Air Quality Egg - Remote - v2.01]"));
+    Serial.println(F("\n[Air Quality Egg - Remote - v2.02]"));
     Serial.print(F("Unit Address: "));
     printlnMAC(mymac);
     Serial.print(F("Last Paired Base: "));
@@ -212,6 +212,7 @@ void setupHumidityPacket(){
 }
 
 void setupEggBusPacket(){
+    float sensor_val = 0;
     memcpy(feed_name, 0, 32);    
     strncpy(feed_name, eggBus.getSensorType(eggbus_sensor_index), 20);
     rflink.setPacketType(AQERF_PACKET_TYPE_REMOTE_STATION_DATUM);
@@ -221,7 +222,9 @@ void setupEggBusPacket(){
     rflink.setSensorIndex(eggbus_sensor_index);
     rflink.setSensorType(eggBus.getSensorType(eggbus_sensor_index));
     rflink.setSensorUnits(eggBus.getSensorUnits(eggbus_sensor_index));
-    rflink.setSensorValue(eggBus.getSensorValue(eggbus_sensor_index));    
+    sensor_val = eggBus.getSensorValue(eggbus_sensor_index);
+    if(sensor_val < 0) sensor_val = 0;
+    rflink.setSensorValue(sensor_val);    
 }
 
 void setupEggBusPacketRaw(){ 
